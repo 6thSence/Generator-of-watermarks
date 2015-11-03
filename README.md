@@ -1,1 +1,3 @@
 >Инструкция по установке моего приложения1. git https://github.com/6thSence/Watermark-Generator.git site2. cd site3. npm install4. bower install5. gem install compass6. gulp
+
+[![Join the chat at https://gitter.im/6thSence/Watermark-Generator](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/6thSence/Watermark-Generator?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
