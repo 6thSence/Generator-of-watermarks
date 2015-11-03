@@ -1,0 +1,38 @@
+include _common/_mixins
+
+doctype html
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+html(lang='ru-RU')
+    head
+        meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+        meta(charset='UTF-8')
+        meta(http-equiv='x-ua-compatible', content='ie=edge')
+        title Генератор водяных знаков
+        // ***** seo ******
+        meta(name='description', content='Генерация водяных знаков')
+        meta(name='keywords', content='')
+        meta(name='author', content='')
+        // ***** favicon ******
+        // ***** css ******
+        link(rel='stylesheet', href='./main.css')
+        // ***** js ******
+    body
+        .wrapper-all
+            .wrapper
+                .container.cl
+                    block block
+
+        include _common/footer
+
+
+
+    <!-- bower:js -->
+    <!-- endbower -->
+    script(src='js/main.js')
+
+
+
+

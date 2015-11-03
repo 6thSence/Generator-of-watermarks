@@ -1,0 +1,23 @@
+{
+  "name": "dz",
+  "version": "0.1.0",
+  "authors": [
+    "6thSence <d.pushkarskaya.pr@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.8",
+    "jquery-ui": "~1.11.4"
+  },
+  "devDependencies": {
+    "modernizr": "2.8.3"
+  }
+}

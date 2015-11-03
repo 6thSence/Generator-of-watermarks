@@ -1,0 +1,33 @@
+{
+  "name": "loft-template",
+  "version": "1.0.0",
+  "description": "template for good works",
+  "main": "gulpfile.js",
+  "repository": "https://github.com/wowua/loftschool-template",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vladimir Sabantsev",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.9.7",
+    "gulp": "^3.9.0",
+    "gulp-compass": "^2.1.0",
+    "gulp-jade": "^1.1.0",
+    "del": "^2.0.2",
+    "gulp-concat-css": "^2.2.0",
+    "gulp-filter": "^3.0.1",
+    "gulp-if": "^2.0.0",
+    "gulp-minify-css": "^1.2.1",
+    "gulp-size": "^2.0.0",
+    "gulp-uglify": "^1.4.1",
+    "gulp-useref": "^1.3.0",
+    "gulp-util": "^3.0.6",
+    "vinyl-ftp": "^0.4.5",
+    "wiredep": "^2.2.2",
+    "gulp-plumber": "^1.0.1"
+  },
+  "dependencies": {
+
+  }
+}
