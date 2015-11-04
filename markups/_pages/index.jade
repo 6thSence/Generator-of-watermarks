@@ -6,100 +6,61 @@ block block
         .watermark-work(data-bg='watermark-work-rus')
             .aim-img
     .controls-bl
-        .controls-title Настройки
-            form.form
-                input(type='hidden', name='aim-img')
-                input(type='hidden', name='watermark')
-                input(type='hidden', name='opacity', value='1')
-                input(type='hidden', name='mode')
-                .form__group
+        h3.controls-title Настройки
+        form.form
+            input(type='hidden', name='aim-img')
+            input(type='hidden', name='watermark')
+            input(type='hidden', name='opacity', value='1')
+            input(type='hidden', name='mode')
+            .form__group
+                .form__group-wrap
                     label.form__label.original-image Исходное изображение
-                    .form__input.input-group
-                        input#image.input-group__input(placeholder='image.jpg', disabled='disabled')
-                        .input-group__icon
-                            input.input-group__file-load(type='file', data-file-name-input='#image')
-                .form__group
+                    .file-holder
+                        p.file-holder__name Image.jpg
+                        .file-holder__btn
+                            img(src="../img/images/cloud.png" alt="").file__up-img
+                        input(type="file" name="fileup" data-position="left" title="изображение" data-file-name-input='#image').file__up
+
                     label.form__label.watermark-image Водяной знак
-                    .form__input.input-group
-                        input#watermark.input-group__input(placeholder='image.png', disabled='disabled')
-                        .input-group__icon
-                            input.input-group__file-load(type='file', data-file-name-input='#watermark')
-                .separator
-                .form__group
-                    .placement
-                        label.form__label.place-title Положение
-                    #chooseSingle.position-select.position-select_single.active
-                        .position-select__choose.choose-position
-                            #top-left.choose-position__item.choose-position__item_single.active
-                            #top-center.choose-position__item.choose-position__item_single
-                            #top-right.choose-position__item.choose-position__item_single
-                            #middle-left.choose-position__item.choose-position__item_single
-                            #middle-center.choose-position__item.choose-position__item_single
-                            #middle-right.choose-position__item.choose-position__item_single
-                            #bottom-left.choose-position__item.choose-position__item_single
-                            #bottom-center.choose-position__item.choose-position__item_single
-                            #bottom-right.choose-position__item.choose-position__item_single
-                        .position-select__count.count-position
-                            .input-group_count
-                                label.input-group__label_count(for='moveX') X
-                                span
-                                    input#moveX.count-position__item.count-position__item_x(name='value_x', value='0', aria-valuenow='0', autocomplete='off', role='spinbutton')
-                                    a(tabindex='-1', role='button')
-                                        span
-                                            span
-                                    a(tabindex='-1', role='button')
-                                        span
-                                            span
-                            .input-group_count
-                                label.input-group__label_count(for='moveY') Y
-                                span
-                                    input#moveY.count-position__item.count-position__item_y(name='value_y', value='0', aria-valuenow='0', autocomplete='off', role='spinbutton')
-                                    a(tabindex='-1', role='button')
-                                        span
-                                            span
-                                    a(tabindex='-1', role='button')
-                                        span
-                                            span
-                    #chooseMulti.position-select.position-select_multi
-                        .position-select__choose.choose-position
-                            .choose-position__margin.choose-position__margin_right
-                            .choose-position__margin.choose-position__margin_bottom
+                    .file-holder
+                        p.file-holder__name Image.jpg
+                        .file-holder__btn
+                            img(src="../img/images/cloud.png" alt="").file__up-img
+                        input(type="file" name="fileup" data-position="left" title="изображение" data-file-name-input='#watermark').file__up
+
+            .form__group.placement
+                .form__group-wrap
+                    label.form__label.place-title Положение
+
+                    .position-select__choose.choose-position
+                        - for (var i = 0; i < 9; i++) 
                             .choose-position__item
-                            .choose-position__item
-                            .choose-position__item
-                            .choose-position__item
-                            .choose-position__item
-                            .choose-position__item
-                            .choose-position__item
-                            .choose-position__item
-                            .choose-position__item
-                        .position-select__count.count-position
-                            .input-group_count
-                                label.input-group__label_count(for='margin-right') X
-                                span.ui-spinner.ui-widget.ui-widget-content.ui-corner-all
-                                    input#margin-right.count-position__item.count-position__item_x.ui-spinner-input(name='value_right', value='0', aria-valuemin='0', aria-valuenow='0', autocomplete='off', role='spinbutton')
-                                    a(tabindex='-1', role='button')
-                                        span
-                                            span
-                                    a(tabindex='-1', role='button')
-                                        span
-                                            span
-                            .input-group_count
-                                label.input-group__label_count(for='margin-bottom') Y
-                                span
-                                    input#margin-bottom.count-position__item.count-position__item_y(name='value_bottom', value='0', aria-valuemin='0', aria-valuenow='0', autocomplete='off', role='spinbutton')
-                                    a(tabindex='-1', role='button')
-                                        span.ui-button-text
-                                            span.ui-icon.ui-icon-triangle-1-n ▲
-                                    a.ui-spinner-button.ui-spinner-down.ui-corner-br.ui-button.ui-widget.ui-state-default.ui-button-text-only(tabindex='-1', role='button')
-                                        span.ui-button-text
-                                            span.ui-icon.ui-icon-triangle-1-s ▼
-                .separator
-                .form__group
-                    label.input-group__label.transparency-title Прозрачность
-                .separator
-                .btn__box
-                    button.btn.btn__clear(type='reset') Сброс
-                    button.btn.btn__save(type='submit') Скачать
+
+                    .position-select__choose.count-position
+                        .input-group_count
+                            label.input-group__label_count(for='moveX') X
+                            input#moveX.count-position__item.count-position__item_x(name='value_x', value='0', aria-valuenow='0', autocomplete='off', role='spinbutton')
+                            .dif__btn-group
+                                a(tabindex='-1', role='button').position__choose.position__choose-increase
+                                a(tabindex='-1', role='button').position__choose.position__choose-reduce
+
+                        .input-group_count
+                            label.input-group__label_count(for='moveY') Y
+                            input#moveY.count-position__item.count-position__item_y(name='value_y', value='0', aria-valuenow='0', autocomplete='off', role='spinbutton')
+                            .dif__btn-group
+                                a(tabindex='-1', role='button').position__choose.position__choose-increase
+                                a(tabindex='-1', role='button').position__choose.position__choose-reduce
+
+            .form__group
+                .form__group-wrap
+                    label.form__label.transparency-title Прозрачность
+                    .filter__content
+                            .filter__slider
+                                .filter__slider-displays
+                                        
+            //- .separator
+        .btn__box
+            button.btn.btn__clear(type='reset') Сброс
+            button.btn.btn__save(type='submit') Скачать
 
 
