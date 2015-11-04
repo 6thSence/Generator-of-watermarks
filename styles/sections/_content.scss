@@ -104,6 +104,10 @@ body{
     width: 100%;
     height: 100%;
     cursor: pointer;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 /****form__group*****/
