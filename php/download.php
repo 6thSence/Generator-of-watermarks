@@ -17,18 +17,31 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $original = WideImage::load('original-image');
     $watermark = WideImage::load('watermark-image');
 
-    if(check_origin($originX, $original->getWidth()) && check_origin($originY, $original->getHeight())) {
-        $result = $original->merge($watermark, $originX, $originY, $transparency);
+    $isPattern = post('is-pattern');
+    if($isPattern) {
+        $watermarkWidth = $watermark->getWidth();
+        $watermarkHeight = $watermark->getHeight();
 
-        $file_name = make_filename($originalImage['name'], 'jpg');
-        $file_dir = get_filedir($file_name);
-        $result->saveToFile($file_dir);
+        $imageWidth = $original->getWidth();
+        $imageHeight = $original->getHeight();
 
-        send_file($file_name, $file_dir) ? send_success('successTransfer') : send_error('errorDownload');
+        $result = $original;
+        for($x = 0; ; $x += ($watermarkWidth + $originX)) {
+            for($y = 0; ; $y += ($watermarkHeight + $originY)) {
+                $result = $result->merge($watermark, $x, $y, $transparency);
+                if ($y > $imageHeight) break;
+            }
+            if ($x > $imageWidth) break;
+        }
     }
     else {
-        send_error('wrongOrigin');
+        $result = $original->merge($watermark, $originX, $originY, $transparency);
     }
+
+    $file_name = make_filename($originalImage['name'], 'jpg');
+    $file_dir = get_filedir($file_name);
+    $result->saveToFile($file_dir);
+    send_file($file_name, $file_dir) ? send_success('successTransfer') : send_error('errorDownload');
 }
 
 

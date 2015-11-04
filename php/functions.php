@@ -79,13 +79,17 @@ function send_file($file_name, $file_dir) {
     return readfile($file_dir) ? true : false;
 }
 
-function send_error($error_message, $fieldName='') {
+function get_translated($data) {
     $lang_array = get_language_from_session();
-    $message = $lang_array[$error_message];
+    return $lang_array[$data];
+}
+
+function send_error($error_message, $fieldName='') {
+    $message = get_translated($error_message);
 
     if($fieldName != '') {
-        $fieldName = strtolower($lang_array[$fieldName]);
-        $message = $lang_array[$error_message].$fieldName;
+        $fieldName = strtolower(get_translated($fieldName));
+        $message = $message.$fieldName;
     }
 
     $error = array(
@@ -100,7 +104,7 @@ function send_error($error_message, $fieldName='') {
 function send_success($message) {
     $success = array(
         'status' => true,
-        'message' => get_language_from_session()[$message]
+        'message' => get_translated($message)
     );
     header('Content-type: application/json');
     echo json_encode($success);
