@@ -1,5 +1,20 @@
 <?php
+	session_start();
+	include_once("php/config.php");
+	include_once("php/lang.php");
 
+	$lang_param = $_GET['lang'];
+	if($lang_param) {
+		$_SESSION['lang'] = $lang_param;
+	}
+
+	$current_language = $_SESSION['lang'];
+	if(!$current_language || !$lang[$current_language]) {
+		$_SESSION['lang'] = $default_language;
+		$current_language = $default_language;
+	}
+
+	$text = $lang[$current_language];
 ?>
 
 <!DOCTYPE html><!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -11,7 +26,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta charset="UTF-8">
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
-		<title>Генератор водяных знаков</title>
+		<title><?php echo $text["title"] ?></title>
 		<!-- ***** seo ******-->
 		<meta name="description" content="Генерация водяных знаков">
 		<meta name="keywords" content="">
@@ -26,20 +41,20 @@
 			<div class="wrapper">
 				<div class="container cl">
 					<div class="main-bl">
-						<div style="opacity: 1;" class="main-title">Генератор водяных знаков</div>
+						<div style="opacity: 1;" class="main-title"><?php echo $text["title"] ?></div>
 						<div data-bg="watermark-work-rus" class="watermark-work">
 							<div class="aim-img"></div>
 						</div>
 					</div>
 					<div class="controls-bl">
-						<div class="controls-title">Настройки
+						<div class="controls-title"><?php echo $text["settings"] ?>
 							<form class="form">
 								<input type="hidden" name="aim-img">
 								<input type="hidden" name="watermark">
 								<input type="hidden" name="opacity" value="1">
 								<input type="hidden" name="mode">
 								<div class="form__group">
-									<label class="form__label original-image">Исходное изображение</label>
+									<label class="form__label original-image"><?php echo $text["image"] ?></label>
 									<div class="form__input input-group">
 										<input id="image" placeholder="image.jpg" disabled="disabled" class="input-group__input">
 										<div class="input-group__icon">
@@ -48,7 +63,7 @@
 									</div>
 								</div>
 								<div class="form__group">
-									<label class="form__label watermark-image">Водяной знак</label>
+									<label class="form__label watermark-image"><?php echo $text["watermark"] ?></label>
 									<div class="form__input input-group">
 										<input id="watermark" placeholder="image.png" disabled="disabled" class="input-group__input">
 										<div class="input-group__icon">
@@ -59,7 +74,7 @@
 								<div class="separator"></div>
 								<div class="form__group">
 									<div class="placement">
-										<label class="form__label place-title">Положение</label>
+										<label class="form__label place-title"><?php echo $text["position"] ?></label>
 									</div>
 									<div id="chooseSingle" class="position-select position-select_single active">
 										<div class="position-select__choose choose-position">
@@ -112,12 +127,12 @@
 								</div>
 								<div class="separator"></div>
 								<div class="form__group">
-									<label class="input-group__label transparency-title">Прозрачность</label>
+									<label class="input-group__label transparency-title"><?php echo $text["transparency"] ?></label>
 								</div>
 								<div class="separator"></div>
 								<div class="btn__box">
-									<button type="reset" class="btn btn__clear">Сброс</button>
-									<button type="submit" class="btn btn__save">Скачать</button>
+									<button type="reset" class="btn btn__clear"><?php echo $text["reset"] ?></button>
+									<button type="submit" class="btn btn__save"><?php echo $text["download"] ?></button>
 								</div>
 							</form>
 						</div>
@@ -125,9 +140,11 @@
 				</div>
 			</div>
 		</div>
+		<a href="index.php?lang=ru">RU</a>
+		<a href="index.php?lang=en">EN</a>
 		<footer class="footer">
 			<div class="footer-wrap">
-				<div class="footer-copi">© 2015, Это мой сайт, пожалуйста, не копируйте и не воруйте его</div>
+				<div class="footer-copi">© 2015, <?php echo $text["copyright"] ?></div>
 			</div>
 		</footer>
 	</body><!-- bower:js -->
