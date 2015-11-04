@@ -15,13 +15,13 @@ block block
                 .form__group
                     label.form__label.original-image Исходное изображение
                     .form__input.input-group
-                        input#image.input-group__input(placeholder='image.jpg', disabled='disabled')
+                        input.input-group__input(placeholder='image.jpg' id="fileuploadImage" type="file" name="files[]" data-url="server/php/" multiple)
                         .input-group__icon
                             input.input-group__file-load(type='file', data-file-name-input='#image')
                 .form__group
                     label.form__label.watermark-image Водяной знак
                     .form__input.input-group
-                        input#watermark.input-group__input(placeholder='image.png', disabled='disabled')
+                        input.input-group__input(placeholder='image.png' id="fileuploadWatermark" type="file" name="files[]" data-url="server/php/" multiple )
                         .input-group__icon
                             input.input-group__file-load(type='file', data-file-name-input='#watermark')
                 .separator

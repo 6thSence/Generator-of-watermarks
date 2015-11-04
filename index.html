@@ -37,7 +37,7 @@
 								<div class="form__group">
 									<label class="form__label original-image">Исходное изображение</label>
 									<div class="form__input input-group">
-										<input id="image" placeholder="image.jpg" disabled="disabled" class="input-group__input">
+										<input placeholder="image.jpg" id="fileuploadImage" type="file" name="files[]" data-url="server/php/" multiple class="input-group__input">
 										<div class="input-group__icon">
 											<input type="file" data-file-name-input="#image" class="input-group__file-load">
 										</div>
@@ -46,7 +46,7 @@
 								<div class="form__group">
 									<label class="form__label watermark-image">Водяной знак</label>
 									<div class="form__input input-group">
-										<input id="watermark" placeholder="image.png" disabled="disabled" class="input-group__input">
+										<input placeholder="image.png" id="fileuploadWatermark" type="file" name="files[]" data-url="server/php/" multiple class="input-group__input">
 										<div class="input-group__icon">
 											<input type="file" data-file-name-input="#watermark" class="input-group__file-load">
 										</div>
@@ -131,4 +131,8 @@
 <script src="../../bower/jquery-ui/jquery-ui.js"></script>
 <!-- endbower -->
 	<script src="js/main.js"></script>
+	<script src="js/vendor/jquery.ui.widget.js"></script>
+	<script src="js/jquery.iframe-transport.js"></script>
+	<script src="js/jquery.fileupload.js"></script>
+	<script src="js/main2.js"></script>
 </html>
