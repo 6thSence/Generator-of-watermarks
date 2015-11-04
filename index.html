@@ -15,6 +15,7 @@
 		<!-- ***** favicon ******-->
 		<!-- ***** css ******-->
 		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="bower/jquery-ui/themes/base/jquery-ui.css">
 		<!-- ***** js ******-->
 	</head>
 	<body>
@@ -38,15 +39,15 @@
 								<div class="form__group-wrap">
 									<label class="form__label original-image">Исходное изображение</label>
 									<div class="file-holder">
-										<p class="file-holder__name">Image.jpg</p>
+										<p class="file-holder__name mainImg">Image.jpg</p>
 										<div class="file-holder__btn"><img src="../img/images/cloud.png" alt="" class="file__up-img"></div>
-										<input type="file" name="fileup" data-position="left" title="изображение" data-file-name-input="#image" class="file__up">
+										<input id="fileuploadImage" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input="#image" class="file__up">
 									</div>
 									<label class="form__label watermark-image">Водяной знак</label>
 									<div class="file-holder">
-										<p class="file-holder__name">Image.jpg</p>
+										<p class="file-holder__name mainWatermark">Image.jpg</p>
 										<div class="file-holder__btn"><img src="../img/images/cloud.png" alt="" class="file__up-img"></div>
-										<input type="file" name="fileup" data-position="left" title="изображение" data-file-name-input="#watermark" class="file__up">
+										<input id="watermark" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input="#watermark" disabled class="file__up">
 									</div>
 								</div>
 							</div>
@@ -81,6 +82,7 @@
 							<div class="form__group">
 								<div class="form__group-wrap">
 									<label class="form__label transparency-title">Прозрачность</label>
+									<div id="slider"></div>
 									<div class="filter__content">
 										<div class="filter__slider">
 											<div class="filter__slider-displays"></div>
@@ -106,5 +108,8 @@
 <script src="../../bower/jquery/jquery.js"></script>
 <script src="../../bower/jquery-ui/jquery-ui.js"></script>
 <!-- endbower -->
-	<script src="js/main.js"></script>
+	<script src="js/vendor/jquery.ui.widget.js"></script>
+	<script src="js/jquery.iframe-transport.js"></script>
+	<script src="js/jquery.fileupload.js"></script>
+	<script src="js/main2.js"></script>
 </html>
