@@ -1,5 +1,8 @@
-node_modules
-.sass-cache
-.idea
-bower
-dist
+.vagrant/
+node_modules/
+.sass-cache/
+.idea/
+vendor/
+bower/
+dist/
+composer.phar
