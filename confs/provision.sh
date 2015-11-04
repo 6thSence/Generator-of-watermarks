@@ -8,6 +8,7 @@ apt-get install -y apache2
 apt-get install -y php5
 apt-get install -y libapache2-mod-php5
 apt-get install -y php5-mcrypt
+apt-get install -y php5-gd
 apt-get install -y ruby
 apt-get install -y ruby-dev
 apt-get install -y nodejs
