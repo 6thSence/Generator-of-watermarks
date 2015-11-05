@@ -18,7 +18,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $watermark = WideImage::load('watermark-image');
 
     $isPattern = post('is-pattern');
-    if($isPattern) {
+    if(isBoolean($isPattern)) {
         $watermarkWidth = $watermark->getWidth();
         $watermarkHeight = $watermark->getHeight();
 

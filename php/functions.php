@@ -1,6 +1,6 @@
 <?php
 
-include_once 'lang.php';
+include 'lang.php';
 include_once 'config.php';
 
 function get_language($lang_param) {
@@ -108,4 +108,12 @@ function send_success($message) {
     );
     header('Content-type: application/json');
     echo json_encode($success);
+}
+
+function get_query($url, $params) {
+    return $url.'?'.urldecode(http_build_query($params));
+}
+
+function isBoolean($value) {
+    return $value === "true";
 }
