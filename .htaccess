@@ -1,10 +1,4 @@
 AddDefaultCharset UTF-8
-
-Options -Indexes
-Options +FollowSymLinks
-
 RewriteEngine on
 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule (.*) /$1
+RewriteRule ^([a-z]+)$ index.php?lang=$1 [QSA]

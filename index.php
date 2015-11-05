@@ -81,8 +81,8 @@
 		</div>
 
 		<!-- Смена языка -->
-		<a href="index.php?lang=ru">RU</a>
-		<a href="index.php?lang=en">EN</a>
+		<a href="ru">RU</a>
+		<a href="en">EN</a>
 
 		<!-- Лайк -->
 		<a id="vk-share" href="">VK</a>
