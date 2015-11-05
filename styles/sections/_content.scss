@@ -364,8 +364,16 @@ body{
 .btn__clear{
     background-color: #c1cfd9;
     margin-right: 37px;
+    &:hover{
+        border: 1px solid #a6b2bb;
+        box-shadow: 0 1px 1px 0 #afbbc5 inset;
+    }
 }
 
 .btn__save{
     background-color: #f97e76;
+    &:hover{
+        border: 1px solid #e3736c;
+        box-shadow: 0 1px 1px 0 #ed7971 inset;
+    }
 }

@@ -13,7 +13,7 @@ block block
             input(type='hidden', name='opacity', value='1')
             input(type='hidden', name='mode')
             .form__group
-                .form__group-wrap
+                .form__group-wrap.group-wrap__image
                     label.form__label.original-image Исходное изображение
                     .file-holder
                         p.file-holder__name.mainImg Image.jpg
@@ -28,7 +28,7 @@ block block
                             img(src="../img/images/cloud.png" alt="").file__up-img
                         input(id="watermark" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input='#watermark' disabled).file__up
             .form__group.placement
-                .form__group-wrap
+                .form__group-wrap.group-wrap__placement
                     label.form__label.place-title Положение
 
                     .position-select__choose.choose-position
@@ -51,7 +51,7 @@ block block
                                 a(tabindex='-1', role='button').position__choose.position__choose-reduce
 
             .form__group
-                .form__group-wrap
+                .form__group-wrap.group-wrap__transparency
                     label.form__label.transparency-title Прозрачность
                     #slider
                     .filter__content
