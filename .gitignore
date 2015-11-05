@@ -6,3 +6,4 @@ vendor/
 bower/
 dist/
 composer.phar
+.DS_Store

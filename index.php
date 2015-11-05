@@ -21,6 +21,7 @@
 <html lang="ru-RU">
 	<head>
 		<meta charset="UTF-8">
+		<meta name="description" content="Сервис для генерации водяных знаков">
 		<title><?php echo $text['title'] ?></title>
 	</head>
 	<body>
@@ -84,7 +85,9 @@
 		<a href="index.php?lang=en">EN</a>
 
 		<!-- Лайк -->
-
+		<a id="vk-share" href="">VK</a>
+		<a id="fb-share" href="">FB</a>
+		<a id="tw-share" href="">TW</a>
 
 		<!-- Футер -->
 		<footer class="footer">
@@ -93,6 +96,8 @@
 			</div>
 		</footer>
 
+		<script src="bower/jquery/jquery.min.js"></script>
+		<script src="js/share.js"></script>
 	</body>
 
 </html>
