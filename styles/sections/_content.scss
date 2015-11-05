@@ -59,7 +59,7 @@ body{
 .aim-img{
     width: 648px;
     height: 533px;
-    margin: 60px auto 35px;
+    margin: 54px auto 35px;
     background-color: #fff;
     // background-image: url(../img/images/water_back.png);
 }
@@ -107,12 +107,12 @@ body{
 
 .file-holder__name{
     font-family: "SegoeUILight", sans-serif;
-    width: 175px;
+    width: 170px;
     background-color: #fff;
     font-size: 12px;
     height: 100%;
     float: left;
-    padding: 7px;
+    padding: 7px 2px;
     padding-right: 0;
     margin: 0 !important;
     text-overflow: ellipsis;
@@ -344,7 +344,7 @@ body{
 /* btn__box */
 
 .btn__box{
-    margin-top: 55px;
+    margin-top: 53px;
     padding: 0px 8px;
     padding-bottom: 25px;
 }
