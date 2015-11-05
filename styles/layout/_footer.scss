@@ -1,0 +1,42 @@
+html{
+    position: relative;
+    height: 100%;
+}
+
+html, body{
+    min-height: 100%;
+}
+
+.wrapper-all{
+    // clear: both;
+    height: auto !important;
+    min-height: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*.layout_footer{
+    height: 80px;
+}*/
+/***************************/
+.footer{
+    // background-color: #eff3f7;
+    color: #000;
+    font-size: 12px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    position: absolute;
+    text-align: center;
+    // @include clearfix;
+
+    .container{
+        margin: 0 auto;
+    }
+}
+
+.footer-wrap {
+    // padding: 50px 0 20px;
+}
