@@ -2,24 +2,49 @@ body{
     background: url('../img/bg.jpg') no-repeat;
     -webkit-background-size: cover;
     background-size: cover;
+    font-family: 'robotolight', sans-serif;
+    line-height: 1.4;
+    padding-bottom: 50px;
 }
 .container{
-    width: 965px;
+    width: 960px;
     margin: 60px auto;
+    @include clearfix;
 }
 
 .main-bl{
-    display: block;
+    // display: block;
     float: left;
-    width: 704px;
+    width: 700px;
     height: 670px;
     background: #61585b;
 
     .main-title{
-        padding-top: 12px;
-        padding-left: 25px;
+        font-family: "SegoeUILight", sans-serif;
+        font-weight: 300;
+        padding-top: 9px;
+        padding-left: 21px;
         font-size: 36px;
         color: #fff;
+        margin: 0;
+    }
+
+    .mainIMG{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        z-index: 10;
+    }
+
+    .mainMark{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        z-index: 10;
     }
 }
 
@@ -77,9 +102,11 @@ body{
     border-radius: 5px;  
     display: block;
     line-height: 12px;
+    cursor: pointer;
 }
 
 .file-holder__name{
+    font-family: "SegoeUILight", sans-serif;
     width: 175px;
     background-color: #fff;
     font-size: 12px;
@@ -88,6 +115,9 @@ body{
     padding: 7px;
     padding-right: 0;
     margin: 0 !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .file-holder__btn{
@@ -115,7 +145,7 @@ body{
 .form__group{
     border-bottom: 1px solid #f97e76;
     position: relative;
-    margin-top: 20px;
+    // margin-top: 20px;
     padding: 0px 20px;
     &:after{
         content: "";
@@ -135,47 +165,73 @@ body{
 }
 
 .form__group-wrap {
-    margin: 26px 0;
+    // margin: 26px 0;
+    // margin: 16px 0;
     @include clearfix;
 }
 
-/*  */
-.controls-title{
-    font-size: 26px;
-    text-align: center;
+.group-wrap__image{
+    // margin: 10px 0;
+    margin-top: 34px;
+    margin-bottom: 29px;
 }
 
+.group-wrap__placement{
+    // margin: 10px 0;
+    margin-top: 14px;
+    margin-bottom: 24px;
+}
 
-/*    form__label  */
+.group-wrap__transparency{
+    // margin: 10px 0;
+    margin: 16px 0;
+    margin-bottom: 20px;
+}
+/*    form__group Name  */
 
 .form__label{
     font-size: 14px;
     // padding-top: 15px;
     color: #2e3641;
     display: block;
-// font-family: robotolight sans-serif;
+}
+
+/* controls-title */
+.controls-title{
+    font-size: 26px;
+    text-align: center;
+    margin: 0;
+    margin-top: 26px;
+    line-height: 1;
 }
 
 .form__label.original-image {
-    margin: 6px;
-    margin-bottom: 10px;   
+    // margin-top: 6px;
+    margin-bottom: 5px;
+    .form__group-wrap{
+
+    }   
 }
 
 .form__label.watermark-image{
-    margin-top: 18px;
-    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 6px;
+    .form__group-wrap{
+
+    }
 }
 
 .form__label.place-title{
-    margin-bottom: 30px;
+    margin-bottom: 34px;
 } 
 
 .form__label.transparency-title{
-    margin-bottom: 15px;
+    margin-bottom: 29px;
 }
 /* choose-position */
 .choose-position{
-    width: 50%;
+    // width: 50%;
+    width: 110px;
     display: block;
     float: left;
     font-size: 0;
@@ -186,13 +242,14 @@ body{
 
 
 .choose-position__item{
-    width: 31px;
-    height: 31px;
+    width: 32px;
+    height: 32px;
     border: 1px solid #c1cfd9;
     display: inline-block;
     margin: 0px;
     padding: 0px;
     background-color: #dbe1e8;
+    @include clearfix;
 
     &:hover{
         background-color: #f97e76;
@@ -223,7 +280,8 @@ body{
 
 /*count-position*/
 .count-position{
-    width: 50%;
+    // width: 50%;
+    width: 110px;
     display: block;
     float: right;
     color: #444a53;
@@ -231,7 +289,7 @@ body{
 
 
 .input-group_count{
-    margin-left: 20px;
+    margin-left: 23px;
 }
 
 .input-group__label_count{
@@ -257,8 +315,12 @@ body{
     display: inline-block;
     vertical-align: top;
     float: right;
-    margin-left: 5px;
+    margin-right: 4px;
 }
+
+// .position-select__choose{
+//     width: 110px;
+// }
 
 .position__choose{
     display: block;
@@ -290,12 +352,13 @@ body{
 .btn{
     padding: 12px 20px;
     border: 0 none;
-    border-radius: 5px;
+    border-radius: 3px;
     font-size: 18px;
     line-height: 20px;
     color: #fff;
     width: 100px;
-    // font-family:robotomedium sans-serif;
+    font-family: 'robotomedium', sans-serif;
+    @include outline;
 }
 
 .btn__clear{
