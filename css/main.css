@@ -970,6 +970,7 @@ html, body {
   left: 0;
   right: 0;
   margin: auto;
+  font-size: 0;
 }
 
 .mainMark{
@@ -984,11 +985,9 @@ html, body {
 
 .flag{
   display: inline-block;
-  border: 1px solid red;
-  z-index: 200;
   cursor: move;
-  margin: 0;
 }
+
 
 
 .spiner{
