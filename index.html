@@ -28,14 +28,14 @@
 						</div>
 					</div>
 					<div class="controls-bl">
-						<h3 class="controls-title">Настройки</h3>
+						<div class="controls-title">Настройки</div>
 						<form class="form">
 							<input type="hidden" name="aim-img">
 							<input type="hidden" name="watermark">
 							<input type="hidden" name="opacity" value="1">
 							<input type="hidden" name="mode">
 							<div class="form__group">
-								<div class="form__group-wrap">
+								<div class="form__group-wrap group-wrap__image">
 									<label class="form__label original-image">Исходное изображение</label>
 									<div class="file-holder">
 										<p class="file-holder__name">Image.jpg</p>
@@ -44,14 +44,14 @@
 									</div>
 									<label class="form__label watermark-image">Водяной знак</label>
 									<div class="file-holder">
-										<p class="file-holder__name">Image.jpg</p>
+										<p class="file-holder__name">Image.png</p>
 										<div class="file-holder__btn"><img src="../img/images/cloud.png" alt="" class="file__up-img"></div>
 										<input type="file" name="fileup" data-position="left" title="изображение" data-file-name-input="#watermark" class="file__up">
 									</div>
 								</div>
 							</div>
-							<div class="form__group placement">
-								<div class="form__group-wrap">
+							<div class="form__group">
+								<div class="form__group-wrap group-wrap__placement">
 									<label class="form__label place-title">Положение</label>
 									<div class="position-select__choose choose-position">
 										<div class="choose-position__item"></div>
@@ -79,8 +79,9 @@
 								</div>
 							</div>
 							<div class="form__group">
-								<div class="form__group-wrap">
+								<div class="form__group-wrap group-wrap__transparency">
 									<label class="form__label transparency-title">Прозрачность</label>
+									<div id="slider"></div>
 									<div class="filter__content">
 										<div class="filter__slider">
 											<div class="filter__slider-displays"></div>
@@ -88,11 +89,11 @@
 									</div>
 								</div>
 							</div>
+							<div class="btn__box">
+								<button type="reset" class="btn btn__clear">Сброс</button>
+								<button type="submit" class="btn btn__save">Скачать</button>
+							</div>
 						</form>
-						<div class="btn__box">
-							<button type="reset" class="btn btn__clear">Сброс</button>
-							<button type="submit" class="btn btn__save">Скачать</button>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -106,5 +107,8 @@
 <script src="../../bower/jquery/jquery.js"></script>
 <script src="../../bower/jquery-ui/jquery-ui.js"></script>
 <!-- endbower -->
-	<script src="js/main.js"></script>
+	<script src="js/vendor/jquery.ui.widget.js"></script>
+	<script src="js/jquery.iframe-transport.js"></script>
+	<script src="js/jquery.fileupload.js"></script>
+	<script src="js/main2.js"></script>
 </html>

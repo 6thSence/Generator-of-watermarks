@@ -6,14 +6,14 @@ block block
         .watermark-work(data-bg='watermark-work-rus')
             .aim-img
     .controls-bl
-        h3.controls-title Настройки
+        .controls-title Настройки
         form.form
             input(type='hidden', name='aim-img')
             input(type='hidden', name='watermark')
             input(type='hidden', name='opacity', value='1')
             input(type='hidden', name='mode')
             .form__group
-                .form__group-wrap
+                .form__group-wrap.group-wrap__image
                     label.form__label.original-image Исходное изображение
                     .file-holder
                         p.file-holder__name Image.jpg
@@ -23,13 +23,13 @@ block block
 
                     label.form__label.watermark-image Водяной знак
                     .file-holder
-                        p.file-holder__name Image.jpg
+                        p.file-holder__name Image.png
                         .file-holder__btn
                             img(src="../img/images/cloud.png" alt="").file__up-img
                         input(type="file" name="fileup" data-position="left" title="изображение" data-file-name-input='#watermark').file__up
 
-            .form__group.placement
-                .form__group-wrap
+            .form__group
+                .form__group-wrap.group-wrap__placement
                     label.form__label.place-title Положение
 
                     .position-select__choose.choose-position
@@ -52,15 +52,15 @@ block block
                                 a(tabindex='-1', role='button').position__choose.position__choose-reduce
 
             .form__group
-                .form__group-wrap
+                .form__group-wrap.group-wrap__transparency
                     label.form__label.transparency-title Прозрачность
+                    #slider
                     .filter__content
                             .filter__slider
                                 .filter__slider-displays
                                         
-            //- .separator
-        .btn__box
-            button.btn.btn__clear(type='reset') Сброс
-            button.btn.btn__save(type='submit') Скачать
+            .btn__box
+                button.btn.btn__clear(type='reset') Сброс
+                button.btn.btn__save(type='submit') Скачать
 
 
