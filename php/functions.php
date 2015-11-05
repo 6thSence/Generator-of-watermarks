@@ -110,10 +110,6 @@ function send_success($message) {
     echo json_encode($success);
 }
 
-function get_query($url, $params) {
-    return $url.'?'.urldecode(http_build_query($params));
-}
-
 function isBoolean($value) {
     return $value === "true";
 }

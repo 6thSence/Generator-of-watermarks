@@ -26,6 +26,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $imageHeight = $original->getHeight();
 
         $result = $original;
+        // Получать координаты самого верхнего элемента (может иметь отрицательные координаты)
         for($x = 0; ; $x += ($watermarkWidth + $originX)) {
             for($y = 0; ; $y += ($watermarkHeight + $originY)) {
                 $result = $result->merge($watermark, $x, $y, $transparency);
