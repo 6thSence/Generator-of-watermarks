@@ -408,12 +408,145 @@ var Coordin = (function () {
 
     var _setupListener = function(){
         console.log('ilia');
+
         $(".mainMark").on('drag', _drag);
         $('#moveY').on('keydown', _setCoordinY);
         $('#moveX').on('keydown', _setCoordinX);
         $('.position__choose-increase').on('click', _increas);
         $('.position__choose-reduce').on('click', _reduce);
+        $('.choose-position__item').on('click', _positionRadio);
 
+
+    };
+
+    var _positionRadio = function(){
+      var item = $(this).attr('data-item'),
+          img = $('.mainMark'),
+          layer=$('.mainIMGHolder'),
+          img_width= parseInt(img.css('width')),
+          layer_width=parseInt(layer.css('width')),
+          img_height= parseInt(img.css('height')),
+          layer_height=parseInt(layer.css('height')),
+          center_width = (layer_width - img_width)/2,
+          center_hight =(layer_height - img_height)/2,
+          inp_x = $('#moveX'),
+          inp_y = $('#moveY');
+
+
+        console.log('click');
+        console.log(item);
+        switch (parseInt(item)){
+            case 0:
+                //img.css({'left': '0' , 'top': '0'});
+                img.animate(
+                    {
+                        'left': '0',
+                        'top': '0'
+                    },
+                    1000
+                );
+                inp_x.val(0);
+                inp_y.val(0);
+                break;
+            case 1:
+                //img.css({'left': center_width, 'top': '0'});
+                img.animate(
+                    {
+                        'left': center_width,
+                        'top': '0'
+                    },
+                    1000
+                );
+                inp_x.val(center_width);
+                inp_y.val(0);
+                break;
+            case 2:
+                //img.css({'left': layer_width-img_width , 'top': '0'});
+                img.animate(
+                    {
+                        'left': layer_width-img_width,
+                        'top': '0'
+                    },
+                    1000
+                );
+                inp_x.val(layer_width-img_width);
+                inp_y.val(0);
+                break;
+            case 3:
+                //img.css({'left': '0' , 'top': center_hight});
+                img.animate(
+                    {
+                        'left': '0',
+                        'top': center_hight
+                    },
+                    1000
+                );
+                inp_x.val(0);
+                inp_y.val(center_hight);
+                break;
+            case 4:
+                //img.css({'left': center_width , 'top': center_hight});
+                img.animate(
+                    {
+                    'left': center_width,
+                    'top': center_hight
+                    },
+                    1000
+                );
+                inp_x.val(center_width);
+                inp_y.val(center_hight);
+                break;
+            case 5:
+                //img.css({'left': layer_width-img_width , 'top': center_hight});
+                img.animate(
+                    {
+                        'left': layer_width-img_width,
+                        'top': center_hight
+                    },
+                    1000
+                );
+                inp_x.val(layer_width-img_width);
+                inp_y.val(center_hight);
+                break;
+            case 6:
+                //img.css({'left': '0' , 'top': layer_height-img_height});
+                img.animate(
+                    {
+                        'left': '0',
+                        'top': layer_height-img_height
+                    },
+                    1000
+                );
+                inp_x.val(0);
+                inp_y.val(layer_height-img_height);
+                break;
+            case 7:
+                //img.css({'left': center_width , 'top': layer_height-img_height});
+                img.animate(
+                    {
+                        'left': center_width,
+                        'top': layer_height-img_height
+                    },
+                    1000
+                );
+                inp_x.val(center_width);
+                inp_y.val(layer_height-img_height);
+                break;
+            case 8:
+                //img.css({'left': layer_width-img_width , 'top': layer_height-img_height});
+                img.animate(
+                    {
+                        'left': layer_width-img_width,
+                        'top': layer_height-img_height
+                    },
+                    1000
+                );
+                inp_x.val(layer_width-img_width);
+                inp_y.val(layer_height-img_height);
+                break;
+            default :
+                console.log('hz')
+        }
 
     };
 
@@ -492,9 +625,11 @@ var Coordin = (function () {
 
 
 $(function(){
-    //if($('.mainMark').length){
-    //    Coordin.init();
-    //}
+    //console.log('create-radio');
+    var child  = $('.choose-position').children().each(function (key,val) {
+        $(this).attr('data-item', key);
+    });
+    //console.log(child);
 });
 
 //_________________________________I_________________________//
