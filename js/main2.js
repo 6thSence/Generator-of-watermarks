@@ -291,6 +291,10 @@ var FileUploadJQ = (function(){
                         $(this).show('fast').draggable({containment:'parent'});
                         ZAMOS.init(width,height,file.name);                        
                     }
+                    //___________I_____________//
+
+                    Coordin.init();
+                    //___________I____________//
                     
                 });
             });
@@ -379,6 +383,108 @@ var ZAMOS = (function(){
 
 })();
 
+//_________________________________I_________________________//
+
+var Coordin = (function () {
+
+    var init = function(){
+        _setupListener();
+    };
+
+
+    var _setupListener = function(){
+        console.log('ilia');
+        $(".mainMark").on('drag', _drag);
+        $('#moveY').on('keydown', _setCoordinY);
+        $('#moveX').on('keydown', _setCoordinX);
+        $('.position__choose-increase').on('click', _increas);
+        $('.position__choose-reduce').on('click', _reduce);
+
+
+    };
+
+    var _increas = function(){
+        console.log('increas');
+        var inp = $(this).closest('.input-group_count').find('input');
+        if (inp.attr('id') === 'moveX'){
+            var coordin = $('.mainMark').css('left'),
+                coordin_inc = parseInt(coordin) + 10,
+                pos = coordin_inc +'px';
+            $('.mainMark').css('left' , pos);
+            inp.val(pos);
+        }
+        if (inp.attr('id') === 'moveY'){
+            var coordin = $('.mainMark').css('top'),
+                coordin_inc = parseInt(coordin) + 10,
+                pos = coordin_inc +'px'
+            $('.mainMark').css('top' , pos);
+            inp.val(pos);
+        }
+
+    };
+    var _reduce = function(){
+        console.log('reduce');
+        var inp = $(this).closest('.input-group_count').find('input');
+        if (inp.attr('id') === 'moveX'){
+            var coordin = $('.mainMark').css('left'),
+                coordin_inc = parseInt(coordin) - 10,
+                pos = coordin_inc +'px';
+            $('.mainMark').css('left' , pos);
+            inp.val(pos);
+        }
+        if (inp.attr('id') === 'moveY'){
+            var coordin = $('.mainMark').css('top'),
+                coordin_inc = parseInt(coordin) - 10,
+                pos = coordin_inc +'px'
+            $('.mainMark').css('top' , pos);
+            inp.val(pos);
+        }
+
+    };
+
+    var _setCoordinY = function () {
+
+        var coordin = $(this).val(),
+            position = coordin +'px';
+        $('.mainMark').css('top' , position);
+    };
+    var _setCoordinX = function () {
+
+        var coordin = $(this).val(),
+            position = coordin +'px';
+        $('.mainMark').css('left' , position);
+    };
+
+    var _drag = function() {
+        //console.log('sssa');
+        var moveX = $('#moveX'),
+            moveY = $('#moveY');
+
+        $(this).draggable({
+            drag: function (event, ui) {
+                moveX.val(ui.position.left);
+                moveY.val(ui.position.top);
+                //console.log(ui.position.left);
+                //console.log(ui.position.top);
+                //ui.position.top = y;
+            }
+        });
+    };
+
+    return{
+        init : init
+    }
+})();
+
+
+
+$(function(){
+    //if($('.mainMark').length){
+    //    Coordin.init();
+    //}
+});
+
+//_________________________________I_________________________//
 
 var main2 = (function(){
 
