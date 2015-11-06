@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 node_modules
 .sass-cache
 .idea
 bower
 dist
-=======
-node_modules
-.sass-cache
-.idea
-bower
-dist
-js
->>>>>>> html/css
+
+

@@ -43,7 +43,7 @@
 					</div>
 					<div class="controls-bl">
 						<h3 class="controls-title">Настройки</h3>
-						<form class="form">
+						<form id="form" class="form">
 							<input type="hidden" name="aim-img">
 							<input type="hidden" name="watermark">
 							<input type="hidden" name="opacity" value="1">
@@ -54,13 +54,21 @@
 									<div class="file-holder">
 										<p class="file-holder__name mainImg">Image.jpg</p>
 										<div class="file-holder__btn"><img src="../img/images/cloud.png" alt="" class="file__up-img"></div>
+<<<<<<< HEAD
 										<input id="fileuploadImage" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input="#image" accept="image/*" class="file__up">
+=======
+										<input id="fileuploadImage" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input="#image" accept="image/jpeg, image/jpg" data-validation="text" class="file__up">
+>>>>>>> 44dbca191fe2712344369434d6d37e88697bd385
 									</div>
 									<label class="form__label watermark-image">Водяной знак</label>
 									<div class="file-holder">
 										<p class="file-holder__name mainWatermark">Image.png</p>
 										<div class="file-holder__btn"><img src="../img/images/cloud.png" alt="" class="file__up-img"></div>
+<<<<<<< HEAD
 										<input id="watermark" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input="#watermark" accept="image/*" disabled class="file__up">
+=======
+										<input id="watermark" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input="#watermark" accept="image/png" disabled data-validation="text2" class="file__up">
+>>>>>>> 44dbca191fe2712344369434d6d37e88697bd385
 									</div>
 								</div>
 							</div>
@@ -116,11 +124,11 @@
 									<div id="slider"></div>
 								</div>
 							</div>
+							<div class="btn__box">
+								<button id="reset" type="reset" class="btn btn__clear">Сброс</button>
+								<button id="submit" type="submit" class="btn btn__save">Скачать</button>
+							</div>
 						</form>
-						<div class="btn__box">
-							<button type="reset" class="btn btn__clear">Сброс</button>
-							<button type="submit" class="btn btn__save">Скачать</button>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -137,5 +145,6 @@
 	<script src="js/vendor/jquery.ui.widget.js"></script>
 	<script src="js/jquery.iframe-transport.js"></script>
 	<script src="js/jquery.fileupload.js"></script>
+	<script src="js/jquery.fadeloader.js"></script>
 	<script src="js/main2.js"></script>
 </html>
