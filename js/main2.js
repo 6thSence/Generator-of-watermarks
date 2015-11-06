@@ -270,19 +270,9 @@ var FileUploadJQ = (function(){
         $('.aim-img').append('<div class="mainIMG css_animation spiner"></div>');
         },
         done: function (e, data) {                
-            $.each(data.result.files, function (index, file) {
-                $('.mainWatermark').text(file.name);
-                
-                if($('.mainMark').length>=1){
-                    console.log(file.name);
-                    $('.mainIMGHolder').empty('mainMark')
-                    $('.mainIMGHolder').append('<img src="server/php/files/'+ file.name +'" class="mainMark">');
-                } else {
-                    console.log('false');
-                $('.mainIMGHolder').append('<img src="server/php/files/'+ file.name +'" class="mainMark">');
-                    
-                }
-
+                var URL = data.result.files[0].url;
+                $('.mainIMGHolder').append('<img src="'+ URL +'" class="mainMark">');
+                    $( "#slider" ).slider({'value':100});
 
                 $('.spiner').remove();
                 $(".mainMark").hide().css({
@@ -292,16 +282,16 @@ var FileUploadJQ = (function(){
                     var width = $(this).width();
                     var height = $(this).height();
                     if(width > 648 || height > 648){
+                        ZAMOS.init(width,height,URL);
                     if(width > height){
                         $(this).css('width', '100%').show('fast').draggable({containment:'parent'});
-                        ZAMOS.init(width,height,file.name);
                     } else {
                          $(this).css('height', '100%').show('fast').draggable({containment:'parent'});
-                         ZAMOS.init(width,height,file.name);
+                         // ZAMOS.init(width,height,file.name);
                     }
                     } else {
                         $(this).show('fast').draggable({containment:'parent'});
-                        ZAMOS.init(width,height,file.name);                        
+                        ZAMOS.init(width,height,URL);                        
                     }
                     //___________I_____________//
 
@@ -309,7 +299,7 @@ var FileUploadJQ = (function(){
                     //___________I____________//
                     
                 });
-            });
+            // });
         }
     });
     };
@@ -344,11 +334,7 @@ var ZAMOS = (function(){
         var flagArea = flagWidth * flagHeight;
         var integer = (mainIMGHolderArea/flagArea)*4;
         $('.btn__clear').on('click', function() {
-
             $('.mainMark').hide().removeClass('mainMark').addClass('flag');
-        // console.log(mainIMGHolderArea);
-        // console.log(flagArea);
-        // console.log(mainIMGHolderArea/flagArea);
             $('.mainIMGHolder').append('<div class="flagHolder"></div>');
             $('.flagHolder').css({
                 'position': 'absolute',
@@ -363,11 +349,14 @@ var ZAMOS = (function(){
                 'cursor':'move'
             }).draggable();
             main2.init();
-
+               
+            console.log(file)
+            $('.flagHolder').hide();
+            $('.flagHolder:last-child').show('500');
             for(var i = 0;i<=integer;i++){
-            $('.flagHolder').append('<img src="server/php/files/'+ file +'" class="flag">'); 
-            console.log(file)               
+            $('.flagHolder').append('<img src="'+ file+'" class="flag">');
             }
+
             $('#moveX').on('keyup', function() {
                 var z = $('#moveX').val();
                 console.log(z);
@@ -408,145 +397,12 @@ var Coordin = (function () {
 
     var _setupListener = function(){
         console.log('ilia');
-
         $(".mainMark").on('drag', _drag);
         $('#moveY').on('keydown', _setCoordinY);
         $('#moveX').on('keydown', _setCoordinX);
         $('.position__choose-increase').on('click', _increas);
         $('.position__choose-reduce').on('click', _reduce);
-        $('.choose-position__item').on('click', _positionRadio);
 
-
-    };
-
-    var _positionRadio = function(){
-      var item = $(this).attr('data-item'),
-          img = $('.mainMark'),
-          layer=$('.mainIMGHolder'),
-          img_width= parseInt(img.css('width')),
-          layer_width=parseInt(layer.css('width')),
-          img_height= parseInt(img.css('height')),
-          layer_height=parseInt(layer.css('height')),
-          center_width = (layer_width - img_width)/2,
-          center_hight =(layer_height - img_height)/2,
-          inp_x = $('#moveX'),
-          inp_y = $('#moveY');
-
-
-        console.log('click');
-        console.log(item);
-        switch (parseInt(item)){
-            case 0:
-                //img.css({'left': '0' , 'top': '0'});
-                img.animate(
-                    {
-                        'left': '0',
-                        'top': '0'
-                    },
-                    1000
-                );
-                inp_x.val(0);
-                inp_y.val(0);
-                break;
-            case 1:
-                //img.css({'left': center_width, 'top': '0'});
-                img.animate(
-                    {
-                        'left': center_width,
-                        'top': '0'
-                    },
-                    1000
-                );
-                inp_x.val(center_width);
-                inp_y.val(0);
-                break;
-            case 2:
-                //img.css({'left': layer_width-img_width , 'top': '0'});
-                img.animate(
-                    {
-                        'left': layer_width-img_width,
-                        'top': '0'
-                    },
-                    1000
-                );
-                inp_x.val(layer_width-img_width);
-                inp_y.val(0);
-                break;
-            case 3:
-                //img.css({'left': '0' , 'top': center_hight});
-                img.animate(
-                    {
-                        'left': '0',
-                        'top': center_hight
-                    },
-                    1000
-                );
-                inp_x.val(0);
-                inp_y.val(center_hight);
-                break;
-            case 4:
-                //img.css({'left': center_width , 'top': center_hight});
-                img.animate(
-                    {
-                    'left': center_width,
-                    'top': center_hight
-                    },
-                    1000
-                );
-                inp_x.val(center_width);
-                inp_y.val(center_hight);
-                break;
-            case 5:
-                //img.css({'left': layer_width-img_width , 'top': center_hight});
-                img.animate(
-                    {
-                        'left': layer_width-img_width,
-                        'top': center_hight
-                    },
-                    1000
-                );
-                inp_x.val(layer_width-img_width);
-                inp_y.val(center_hight);
-                break;
-            case 6:
-                //img.css({'left': '0' , 'top': layer_height-img_height});
-                img.animate(
-                    {
-                        'left': '0',
-                        'top': layer_height-img_height
-                    },
-                    1000
-                );
-                inp_x.val(0);
-                inp_y.val(layer_height-img_height);
-                break;
-            case 7:
-                //img.css({'left': center_width , 'top': layer_height-img_height});
-                img.animate(
-                    {
-                        'left': center_width,
-                        'top': layer_height-img_height
-                    },
-                    1000
-                );
-                inp_x.val(center_width);
-                inp_y.val(layer_height-img_height);
-                break;
-            case 8:
-                //img.css({'left': layer_width-img_width , 'top': layer_height-img_height});
-                img.animate(
-                    {
-                        'left': layer_width-img_width,
-                        'top': layer_height-img_height
-                    },
-                    1000
-                );
-                inp_x.val(layer_width-img_width);
-                inp_y.val(layer_height-img_height);
-                break;
-            default :
-                console.log('hz')
-        }
 
     };
 
@@ -625,11 +481,9 @@ var Coordin = (function () {
 
 
 $(function(){
-    //console.log('create-radio');
-    var child  = $('.choose-position').children().each(function (key,val) {
-        $(this).attr('data-item', key);
-    });
-    //console.log(child);
+    //if($('.mainMark').length){
+    //    Coordin.init();
+    //}
 });
 
 //_________________________________I_________________________//
