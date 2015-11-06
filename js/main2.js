@@ -402,3 +402,13 @@ var main2 = (function(){
     };
 
 })();
+
+//Fadeloader (красивишная загрузка страницы)
+$('body').fadeloader({
+    mode: 'children',
+    fadeSpeed : 1000,
+    displayType : 'table',
+    easeLoad : 'easeInOutSine',
+    onComplete : ''
+});
+
