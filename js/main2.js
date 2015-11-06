@@ -20,16 +20,17 @@ var submitForm = (function(){
 //Валидация формы
     function validateThis(form) {
         var
-            textType = form.find("[data-validation='text']");
+            textType = form.find("[data-validation='text']"),
+            textType2 = form.find("[data-validation='text2']");
 
         textType.each(function(){
             var
                 $this = $(this),
                 emptyField = $this.val() == '';
-
+            console.log($this.val());
             if (emptyField) {
                 $this.tooltip({
-                    content     : 'Зазрузите изоражение',
+                    content     : 'Зазрузите изоражение (JPG)',
                     position    : 'left'
                 });
 
@@ -38,7 +39,22 @@ var submitForm = (function(){
                 $this.removeClass('error');
             }
         });
+        textType2.each(function(){
+            var
+                $this = $(this),
+                emptyField = $this.val() == '';
+            console.log($this.val());
+            if (emptyField) {
+                $this.tooltip({
+                    content     : 'Зазрузите изоражение (PNG)',
+                    position    : 'left'
+                });
 
+                $this.addClass('error');
+            } else {
+                $this.removeClass('error');
+            }
+        });
         return form.find('.error').length == 0;
     }
 //Плагин tooltipster
@@ -159,7 +175,9 @@ submitForm.init();
 var OpacitySlider = (function(){
 
     var _setUpListners = function() {
-    	$( "#slider" ).slider({'value':100}).on( "slide", function( event, ui ) {
+    	$( "#slider" ).slider({'value':100,
+            range: "min"
+        }).on( "slide", function( event, ui ) {
 	  	var opacity = ui.value/100;
 	  	$('.mainMark,.flagHolder').css('opacity', opacity);
 	  	// console.log($( "#slider" ).slider('value'));
