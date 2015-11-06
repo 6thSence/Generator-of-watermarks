@@ -7,7 +7,7 @@ block block
             .aim-img
     .controls-bl
         h3.controls-title Настройки
-        form.form
+        form.form#form
             input(type='hidden', name='aim-img')
             input(type='hidden', name='watermark')
             input(type='hidden', name='opacity', value='1')
@@ -19,14 +19,14 @@ block block
                         p.file-holder__name.mainImg Image.jpg
                         .file-holder__btn
                             img(src="../img/images/cloud.png" alt="").file__up-img
-                        input(id="fileuploadImage" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input='#image' accept="image/jpeg, image/jpg").file__up
+                        input(id="fileuploadImage" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input='#image' accept="image/jpeg, image/jpg" data-validation='text').file__up
 
                     label.form__label.watermark-image Водяной знак
                     .file-holder
                         p.file-holder__name.mainWatermark Image.png
                         .file-holder__btn
                             img(src="../img/images/cloud.png" alt="").file__up-img
-                        input(id="watermark" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input='#watermark' accept="image/png" disabled).file__up
+                        input(id="watermark" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input='#watermark' accept="image/png" disabled data-validation='text').file__up
             .form__group.placement
                 .form__group-wrap.group-wrap__placement
                     label.form__label.place-title Положение
@@ -59,8 +59,8 @@ block block
                                 .filter__slider-displays
                                         
             //- .separator
-        .btn__box
-            button.btn.btn__clear(type='reset') Сброс
-            button.btn.btn__save(type='submit') Скачать
+            .btn__box
+                button.btn.btn__clear#reset(type='reset') Сброс
+                button.btn.btn__save#submit(type='submit') Скачать
 
 
