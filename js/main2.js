@@ -269,13 +269,25 @@ var FileUploadJQ = (function(){
          progressall: function (e, data) {
         $('.aim-img').append('<div class="mainIMG css_animation spiner"></div>');
         },
-        done: function (e, data) {
+        done: function (e, data) {                
             $.each(data.result.files, function (index, file) {
                 $('.mainWatermark').text(file.name);
+                
+                if($('.mainMark').length>=1){
+                    console.log(file.name);
+                    $('.mainIMGHolder').empty('mainMark')
+                    $('.mainIMGHolder').append('<img src="server/php/files/'+ file.name +'" class="mainMark">');
+                } else {
+                    console.log('false');
                 $('.mainIMGHolder').append('<img src="server/php/files/'+ file.name +'" class="mainMark">');
+                    
+                }
+
+
                 $('.spiner').remove();
                 $(".mainMark").hide().css({
-                    'position': 'absolute'
+                    'position': 'absolute',
+                    'cursor':'move'
                 }).on('load', function(event) {
                     var width = $(this).width();
                     var height = $(this).height();
@@ -332,10 +344,11 @@ var ZAMOS = (function(){
         var flagArea = flagWidth * flagHeight;
         var integer = (mainIMGHolderArea/flagArea)*4;
         $('.btn__clear').on('click', function() {
+
             $('.mainMark').hide().removeClass('mainMark').addClass('flag');
-        console.log(mainIMGHolderArea);
-        console.log(flagArea);
-        console.log(mainIMGHolderArea/flagArea);
+        // console.log(mainIMGHolderArea);
+        // console.log(flagArea);
+        // console.log(mainIMGHolderArea/flagArea);
             $('.mainIMGHolder').append('<div class="flagHolder"></div>');
             $('.flagHolder').css({
                 'position': 'absolute',
@@ -346,14 +359,15 @@ var ZAMOS = (function(){
                 'bottom':'0',
                 'left':'-50%',
                 'right':'0',
-                'margin':'auto'
+                'margin':'auto',
+                'cursor':'move'
             }).draggable();
             main2.init();
 
             for(var i = 0;i<=integer;i++){
-            $('.flagHolder').append('<img src="server/php/files/'+ file +'" class="flag">');                
+            $('.flagHolder').append('<img src="server/php/files/'+ file +'" class="flag">'); 
+            console.log(file)               
             }
-
             $('#moveX').on('keyup', function() {
                 var z = $('#moveX').val();
                 console.log(z);
@@ -395,8 +409,8 @@ var Coordin = (function () {
     var _setupListener = function(){
         console.log('ilia');
         $(".mainMark").on('drag', _drag);
-        $('#moveY').on('change', _setCoordinY);
-        $('#moveX').on('change', _setCoordinX);
+        $('#moveY').on('keydown', _setCoordinY);
+        $('#moveX').on('keydown', _setCoordinX);
         $('.position__choose-increase').on('click', _increas);
         $('.position__choose-reduce').on('click', _reduce);
 
@@ -405,116 +419,53 @@ var Coordin = (function () {
 
     var _increas = function(){
         console.log('increas');
-        var inp = $(this).closest('.input-group_count').find('input'),
-            img=$('.mainMark'),
-            layer=$('.mainIMGHolder'),
-            img_width= parseInt(img.css('width')),
-            layer_width=parseInt(layer.css('width')),
-            img_height= parseInt(img.css('height')),
-            layer_height=parseInt(layer.css('height'));
+        var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.mainMark').css('left'),
                 coordin_inc = parseInt(coordin) + 10,
                 pos = coordin_inc +'px';
-
-            if ((coordin_inc)<= (layer_width - img_width)) {
-                $('.mainMark').css('left', pos);
-                inp.val(coordin_inc);
-            }
-            if ((coordin_inc)>= (layer_width - img_width)) {
-                $('.mainMark').css('left', layer_width - img_width);
-                inp.val(layer_width - img_width);
-            }
+            $('.mainMark').css('left' , pos);
+            inp.val(pos);
         }
         if (inp.attr('id') === 'moveY'){
             var coordin = $('.mainMark').css('top'),
                 coordin_inc = parseInt(coordin) + 10,
-                pos = coordin_inc +'px';
-            if ((coordin_inc)<= (layer_height - img_height)) {
-                 $('.mainMark').css('top' , pos);
-                inp.val(coordin_inc);
-            }
-            if ((coordin_inc)>= (layer_height - img_height)) {
-                $('.mainMark').css('top' , layer_height - img_height);
-                inp.val(layer_height - img_height);
-            }
+                pos = coordin_inc +'px'
+            $('.mainMark').css('top' , pos);
+            inp.val(pos);
         }
 
     };
     var _reduce = function(){
-        console.log('reduce');
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.mainMark').css('left'),
-                coordin_red = parseInt(coordin) - 10,
-                pos = coordin_red +'px';
-            if(coordin_red >= 0) {
-                $('.mainMark').css('left', pos);
-                inp.val(coordin_red);
-            }
-            if(coordin_red <=0){
-                $('.mainMark').css('left', '0');
-                inp.val('0');
-            }
+                coordin_inc = parseInt(coordin) - 10,
+                pos = coordin_inc +'px';
+            $('.mainMark').css('left' , pos);
+            inp.val(pos);
         }
         if (inp.attr('id') === 'moveY'){
             var coordin = $('.mainMark').css('top'),
-                coordin_red = parseInt(coordin) - 10,
-                pos = coordin_red +'px';
-            if(coordin_red >= 0) {
-                $('.mainMark').css('top', pos);
-                inp.val(coordin_red);
-            }
-            if(coordin_red <=0){
-                $('.mainMark').css('top', '0');
-                inp.val('0');
-            }
+                coordin_inc = parseInt(coordin) - 10,
+                pos = coordin_inc +'px'
+            $('.mainMark').css('top' , pos);
+            inp.val(pos);
         }
 
     };
 
     var _setCoordinY = function () {
 
-        var $this = $(this),
-            coordin = $(this).val(),
-            position = coordin +'px',
-            img=$('.mainMark'),
-            layer=$('.mainIMGHolder'),
-            img_height= parseInt(img.css('height')),
-            layer_height=parseInt(layer.css('height'));
-        if(coordin <= (layer_height - img_height) || coordin >= 0){
-            $('.mainMark').css('top' , position);
-        }
-        if(coordin >= (layer_height - img_height)){
-            $('.mainMark').css('top' , layer_height - img_height);
-            $this.val(layer_height - img_height);
-        }
-        if(coordin < 0){
-            $('.mainMark').css('top' , '0');
-            $this.val('0');
-        }
+        var coordin = $(this).val(),
+            position = coordin +'px';
+        $('.mainMark').css('top' , position);
     };
     var _setCoordinX = function () {
 
-        var $this = $(this),
-            coordin = $(this).val(),
-            img=$('.mainMark'),
-            layer=$('.mainIMGHolder'),
-            position = coordin +'px',
-            img_width= parseInt(img.css('width')),
-            layer_width=parseInt(layer.css('width'));
-
-        if(coordin <= (layer_width - img_width) || coordin >= 0){
-            $('.mainMark').css('left' , position);
-        }
-        if(coordin >= (layer_width - img_width)){
-            $('.mainMark').css('left' , layer_width - img_width);
-            $this.val(layer_width - img_width);
-        }
-        if(coordin < 0){
-            $('.mainMark').css('left' , '0');
-            $this.val('0');
-        }
+        var coordin = $(this).val(),
+            position = coordin +'px';
+        $('.mainMark').css('left' , position);
     };
 
     var _drag = function() {
@@ -549,12 +500,64 @@ $(function(){
 //_________________________________I_________________________//
 
 var main2 = (function(){
+        
+
+        var _increas = function(){
+        var inp = $(this).closest('.input-group_count').find('input');
+        if (inp.attr('id') === 'moveX'){
+            var coordin = $('.flag').css('border-bottom-width'),
+                coordin_inc = parseInt(coordin) + 1,
+                pos = coordin_inc;
+            $('.flag').css('border-bottom' , pos+'px solid transparent');
+            inp.val(pos);
+        }
+        if (inp.attr('id') === 'moveY'){
+            var coordin = $('.flag').css('border-left-width'),
+                coordin_inc = parseInt(coordin) + 1,
+                pos = coordin_inc;
+            $('.flag').css('border-left' , pos+'px solid transparent');
+            inp.val(pos);
+        }
+
+    };
+    var _reduce = function(){
+        var inp = $(this).closest('.input-group_count').find('input');
+        if (inp.attr('id') === 'moveX'){
+            var coordin = $('.flag').css('border-bottom-width'),
+                coordin_inc = parseInt(coordin) - 1;
+                var pos = coordin_inc;
+            $('.flag').css('border-bottom' , pos+'px solid transparent');
+            if(pos <= 0){
+                inp.val(0);
+            } else {
+            inp.val(pos);
+                
+            }
+                    
+                
+        }
+        if (inp.attr('id') === 'moveY'){
+            var coordin = $('.flag').css('border-left-width'),
+                coordin_inc = parseInt(coordin) - 1;
+                var pos = coordin_inc;
+            $('.flag').css('border-left' , pos+'px solid transparent');
+             if(pos <= 0){
+                inp.val(0);
+            } else {
+            inp.val(pos);
+        }
+                    
+                
+        }
+
+    };
+
 
     
     var _setUpListners = function() {
         $('.flagHolder').on(' mouseup', function() {
-            console.log($(this).css('left'))
-            console.log($(this).css('top'))
+            // console.log($(this).css('left'))
+            // console.log($(this).css('top'))
             
         });
     };
@@ -563,7 +566,8 @@ var main2 = (function(){
 
     var init = function () {
         _setUpListners();
-
+        $('.position__choose-increase').on('click', _increas);
+        $('.position__choose-reduce').on('click', _reduce);
     };
 
 
