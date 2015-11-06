@@ -212,7 +212,13 @@ var FileUploadJQ = (function(){
                             'height': 648/finalSize+'px',
                             'background': 'url(../server/php/files/'+ file.name +')',
                             'background-size':'contain',
-                            'overflow':'hidden'
+                            'overflow':'hidden',
+                            'position':'absolute',
+                            'top':'0',
+                            'bottom':'0',
+                            'left':'0',
+                            'right':'0',
+                            'margin':'auto'
                         });
                     } else {
                          var finalSize = (height/width);
@@ -222,7 +228,13 @@ var FileUploadJQ = (function(){
                             'width': 533/finalSize+'px',
                             'background': 'url(../server/php/files/'+ file.name +')',
                             'background-size':'contain',
-                            'overflow':'hidden'
+                            'overflow':'hidden',
+                            'position':'absolute',
+                            'top':'0',
+                            'bottom':'0',
+                            'left':'0',
+                            'right':'0',
+                            'margin':'auto'
                         });
                     }
                     } else {
@@ -232,7 +244,13 @@ var FileUploadJQ = (function(){
                             'width': width,
                             'background': 'url(../server/php/files/'+ file.name +')',
                             'background-size':'contain',
-                            'overflow':'hidden'
+                            'overflow':'hidden',
+                            'position':'absolute',
+                            'top':'0',
+                            'bottom':'0',
+                            'left':'0',
+                            'right':'0',
+                            'margin':'auto'
                         });
                     }
 
@@ -256,19 +274,21 @@ var FileUploadJQ = (function(){
                 $('.mainWatermark').text(file.name);
                 $('.mainIMGHolder').append('<img src="server/php/files/'+ file.name +'" class="mainMark">');
                 $('.spiner').remove();
-                $(".mainMark").hide().on('load', function(event) {
+                $(".mainMark").hide().css({
+                    'position': 'absolute'
+                }).on('load', function(event) {
                     var width = $(this).width();
                     var height = $(this).height();
                     if(width > 648 || height > 648){
                     if(width > height){
-                        $(this).css('width', '100%').show('fast').draggable();
+                        $(this).css('width', '100%').show('fast').draggable({containment:'parent'});
                         ZAMOS.init(width,height,file.name);
                     } else {
-                         $(this).css('height', '100%').show('fast').draggable();
+                         $(this).css('height', '100%').show('fast').draggable({containment:'parent'});
                          ZAMOS.init(width,height,file.name);
                     }
                     } else {
-                        $(this).show('fast').draggable();
+                        $(this).show('fast').draggable({containment:'parent'});
                         ZAMOS.init(width,height,file.name);                        
                     }
                     
