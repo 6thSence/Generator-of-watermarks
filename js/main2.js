@@ -29,7 +29,7 @@ var submitForm = (function(){
 
             if (emptyField) {
                 $this.tooltip({
-                    content     : 'Зазрузите изоражение',
+                    content     : 'Загрузите изображение',
                     position    : 'left'
                 });
 
@@ -269,12 +269,15 @@ var FileUploadJQ = (function(){
          progressall: function (e, data) {
         $('.aim-img').append('<div class="mainIMG css_animation spiner"></div>');
         },
-        done: function (e, data) {                
-                var URL = data.result.files[0].url;
-                $('.mainIMGHolder').append('<img src="'+ URL +'" class="mainMark">');
-                    $( "#slider" ).slider({'value':100});
-
-                $('.spiner').remove();
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('.mainWatermark').text(file.name);
+                // $('#fileuploadImage').val(file.name);
+                $('.mainIMGHolder').append('<img src="server/php/files/'+ file.name +'" class="mainMark">');
+                if($('.flagHolder')){
+                    $('.flagHolder').remove();
+                }
+                $( "#slider" ).slider({'value':100})
                 $(".mainMark").hide().css({
                     'position': 'absolute',
                     'cursor':'move'
@@ -282,16 +285,16 @@ var FileUploadJQ = (function(){
                     var width = $(this).width();
                     var height = $(this).height();
                     if(width > 648 || height > 648){
-                        ZAMOS.init(width,height,URL);
                     if(width > height){
                         $(this).css('width', '100%').show('fast').draggable({containment:'parent'});
+                        ZAMOS.init(width,height,file.name);
                     } else {
                          $(this).css('height', '100%').show('fast').draggable({containment:'parent'});
-                         // ZAMOS.init(width,height,file.name);
+                         ZAMOS.init(width,height,file.name);
                     }
                     } else {
                         $(this).show('fast').draggable({containment:'parent'});
-                        ZAMOS.init(width,height,URL);                        
+                        ZAMOS.init(width,height,file.name);                        
                     }
                     //___________I_____________//
 
@@ -299,7 +302,7 @@ var FileUploadJQ = (function(){
                     //___________I____________//
                     
                 });
-            // });
+            });
         }
     });
     };
@@ -334,7 +337,11 @@ var ZAMOS = (function(){
         var flagArea = flagWidth * flagHeight;
         var integer = (mainIMGHolderArea/flagArea)*4;
         $('.btn__clear').on('click', function() {
+            $( "#slider" ).slider({'value':100});
             $('.mainMark').hide().removeClass('mainMark').addClass('flag');
+        console.log(mainIMGHolderArea);
+        console.log(flagArea);
+        console.log(mainIMGHolderArea/flagArea);
             $('.mainIMGHolder').append('<div class="flagHolder"></div>');
             $('.flagHolder').css({
                 'position': 'absolute',
@@ -349,12 +356,12 @@ var ZAMOS = (function(){
                 'cursor':'move'
             }).draggable();
             main2.init();
-               
-            console.log(file)
+
+
             $('.flagHolder').hide();
             $('.flagHolder:last-child').show('500');
             for(var i = 0;i<=integer;i++){
-            $('.flagHolder').append('<img src="'+ file+'" class="flag">');
+            $('.flagHolder').append('<img src="server/php/files/'+ file +'" class="flag">');                
             }
 
             $('#moveX').on('keyup', function() {
@@ -397,64 +404,260 @@ var Coordin = (function () {
 
     var _setupListener = function(){
         console.log('ilia');
+
         $(".mainMark").on('drag', _drag);
-        $('#moveY').on('keydown', _setCoordinY);
-        $('#moveX').on('keydown', _setCoordinX);
+        $('#moveY').on('change', _setCoordinY);
+        $('#moveX').on('change', _setCoordinX);
         $('.position__choose-increase').on('click', _increas);
         $('.position__choose-reduce').on('click', _reduce);
+        $('.choose-position__item').on('click', _positionRadio);
 
+
+    };
+
+    var _positionRadio = function(){
+      var item = $(this).attr('data-item'),
+          img = $('.mainMark'),
+          layer=$('.mainIMGHolder'),
+          img_width= parseInt(img.css('width')),
+          layer_width=parseInt(layer.css('width')),
+          img_height= parseInt(img.css('height')),
+          layer_height=parseInt(layer.css('height')),
+          center_width = (layer_width - img_width)/2,
+          center_hight =(layer_height - img_height)/2,
+          inp_x = $('#moveX'),
+          inp_y = $('#moveY');
+
+
+        console.log('click');
+        console.log(item);
+        switch (parseInt(item)){
+            case 0:
+                //img.css({'left': '0' , 'top': '0'});
+                img.stop(true,true).animate(
+                    {
+                        'left': '0',
+                        'top': '0'
+                    },
+                    1000
+                );
+                inp_x.val(0);
+                inp_y.val(0);
+                break;
+            case 1:
+                //img.css({'left': center_width, 'top': '0'});
+                img.stop(true,true).animate(
+                    {
+                        'left': center_width,
+                        'top': '0'
+                    },
+                    1000
+                );
+                inp_x.val(center_width);
+                inp_y.val(0);
+                break;
+            case 2:
+                //img.css({'left': layer_width-img_width , 'top': '0'});
+                img.stop(true,true).animate(
+                    {
+                        'left': layer_width-img_width,
+                        'top': '0'
+                    },
+                    1000
+                );
+                inp_x.val(layer_width-img_width);
+                inp_y.val(0);
+                break;
+            case 3:
+                //img.css({'left': '0' , 'top': center_hight});
+                img.stop(true,true).animate(
+                    {
+                        'left': '0',
+                        'top': center_hight
+                    },
+                    1000
+                );
+                inp_x.val(0);
+                inp_y.val(center_hight);
+                break;
+            case 4:
+                //img.css({'left': center_width , 'top': center_hight});
+                img.stop(true,true).animate(
+                    {
+                    'left': center_width,
+                    'top': center_hight
+                    },
+                    1000
+                );
+                inp_x.val(center_width);
+                inp_y.val(center_hight);
+                break;
+            case 5:
+                //img.css({'left': layer_width-img_width , 'top': center_hight});
+                img.stop(true,true).animate(
+                    {
+                        'left': layer_width-img_width,
+                        'top': center_hight
+                    },
+                    1000
+                );
+                inp_x.val(layer_width-img_width);
+                inp_y.val(center_hight);
+                break;
+            case 6:
+                //img.css({'left': '0' , 'top': layer_height-img_height});
+                img.stop(true,true).animate(
+                    {
+                        'left': '0',
+                        'top': layer_height-img_height
+                    },
+                    1000
+                );
+                inp_x.val(0);
+                inp_y.val(layer_height-img_height);
+                break;
+            case 7:
+                //img.css({'left': center_width , 'top': layer_height-img_height});
+                img.stop(true,true).animate(
+                    {
+                        'left': center_width,
+                        'top': layer_height-img_height
+                    },
+                    1000
+                );
+                inp_x.val(center_width);
+                inp_y.val(layer_height-img_height);
+                break;
+            case 8:
+                //img.css({'left': layer_width-img_width , 'top': layer_height-img_height});
+                img.stop(true,true).animate(
+                    {
+                        'left': layer_width-img_width,
+                        'top': layer_height-img_height
+                    },
+                    1000
+                );
+                inp_x.val(layer_width-img_width);
+                inp_y.val(layer_height-img_height);
+                break;
+            default :
+                console.log('hz')
+        }
 
     };
 
     var _increas = function(){
         console.log('increas');
-        var inp = $(this).closest('.input-group_count').find('input');
+        var inp = $(this).closest('.input-group_count').find('input'),
+            img=$('.mainMark'),
+            layer=$('.mainIMGHolder'),
+            img_width= parseInt(img.css('width')),
+            layer_width=parseInt(layer.css('width')),
+            img_height= parseInt(img.css('height')),
+            layer_height=parseInt(layer.css('height'));
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.mainMark').css('left'),
                 coordin_inc = parseInt(coordin) + 10,
                 pos = coordin_inc +'px';
-            $('.mainMark').css('left' , pos);
-            inp.val(pos);
+
+            if ((coordin_inc)<= (layer_width - img_width)) {
+                $('.mainMark').css('left', pos);
+                inp.val(coordin_inc);
+            }
+            if ((coordin_inc)>= (layer_width - img_width)) {
+                $('.mainMark').css('left', layer_width - img_width);
+                inp.val(layer_width - img_width);
+            }
         }
         if (inp.attr('id') === 'moveY'){
             var coordin = $('.mainMark').css('top'),
                 coordin_inc = parseInt(coordin) + 10,
-                pos = coordin_inc +'px'
-            $('.mainMark').css('top' , pos);
-            inp.val(pos);
+                pos = coordin_inc +'px';
+            if ((coordin_inc)<= (layer_height - img_height)) {
+                 $('.mainMark').css('top' , pos);
+                inp.val(coordin_inc);
+            }
+            if ((coordin_inc)>= (layer_height - img_height)) {
+                $('.mainMark').css('top' , layer_height - img_height);
+                inp.val(layer_height - img_height);
+            }
         }
 
     };
     var _reduce = function(){
+        console.log('reduce');
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.mainMark').css('left'),
-                coordin_inc = parseInt(coordin) - 10,
-                pos = coordin_inc +'px';
-            $('.mainMark').css('left' , pos);
-            inp.val(pos);
+                coordin_red = parseInt(coordin) - 10,
+                pos = coordin_red +'px';
+            if(coordin_red >= 0) {
+                $('.mainMark').css('left', pos);
+                inp.val(coordin_red);
+            }
+            if(coordin_red <=0){
+                $('.mainMark').css('left', '0');
+                inp.val('0');
+            }
         }
         if (inp.attr('id') === 'moveY'){
             var coordin = $('.mainMark').css('top'),
-                coordin_inc = parseInt(coordin) - 10,
-                pos = coordin_inc +'px'
-            $('.mainMark').css('top' , pos);
-            inp.val(pos);
+                coordin_red = parseInt(coordin) - 10,
+                pos = coordin_red +'px';
+            if(coordin_red >= 0) {
+                $('.mainMark').css('top', pos);
+                inp.val(coordin_red);
+            }
+            if(coordin_red <=0){
+                $('.mainMark').css('top', '0');
+                inp.val('0');
+            }
         }
 
     };
 
     var _setCoordinY = function () {
 
-        var coordin = $(this).val(),
-            position = coordin +'px';
-        $('.mainMark').css('top' , position);
+        var $this = $(this),
+            coordin = $(this).val(),
+            position = coordin +'px',
+            img=$('.mainMark'),
+            layer=$('.mainIMGHolder'),
+            img_height= parseInt(img.css('height')),
+            layer_height=parseInt(layer.css('height'));
+        if(coordin <= (layer_height - img_height) || coordin >= 0){
+            $('.mainMark').css('top' , position);
+        }
+        if(coordin >= (layer_height - img_height)){
+            $('.mainMark').css('top' , layer_height - img_height);
+            $this.val(layer_height - img_height);
+        }
+        if(coordin < 0){
+            $('.mainMark').css('top' , '0');
+            $this.val('0');
+        }
     };
     var _setCoordinX = function () {
 
-        var coordin = $(this).val(),
-            position = coordin +'px';
-        $('.mainMark').css('left' , position);
+        var $this = $(this),
+            coordin = $(this).val(),
+            img=$('.mainMark'),
+            layer=$('.mainIMGHolder'),
+            position = coordin +'px',
+            img_width= parseInt(img.css('width')),
+            layer_width=parseInt(layer.css('width'));
+
+        if(coordin <= (layer_width - img_width) || coordin >= 0){
+            $('.mainMark').css('left' , position);
+        }
+        if(coordin >= (layer_width - img_width)){
+            $('.mainMark').css('left' , layer_width - img_width);
+            $this.val(layer_width - img_width);
+        }
+        if(coordin < 0){
+            $('.mainMark').css('left' , '0');
+            $this.val('0');
+        }
     };
 
     var _drag = function() {
@@ -481,9 +684,11 @@ var Coordin = (function () {
 
 
 $(function(){
-    //if($('.mainMark').length){
-    //    Coordin.init();
-    //}
+    //console.log('create-radio');
+    var child  = $('.choose-position').children().each(function (key,val) {
+        $(this).attr('data-item', key);
+    });
+    //console.log(child);
 });
 
 //_________________________________I_________________________//
@@ -491,7 +696,8 @@ $(function(){
 var main2 = (function(){
         
 
-        var _increas = function(){
+        var _increas2 = function(){
+            
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.flag').css('border-bottom-width'),
@@ -509,7 +715,8 @@ var main2 = (function(){
         }
 
     };
-    var _reduce = function(){
+
+    var _reduce2 = function(){
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.flag').css('border-bottom-width'),
@@ -555,8 +762,8 @@ var main2 = (function(){
 
     var init = function () {
         _setUpListners();
-        $('.position__choose-increase').on('click', _increas);
-        $('.position__choose-reduce').on('click', _reduce);
+        $('.position__choose-increase').on('click', _increas2);
+        $('.position__choose-reduce').on('click', _reduce2);
     };
 
 
