@@ -21,6 +21,19 @@
 	<body>
 		<div class="wrapper-all">
 			<div class="wrapper">
+				<div class="left__btn-group">
+					<div class="lang">
+						<div class="lang__btn-wrap"><a href="" class="lang__btn">РУС</a></div>
+						<div class="lang__btn-wrap"><a href="" class="lang__btn">ENG </a></div>
+					</div>
+					<div class="share">
+						<div class="share__btn-wrap"><a href="" alt="facebook" class="share__btn share__btn_fb"></a>
+							<div class="share__btn-wrap"><a href="" alt="facebook" class="share__btn share__btn_like"> </a></div>
+						</div>
+						<div class="share__btn-wrap"><a href="" alt="tweeter" class="share__btn share__btn_tw"> </a></div>
+						<div class="share__btn-wrap"><a href="" alt="vkontacte" class="share__btn share__btn_vk"></a></div>
+					</div>
+				</div>
 				<div class="container cl">
 					<div class="main-bl">
 						<div style="opacity: 1;" class="main-title">Генератор водяных знаков</div>
@@ -41,40 +54,58 @@
 									<div class="file-holder">
 										<p class="file-holder__name mainImg">Image.jpg</p>
 										<div class="file-holder__btn"><img src="../img/images/cloud.png" alt="" class="file__up-img"></div>
-										<input id="fileuploadImage" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input="#image" accept="image/jpeg, image/jpg" class="file__up">
+										<input id="fileuploadImage" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input="#image" accept="image/*" class="file__up">
 									</div>
 									<label class="form__label watermark-image">Водяной знак</label>
 									<div class="file-holder">
 										<p class="file-holder__name mainWatermark">Image.png</p>
 										<div class="file-holder__btn"><img src="../img/images/cloud.png" alt="" class="file__up-img"></div>
-										<input id="watermark" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input="#watermark" accept="image/png" disabled class="file__up">
+										<input id="watermark" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input="#watermark" accept="image/*" disabled class="file__up">
 									</div>
 								</div>
 							</div>
-							<div class="form__group placement">
+							<div class="form__group">
 								<div class="form__group-wrap group-wrap__placement">
-									<label class="form__label place-title">Положение</label>
-									<div class="position-select__choose choose-position">
-										<div class="choose-position__item"></div>
-										<div class="choose-position__item"></div>
-										<div class="choose-position__item"></div>
-										<div class="choose-position__item"></div>
-										<div class="choose-position__item"></div>
-										<div class="choose-position__item"></div>
-										<div class="choose-position__item"></div>
-										<div class="choose-position__item"></div>
-										<div class="choose-position__item"></div>
-									</div>
-									<div class="position-select__choose count-position">
-										<div class="input-group_count">
-											<label for="moveX" class="input-group__label_count">X</label>
-											<input id="moveX" name="value_x" value="0" aria-valuenow="0" autocomplete="off" role="spinbutton" class="count-position__item count-position__item_x">
-											<div class="dif__btn-group"><a tabindex="-1" role="button" class="position__choose position__choose-increase"></a><a tabindex="-1" role="button" class="position__choose position__choose-reduce"></a></div>
+									<header class="header__placement">
+										<label class="form__label place-title">Положение</label><span class="place-title__change-view">
+											<div class="radio">
+												<form class="radio__list">
+													<div class="radio__item">
+														<label class="radio__item_label">
+															<input type="radio" class="radio__real radio__real1"><span class="radio__fake radio__fake1"></span>
+														</label>
+													</div>
+													<div class="radio__item">
+														<label class="radio__item_label">
+															<input type="radio" class="radio__real radio__real2"><span class="radio__fake radio__fake2">           </span>
+														</label>
+													</div>
+												</form>
+											</div></span>
+									</header>
+									<div class="position-select__wrap">  
+										<div class="position-select__choose choose-position">
+											<div class="choose-position__item"></div>
+											<div class="choose-position__item"></div>
+											<div class="choose-position__item"></div>
+											<div class="choose-position__item"></div>
+											<div class="choose-position__item"></div>
+											<div class="choose-position__item"></div>
+											<div class="choose-position__item"></div>
+											<div class="choose-position__item"></div>
+											<div class="choose-position__item"></div>
 										</div>
-										<div class="input-group_count">
-											<label for="moveY" class="input-group__label_count">Y</label>
-											<input id="moveY" name="value_y" value="0" aria-valuenow="0" autocomplete="off" role="spinbutton" class="count-position__item count-position__item_y">
-											<div class="dif__btn-group"><a tabindex="-1" role="button" class="position__choose position__choose-increase"></a><a tabindex="-1" role="button" class="position__choose position__choose-reduce"></a></div>
+										<div class="position-select__choose count-position">
+											<div class="input-group_count">
+												<label for="moveX" class="input-group__label_count count-position__item_xxx"></label>
+												<input id="moveX" name="value_x" value="0" aria-valuenow="0" autocomplete="off" role="spinbutton" class="count-position__item">
+												<div class="dif__btn-group"><a tabindex="-1" role="button" class="position__choose position__choose-increase"></a><a tabindex="-1" role="button" class="position__choose position__choose-reduce"></a></div>
+											</div>
+											<div class="input-group_count">
+												<label for="moveY" class="input-group__label_count count-position__item_yyy"> </label>
+												<input id="moveY" name="value_y" value="0" aria-valuenow="0" autocomplete="off" role="spinbutton" class="count-position__item">
+												<div class="dif__btn-group"><a tabindex="-1" role="button" class="position__choose position__choose-increase"></a><a tabindex="-1" role="button" class="position__choose position__choose-reduce"></a></div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -83,11 +114,6 @@
 								<div class="form__group-wrap group-wrap__transparency">
 									<label class="form__label transparency-title">Прозрачность</label>
 									<div id="slider"></div>
-									<div class="filter__content">
-										<div class="filter__slider">
-											<div class="filter__slider-displays"></div>
-										</div>
-									</div>
 								</div>
 							</div>
 						</form>

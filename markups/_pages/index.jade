@@ -19,46 +19,57 @@ block block
                         p.file-holder__name.mainImg Image.jpg
                         .file-holder__btn
                             img(src="../img/images/cloud.png" alt="").file__up-img
-                        input(id="fileuploadImage" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input='#image' accept="image/jpeg, image/jpg").file__up
+                        input(id="fileuploadImage" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input='#image' accept="image/*").file__up
 
                     label.form__label.watermark-image Водяной знак
                     .file-holder
                         p.file-holder__name.mainWatermark Image.png
                         .file-holder__btn
                             img(src="../img/images/cloud.png" alt="").file__up-img
-                        input(id="watermark" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input='#watermark' accept="image/png" disabled).file__up
-            .form__group.placement
+                        input(id="watermark" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input='#watermark' accept="image/*" disabled).file__up
+            .form__group
                 .form__group-wrap.group-wrap__placement
-                    label.form__label.place-title Положение
+                    header.header__placement
+                        label.form__label.place-title Положение
+                        span.place-title__change-view
+                            //- +radio(' radio', ['', ''])
+                            //- include _common/_chose-view
+                            .radio
+                                form.radio__list
+                                    .radio__item
+                                        label.radio__item_label
+                                            input.radio__real.radio__real1(type='radio')
+                                            span.radio__fake.radio__fake1
+                                    .radio__item
+                                        label.radio__item_label
+                                            input.radio__real.radio__real2(type='radio')
+                                            span.radio__fake.radio__fake2            
 
-                    .position-select__choose.choose-position
-                        - for (var i = 0; i < 9; i++) 
-                            .choose-position__item
+                    .position-select__wrap   
+                        .position-select__choose.choose-position
+                            - for (var i = 0; i < 9; i++) 
+                                .choose-position__item
 
-                    .position-select__choose.count-position
-                        .input-group_count
-                            label.input-group__label_count(for='moveX') X
-                            input#moveX.count-position__item.count-position__item_x(name='value_x', value='0', aria-valuenow='0', autocomplete='off', role='spinbutton')
-                            .dif__btn-group
-                                a(tabindex='-1', role='button').position__choose.position__choose-increase
-                                a(tabindex='-1', role='button').position__choose.position__choose-reduce
+                        .position-select__choose.count-position
+                            .input-group_count
+                                label.input-group__label_count.count-position__item_xxx(for='moveX')
+                                input#moveX.count-position__item(name='value_x', value='0', aria-valuenow='0', autocomplete='off', role='spinbutton')
+                                .dif__btn-group
+                                    a(tabindex='-1', role='button').position__choose.position__choose-increase
+                                    a(tabindex='-1', role='button').position__choose.position__choose-reduce
 
-                        .input-group_count
-                            label.input-group__label_count(for='moveY') Y
-                            input#moveY.count-position__item.count-position__item_y(name='value_y', value='0', aria-valuenow='0', autocomplete='off', role='spinbutton')
-                            .dif__btn-group
-                                a(tabindex='-1', role='button').position__choose.position__choose-increase
-                                a(tabindex='-1', role='button').position__choose.position__choose-reduce
+                            .input-group_count
+                                label.input-group__label_count.count-position__item_yyy(for='moveY') 
+                                input#moveY.count-position__item(name='value_y', value='0', aria-valuenow='0', autocomplete='off', role='spinbutton')
+                                .dif__btn-group
+                                    a(tabindex='-1', role='button').position__choose.position__choose-increase
+                                    a(tabindex='-1', role='button').position__choose.position__choose-reduce
 
             .form__group
                 .form__group-wrap.group-wrap__transparency
                     label.form__label.transparency-title Прозрачность
                     #slider
-                    .filter__content
-                            .filter__slider
-                                .filter__slider-displays
                                         
-            //- .separator
         .btn__box
             button.btn.btn__clear(type='reset') Сброс
             button.btn.btn__save(type='submit') Скачать

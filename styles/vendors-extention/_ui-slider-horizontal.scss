@@ -20,6 +20,9 @@
 }
 
 .ui-slider-handle{
+    // -webkit-box-sizing: conten-box !important;
+    // -moz-box-sizing: conten-box !important;
+    // box-sizing: conten-box !important;
     top: -9px !important;
     border: 0 none !important;
     border-radius: 0 !important;
