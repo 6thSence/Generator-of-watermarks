@@ -405,20 +405,39 @@ var Coordin = (function () {
 
     var _increas = function(){
         console.log('increas');
-        var inp = $(this).closest('.input-group_count').find('input');
+        var inp = $(this).closest('.input-group_count').find('input'),
+            img=$('.mainMark'),
+            layer=$('.mainIMGHolder'),
+            img_width= parseInt(img.css('width')),
+            layer_width=parseInt(layer.css('width')),
+            img_height= parseInt(img.css('height')),
+            layer_height=parseInt(layer.css('height'));
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.mainMark').css('left'),
                 coordin_inc = parseInt(coordin) + 10,
                 pos = coordin_inc +'px';
-            $('.mainMark').css('left' , pos);
-            inp.val(pos);
+
+            if ((coordin_inc)<= (layer_width - img_width)) {
+                $('.mainMark').css('left', pos);
+                inp.val(coordin_inc);
+            }
+            if ((coordin_inc)>= (layer_width - img_width)) {
+                $('.mainMark').css('left', layer_width - img_width);
+                inp.val(layer_width - img_width);
+            }
         }
         if (inp.attr('id') === 'moveY'){
             var coordin = $('.mainMark').css('top'),
                 coordin_inc = parseInt(coordin) + 10,
-                pos = coordin_inc +'px'
-            $('.mainMark').css('top' , pos);
-            inp.val(pos);
+                pos = coordin_inc +'px';
+            if ((coordin_inc)<= (layer_height - img_height)) {
+                 $('.mainMark').css('top' , pos);
+                inp.val(coordin_inc);
+            }
+            if ((coordin_inc)>= (layer_height - img_height)) {
+                $('.mainMark').css('top' , layer_height - img_height);
+                inp.val(layer_height - img_height);
+            }
         }
 
     };
@@ -427,17 +446,29 @@ var Coordin = (function () {
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.mainMark').css('left'),
-                coordin_inc = parseInt(coordin) - 10,
-                pos = coordin_inc +'px';
-            $('.mainMark').css('left' , pos);
-            inp.val(pos);
+                coordin_red = parseInt(coordin) - 10,
+                pos = coordin_red +'px';
+            if(coordin_red >= 0) {
+                $('.mainMark').css('left', pos);
+                inp.val(coordin_red);
+            }
+            if(coordin_red <=0){
+                $('.mainMark').css('left', '0');
+                inp.val('0');
+            }
         }
         if (inp.attr('id') === 'moveY'){
             var coordin = $('.mainMark').css('top'),
-                coordin_inc = parseInt(coordin) - 10,
-                pos = coordin_inc +'px'
-            $('.mainMark').css('top' , pos);
-            inp.val(pos);
+                coordin_red = parseInt(coordin) - 10,
+                pos = coordin_red +'px';
+            if(coordin_red >= 0) {
+                $('.mainMark').css('top', pos);
+                inp.val(coordin_red);
+            }
+            if(coordin_red <=0){
+                $('.mainMark').css('top', '0');
+                inp.val('0');
+            }
         }
 
     };
