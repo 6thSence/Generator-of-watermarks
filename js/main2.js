@@ -424,7 +424,7 @@ var Coordin = (function () {
         switch (parseInt(item)){
             case 0:
                 //img.css({'left': '0' , 'top': '0'});
-                img.animate(
+                img.stop(true,true).animate(
                     {
                         'left': '0',
                         'top': '0'
@@ -436,7 +436,7 @@ var Coordin = (function () {
                 break;
             case 1:
                 //img.css({'left': center_width, 'top': '0'});
-                img.animate(
+                img.stop(true,true).animate(
                     {
                         'left': center_width,
                         'top': '0'
@@ -448,7 +448,7 @@ var Coordin = (function () {
                 break;
             case 2:
                 //img.css({'left': layer_width-img_width , 'top': '0'});
-                img.animate(
+                img.stop(true,true).animate(
                     {
                         'left': layer_width-img_width,
                         'top': '0'
@@ -460,7 +460,7 @@ var Coordin = (function () {
                 break;
             case 3:
                 //img.css({'left': '0' , 'top': center_hight});
-                img.animate(
+                img.stop(true,true).animate(
                     {
                         'left': '0',
                         'top': center_hight
@@ -472,7 +472,7 @@ var Coordin = (function () {
                 break;
             case 4:
                 //img.css({'left': center_width , 'top': center_hight});
-                img.animate(
+                img.stop(true,true).animate(
                     {
                     'left': center_width,
                     'top': center_hight
@@ -484,7 +484,7 @@ var Coordin = (function () {
                 break;
             case 5:
                 //img.css({'left': layer_width-img_width , 'top': center_hight});
-                img.animate(
+                img.stop(true,true).animate(
                     {
                         'left': layer_width-img_width,
                         'top': center_hight
@@ -496,7 +496,7 @@ var Coordin = (function () {
                 break;
             case 6:
                 //img.css({'left': '0' , 'top': layer_height-img_height});
-                img.animate(
+                img.stop(true,true).animate(
                     {
                         'left': '0',
                         'top': layer_height-img_height
@@ -508,7 +508,7 @@ var Coordin = (function () {
                 break;
             case 7:
                 //img.css({'left': center_width , 'top': layer_height-img_height});
-                img.animate(
+                img.stop(true,true).animate(
                     {
                         'left': center_width,
                         'top': layer_height-img_height
@@ -520,7 +520,7 @@ var Coordin = (function () {
                 break;
             case 8:
                 //img.css({'left': layer_width-img_width , 'top': layer_height-img_height});
-                img.animate(
+                img.stop(true,true).animate(
                     {
                         'left': layer_width-img_width,
                         'top': layer_height-img_height
