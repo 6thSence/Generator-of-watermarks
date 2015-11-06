@@ -395,8 +395,8 @@ var Coordin = (function () {
     var _setupListener = function(){
         console.log('ilia');
         $(".mainMark").on('drag', _drag);
-        $('#moveY').on('keydown', _setCoordinY);
-        $('#moveX').on('keydown', _setCoordinX);
+        $('#moveY').on('change', _setCoordinY);
+        $('#moveX').on('change', _setCoordinX);
         $('.position__choose-increase').on('click', _increas);
         $('.position__choose-reduce').on('click', _reduce);
 
@@ -475,15 +475,46 @@ var Coordin = (function () {
 
     var _setCoordinY = function () {
 
-        var coordin = $(this).val(),
-            position = coordin +'px';
-        $('.mainMark').css('top' , position);
+        var $this = $(this),
+            coordin = $(this).val(),
+            position = coordin +'px',
+            img=$('.mainMark'),
+            layer=$('.mainIMGHolder'),
+            img_height= parseInt(img.css('height')),
+            layer_height=parseInt(layer.css('height'));
+        if(coordin <= (layer_height - img_height) || coordin >= 0){
+            $('.mainMark').css('top' , position);
+        }
+        if(coordin >= (layer_height - img_height)){
+            $('.mainMark').css('top' , layer_height - img_height);
+            $this.val(layer_height - img_height);
+        }
+        if(coordin < 0){
+            $('.mainMark').css('top' , '0');
+            $this.val('0');
+        }
     };
     var _setCoordinX = function () {
 
-        var coordin = $(this).val(),
-            position = coordin +'px';
-        $('.mainMark').css('left' , position);
+        var $this = $(this),
+            coordin = $(this).val(),
+            img=$('.mainMark'),
+            layer=$('.mainIMGHolder'),
+            position = coordin +'px',
+            img_width= parseInt(img.css('width')),
+            layer_width=parseInt(layer.css('width'));
+
+        if(coordin <= (layer_width - img_width) || coordin >= 0){
+            $('.mainMark').css('left' , position);
+        }
+        if(coordin >= (layer_width - img_width)){
+            $('.mainMark').css('left' , layer_width - img_width);
+            $this.val(layer_width - img_width);
+        }
+        if(coordin < 0){
+            $('.mainMark').css('left' , '0');
+            $this.val('0');
+        }
     };
 
     var _drag = function() {
