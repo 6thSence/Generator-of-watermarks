@@ -304,8 +304,21 @@ var FileUploadJQ = (function(){
                 var nameFile = data.result.files[0].name,
                 urlFile = data.result.files[0].url
                 $('.mainWatermark').text(nameFile);
-                $('input[name="watermark"]').val(nameFile)
+                $('input[name="watermark"]').val(nameFile);
+//___________________________delete_watermark_if_isset________//
+                if (!($('.mainMark').length)){
+                    Coordin.init();
+                };
+                if ($('.mainMark').length){
+                    $('.mainMark').remove();
+                };
+                $('#moveX').val(0);
+                $('#moveY').val(0);
+//___________________________________________________________//
                 $('.mainIMGHolder').append('<img src="'+ urlFile +'" class="mainMark">');
+//___________________________________________________________//
+                $('.mainMark').css({left : '0' , top : '0'});
+//___________________________________________________________//
                 if($('.flagHolder')){
                     $('.flagHolder').remove();
                 }
@@ -330,7 +343,7 @@ var FileUploadJQ = (function(){
                     }
                     //___________I_____________//
 
-                    Coordin.init();
+                    //Coordin.init();
                     //___________I____________//
                     
                 });
@@ -446,7 +459,7 @@ var Coordin = (function () {
 
     var _positionRadio = function(){
       var item = $(this).attr('data-item'),
-          img = $('.mainMark:last'),//  Моя правка
+          img = $('.mainMark'),//  Моя правка
           layer=$('.mainIMGHolder'),
           img_width= parseInt(img.css('width')),
           layer_width=parseInt(layer.css('width')),
