@@ -1,6 +1,4 @@
 
-
-
 var submitForm = (function(){
 
     var init = function () {
@@ -156,18 +154,18 @@ var submitForm = (function(){
 
 submitForm.init();
 
+
+
 var OpacitySlider = (function(){
 
     var _setUpListners = function() {
-    	$( "#slider" ).slider({'value':100,
-        range: "min"
-        }).on( "slide", function( event, ui ) {
+    	$( "#slider" ).slider({'value':100}).on( "slide", function( event, ui ) {
 	  	var opacity = ui.value/100;
 	  	$('.mainMark,.flagHolder').css('opacity', opacity);
 	  	$('input[name="opacity"]').val(opacity*100);
 	  });
     };
-
+    
 
 
     var init = function () {
@@ -274,7 +272,7 @@ var FileUploadJQ = (function(){
                         });
                     }
 
-
+                        
                 });
         }
     });
@@ -304,23 +302,14 @@ var FileUploadJQ = (function(){
         done: function (e, data) {
                 $('#progress').remove();
                 var nameFile = data.result.files[0].name,
-                urlFile = data.result.files[0].url
+                urlFile = data.result.files[0].url;
+                $('#progress').remove(); 
                 $('.mainWatermark').text(nameFile);
-                $('input[name="watermark"]').val(nameFile);
-//___________________________delete_watermark_if_isset________//
-                if (!($('.mainMark').length)){
-                    Coordin.init();
-                };
-                if ($('.mainMark').length){
+                $('input[name="watermark"]').val(nameFile)
+                if($('.mainMark').length){
                     $('.mainMark').remove();
-                };
-                $('#moveX').val(0);
-                $('#moveY').val(0);
-//___________________________________________________________//
+                    }
                 $('.mainIMGHolder').append('<img src="'+ urlFile +'" class="mainMark">');
-//___________________________________________________________//
-                $('.mainMark').css({left : '0' , top : '0'});
-//___________________________________________________________//
                 if($('.flagHolder')){
                     $('.flagHolder').remove();
                 }
@@ -341,13 +330,13 @@ var FileUploadJQ = (function(){
                     }
                     } else {
                         $(this).show('fast').draggable({containment:'parent'});
-                        ZAMOS.init(width,height,nameFile);
+                        ZAMOS.init(width,height,nameFile);                        
                     }
                     //___________I_____________//
 
-                    //Coordin.init();
+                    Coordin.init();
                     //___________I____________//
-
+                    
                 });
 
         }
@@ -369,8 +358,10 @@ var FileUploadJQ = (function(){
 
 FileUploadJQ.init();
 
-var ZAMOS = (function(){
 
+
+var ZAMOS = (function(){
+    
 
 
     var init = function (width,height,file) {
@@ -381,7 +372,7 @@ var ZAMOS = (function(){
         var mainIMGHolderArea = mainIMGHolderWidth * mainIMGHolderHeight;
         var flagArea = flagWidth * flagHeight;
         var integer = (mainIMGHolderArea/flagArea);
-        $('.btn__clear').on('click', function() {
+        $('label[for="true"]').on('click', function() {
             $( "#slider" ).slider({'value':100});
             $('.mainMark').hide().removeClass('mainMark').addClass('flag');
         console.log(mainIMGHolderArea);
@@ -395,7 +386,8 @@ var ZAMOS = (function(){
                 'border':'1px solid green',
                 'top': -1*screen.height+'px',
                 'left':-1*screen.width+'px',
-                'cursor':'move'
+                'cursor':'move',
+                'font-size':'0'
             }).draggable();
             main2.init();
 
@@ -403,23 +395,23 @@ var ZAMOS = (function(){
             $('.flagHolder').hide();
             $('.flagHolder:last-child').show('500');
             for(var i = 0;i<=integer;i++){
-            $('.flagHolder').append('<img src="server/php/files/'+ file +'" class="flag">');
+            $('.flagHolder').append('<img src="server/php/files/'+ file +'" class="flag">');                
             }
 
             $('#moveX').on('keyup', function() {
                 var z = $('#moveX').val();
                 console.log(z);
                 $('.flag').css('border-bottom', z+'px solid transparent');
-
+                
             });
 
             $('#moveY').on('keyup', function() {
                 var z = $('#moveY').val();
                 console.log(z);
                 $('.flag').css('border-left', z+'px solid transparent');
-
+                
             });
-
+            
         });
 
 
@@ -431,7 +423,7 @@ var ZAMOS = (function(){
     };
 
 
-
+    
 
 })();
 
@@ -445,7 +437,8 @@ var Coordin = (function () {
 
 
     var _setupListener = function(){
-        console.log('iliarwerwerwe');
+        console.log('ilia');
+
         $(".mainMark").on('drag', _drag);
         $('#moveY').on('change', _setCoordinY);
         $('#moveX').on('change', _setCoordinX);
@@ -702,6 +695,7 @@ var Coordin = (function () {
     };
 
     var _drag = function() {
+        //console.log('sssa');
         var moveX = $('#moveX'),
             moveY = $('#moveY');
 
@@ -709,8 +703,8 @@ var Coordin = (function () {
             drag: function (event, ui) {
                 moveX.val(ui.position.left);
                 moveY.val(ui.position.top);
-                // console.log(ui.position.left);
-                // console.log(ui.position.top);
+                //console.log(ui.position.left);
+                //console.log(ui.position.top);
                 //ui.position.top = y;
             }
         });
@@ -720,6 +714,8 @@ var Coordin = (function () {
         init : init
     }
 })();
+
+
 
 $(function(){
     //console.log('create-radio');
@@ -732,14 +728,20 @@ $(function(){
 //_________________________________I_________________________//
 
 var main2 = (function(){
-
+        
 
         var _increas2 = function(){
-
+            
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
-            var coordin = $('.flag').css('border-bottom-width'),
-                coordin_inc = parseInt(coordin) + 1,
+            if($('.flagHolder').length > 1){
+            var coordin = $('.flag:last').css('border-bottom-width');
+            } else {
+            var coordin = $('.flag:last').css('border-bottom-width');
+            }
+
+
+                var coordin_inc = parseInt(coordin) + 1,
                 pos = coordin_inc;
             $('.flag').css('border-bottom' , pos+'px solid transparent');
             inp.val(pos);
@@ -765,10 +767,10 @@ var main2 = (function(){
                 inp.val(0);
             } else {
             inp.val(pos);
-
+                
             }
-
-
+                    
+                
         }
         if (inp.attr('id') === 'moveY'){
             var coordin = $('.flag').css('border-left-width'),
@@ -780,19 +782,19 @@ var main2 = (function(){
             } else {
             inp.val(pos);
         }
-
-
+                    
+                
         }
 
     };
 
 
-
+    
     var _setUpListners = function() {
         $('.flagHolder').on(' mouseup', function() {
             // console.log($(this).css('left'))
             // console.log($(this).css('top'))
-
+            
         });
     };
 
