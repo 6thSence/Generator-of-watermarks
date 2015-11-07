@@ -1,0 +1,35 @@
+.main-bl{
+    // display: block;
+    float: left;
+    width: 700px;
+    height: 670px;
+    background: #61585b;
+
+    .main-title{
+        font-family: "SegoeUILight", sans-serif;
+        font-weight: 300;
+        padding-top: 9px;
+        padding-left: 21px;
+        font-size: 36px;
+        color: #fff;
+        margin: 0;
+    }
+
+    .mainIMG{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        z-index: 10;
+    }
+
+    .mainMark{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        z-index: 10;
+    }
+}

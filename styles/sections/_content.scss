@@ -12,6 +12,8 @@ body{
     @include clearfix;
 }
 
+
+/****main-bl*****/
 .main-bl{
     // display: block;
     float: left;
@@ -37,23 +39,25 @@ body{
         margin: auto;
         z-index: 10;
     }
-
-    .mainMark{
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        margin: auto;
-        z-index: 10;
-    }
 }
 
+/****controls-bl*****/
 .controls-bl{
     display: block;
     float: right;
     width: 260px;
     height: 670px;
     background: #f1f1f5;
+}
+
+/****controls-title****/
+.controls-title{
+    font-size: 26px;
+    text-align: center;
+    margin: 0;
+    margin-top: 26px;
+    line-height: 1;
+    padding-right: 6px;
 }
 
 .aim-img{
@@ -140,12 +144,12 @@ body{
     overflow: hidden;
 }
 
+
 /****form__group*****/
 
 .form__group{
     border-bottom: 1px solid #f97e76;
     position: relative;
-    // margin-top: 20px;
     padding: 0px 20px;
     &:after{
         content: "";
@@ -165,29 +169,26 @@ body{
 }
 
 .form__group-wrap {
-    // margin: 26px 0;
-    // margin: 16px 0;
     @include clearfix;
 }
 
 .group-wrap__image{
-    // margin: 10px 0;
     margin-top: 34px;
     margin-bottom: 29px;
 }
 
 .group-wrap__placement{
-    // margin: 10px 0;
     margin-top: 14px;
-    margin-bottom: 24px;
+    margin-bottom: 23px;
 }
 
 .group-wrap__transparency{
-    // margin: 10px 0;
-    margin: 16px 0;
+    margin: 15px 0;
     margin-bottom: 20px;
 }
-/*    form__group Name  */
+
+
+/****form__group Name*****/
 
 .form__label{
     font-size: 14px;
@@ -196,38 +197,32 @@ body{
     display: block;
 }
 
-/* controls-title */
-.controls-title{
-    font-size: 26px;
-    text-align: center;
-    margin: 0;
-    margin-top: 26px;
-    line-height: 1;
-}
-
 .form__label.original-image {
-    // margin-top: 6px;
-    margin-bottom: 5px;
-    .form__group-wrap{
+    margin-bottom: 6px;  
+    }
 
-    }   
-}
 
 .form__label.watermark-image{
     margin-top: 20px;
     margin-bottom: 6px;
-    .form__group-wrap{
+}
 
-    }
+.header__placement{
+    margin-bottom: 57px;
 }
 
 .form__label.place-title{
-    margin-bottom: 34px;
-} 
-
-.form__label.transparency-title{
-    margin-bottom: 29px;
+    width: 100px;
+    float: left;
 }
+//.form__label.place-title{
+      //    margin-bottom: 34px;
+      //}
+
+.form__label.transparency-title {
+    margin-bottom: 27px;
+}
+
 /* choose-position */
 .choose-position{
     // width: 50%;

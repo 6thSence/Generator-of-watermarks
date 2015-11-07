@@ -1,0 +1,97 @@
+.left__btn-group{
+    display: inline-block;
+    position: fixed;
+    top: 103px;
+    width: 86px;
+}
+
+.lang{
+    margin-bottom: 18px;
+
+    .lang__btn-wrap{
+        border-bottom: 1px solid #a4a7ab;
+        width: 43px;
+        &:last-of-type{
+            border: 0 none;
+        }
+    }
+
+    .lang__btn{
+        font-family: "SegoeUILight", sans-serif;
+        font-size: 20px;
+        text-align: center;
+        display: inline-block;
+        width: 43px;
+        background-color: #f1f1f5;
+        opacity: 0.6;
+        color: #8e9298;
+        text-decoration: none;
+        padding: 3px 0px;
+        line-height: 28px;
+
+        &:hover{
+            color: #444a53;
+        }
+    }
+}
+.share{
+    .share__btn-wrap{
+        box-sizing: content-box;
+        &:first-of-type{
+            margin-bottom: -5px;
+        }
+    }
+
+    
+    .share__btn_fb{
+        float: left;
+
+        &:nth-of-child(2){
+            float: right;
+        }
+    }
+
+    .share__btn{
+        // text-align: center;
+        display: block;
+        background-color: #f1f1f5;
+        opacity: 0.6; 
+        width: 43px;
+        height: 43px;
+    }
+
+
+    .share__btn_fb{
+        // float: none;
+        // display: inline-block;
+        background-image: url('../img/images/share/fb.png');
+        &:hover{
+            background-image: url('../img/images/share/fb_hover.png');
+        }
+    }
+
+    .share__btn_like{
+        // float: right;
+        display: inline-block;
+        background-image: url('../img/images/share/like.png');
+        &:hover{
+            background-image: url('../img/images/share/like_hover.png');
+        }
+    }
+
+    .share__btn_tw{
+        // float: none;
+        background-image: url('../img/images/share/tw.png');
+        &:hover{
+            background-image: url('../img/images/share/tw_hover.png');
+        }
+    }
+
+    .share__btn_vk{
+        // float: none;
+        background-image: url('../img/images/share/vk.png');
+        &:hover{
+            background-image: url('../img/images/share/vk_hover.png');
+        }
+    }
+}
