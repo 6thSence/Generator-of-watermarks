@@ -445,8 +445,7 @@ var Coordin = (function () {
 
 
     var _setupListener = function(){
-        console.log('ilia');
-
+        console.log('iliarwerwerwe');
         $(".mainMark").on('drag', _drag);
         $('#moveY').on('change', _setCoordinY);
         $('#moveX').on('change', _setCoordinX);
@@ -703,7 +702,6 @@ var Coordin = (function () {
     };
 
     var _drag = function() {
-        //console.log('sssa');
         var moveX = $('#moveX'),
             moveY = $('#moveY');
 
@@ -711,8 +709,8 @@ var Coordin = (function () {
             drag: function (event, ui) {
                 moveX.val(ui.position.left);
                 moveY.val(ui.position.top);
-                //console.log(ui.position.left);
-                //console.log(ui.position.top);
+                // console.log(ui.position.left);
+                // console.log(ui.position.top);
                 //ui.position.top = y;
             }
         });
