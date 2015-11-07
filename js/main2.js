@@ -454,6 +454,9 @@ var Coordin = (function () {
         console.log('ilia');
 
         //$(".mainMark").on('drag', _drag);
+
+
+        
         $('#moveY').on('change', _setCoordinY);
         $('#moveX').on('change', _setCoordinX);
         $('.position__choose-increase').on('click', _increas);
