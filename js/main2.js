@@ -162,7 +162,7 @@ var OpacitySlider = (function(){
     	$( "#slider" ).slider({'value':100}).on( "slide", function( event, ui ) {
 	  	var opacity = ui.value/100;
 	  	$('.mainMark,.flagHolder').css('opacity', opacity);
-	  	// console.log($( "#slider" ).slider('value'));
+	  	$('input[name="opacity"]').val(opacity*100)
 	  });
     };
     
@@ -196,6 +196,7 @@ var FileUploadJQ = (function(){
         done: function (e, data) {
             $('#fileuploadImage').attr('disabled', 'disabled');
             $.each(data.result.files, function (index, file) {
+            $('input[name="aim-img"]').val(file.name)
                 $('.mainImg').text(file.name);
                 $('#watermark').removeAttr('disabled');
                 $('body').append('<img src="server/php/files/'+ file.name +'" class="mainIMG">');
@@ -272,7 +273,7 @@ var FileUploadJQ = (function(){
         done: function (e, data) {
             $.each(data.result.files, function (index, file) {
                 $('.mainWatermark').text(file.name);
-                // $('#fileuploadImage').val(file.name);
+                $('input[name="watermark"]').val(file.name)
                 $('.mainIMGHolder').append('<img src="server/php/files/'+ file.name +'" class="mainMark">');
                 if($('.flagHolder')){
                     $('.flagHolder').remove();
@@ -329,13 +330,13 @@ var ZAMOS = (function(){
 
 
     var init = function (width,height,file) {
-        var mainIMGHolderWidth = $('.mainIMGHolder').width();
-        var mainIMGHolderHeight = $('.mainIMGHolder').height();
+        var mainIMGHolderWidth = screen.width*2;
+        var mainIMGHolderHeight = screen.height*2;
         var flagWidth = width;
         var flagHeight = height;
         var mainIMGHolderArea = mainIMGHolderWidth * mainIMGHolderHeight;
         var flagArea = flagWidth * flagHeight;
-        var integer = (mainIMGHolderArea/flagArea)*4;
+        var integer = (mainIMGHolderArea/flagArea);
         $('.btn__clear').on('click', function() {
             $( "#slider" ).slider({'value':100});
             $('.mainMark').hide().removeClass('mainMark').addClass('flag');
@@ -345,14 +346,11 @@ var ZAMOS = (function(){
             $('.mainIMGHolder').append('<div class="flagHolder"></div>');
             $('.flagHolder').css({
                 'position': 'absolute',
-                'width': mainIMGHolderWidth*2+'px',
-                'height': mainIMGHolderHeight*2+'px',
+                'width': mainIMGHolderWidth+'px',
+                'height': mainIMGHolderHeight+'px',
                 'border':'1px solid green',
-                'top':'-50%',
-                'bottom':'0',
-                'left':'-50%',
-                'right':'0',
-                'margin':'auto',
+                'top': -1*screen.height+'px',
+                'left':-1*screen.width+'px',
                 'cursor':'move'
             }).draggable();
             main2.init();
@@ -417,7 +415,7 @@ var Coordin = (function () {
 
     var _positionRadio = function(){
       var item = $(this).attr('data-item'),
-          img = $('.mainMark'),
+          img = $('.mainMark:last'),//  Моя правка
           layer=$('.mainIMGHolder'),
           img_width= parseInt(img.css('width')),
           layer_width=parseInt(layer.css('width')),
