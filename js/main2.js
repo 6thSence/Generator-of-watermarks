@@ -801,3 +801,13 @@ var main2 = (function(){
     };
 
 })();
+
+
+//Fadeloader (красивишная загрузка страницы)
+$('body').fadeloader({
+    mode: 'children',
+    fadeSpeed : 1500,
+    displayType : 'block',
+    easeLoad : 'easeInOutBack',
+    onComplete : ''
+});
