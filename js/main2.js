@@ -164,7 +164,7 @@ var OpacitySlider = (function(){
         }).on( "slide", function( event, ui ) {
 	  	var opacity = ui.value/100;
 	  	$('.mainMark,.flagHolder').css('opacity', opacity);
-	  	$('input[name="opacity"]').val(opacity*100)
+	  	$('input[name="opacity"]').val(opacity*100);
 	  });
     };
 
@@ -193,19 +193,36 @@ var FileUploadJQ = (function(){
     	$('#fileuploadImage').fileupload({
         dataType: 'json',
         progressall: function (e, data) {
-        $('.aim-img').css('position', 'relative').append('<div class="mainIMG css_animation spiner"></div>');
+            var progress = '<div id="progress"></div>';
+            $('.main-bl').css('position', 'relative').prepend(progress)
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('#progress').css({
+            'height': '17px',
+            'background-image':'url(img/progressbar.gif)',
+            'position':'absolute',
+            'top':'75px',
+            'left':'26px',
+            'max-width':'648px',
+            'border-radius': '7px'
+        }).css('width', progress + '%');
+    },
+    add:function (e,data) {
+        console.log('add ready')
+        data.submit();
     },
         done: function (e, data) {
+            var nameFile = data.result.files[0].name,
+                urlFile = data.result.files[0].url;
+            $('#progress').remove();    
             $('#fileuploadImage').attr('disabled', 'disabled');
-            $.each(data.result.files, function (index, file) {
-            $('input[name="aim-img"]').val(file.name)
-                $('.mainImg').text(file.name);
+            $('input[name="aim-img"]').val(nameFile)
+                $('.mainImg').text(nameFile);
                 $('#watermark').removeAttr('disabled');
-                $('body').append('<img src="server/php/files/'+ file.name +'" class="mainIMG">');
+                $('body').append('<img src="'+ urlFile +'" class="mainIMG">');
                 $(".mainIMG").hide().on('load', function(event) {
                     var width = $(this).width();
                     var height = $(this).height();
-                    $('.aim-img').append('<div class="mainIMGHolder"></div>')
+                    $('.aim-img').append('<div class="mainIMGHolder"></div>').css('position', 'relative');
                     if(width > 648 || height > 648){
                     if(width > height){
                         var finalSize = (width/height);
@@ -213,7 +230,7 @@ var FileUploadJQ = (function(){
                         $('.mainIMGHolder').css({
                             'width': '648px',
                             'height': 648/finalSize+'px',
-                            'background': 'url(../server/php/files/'+ file.name +')',
+                            'background': 'url('+ urlFile +')',
                             'background-size':'contain',
                             'overflow':'hidden',
                             'position':'absolute',
@@ -229,7 +246,7 @@ var FileUploadJQ = (function(){
                          $('.mainIMGHolder').css({
                             'height': '533px',
                             'width': 533/finalSize+'px',
-                            'background': 'url(../server/php/files/'+ file.name +')',
+                            'background': 'url('+ urlFile +')',
                             'background-size':'contain',
                             'overflow':'hidden',
                             'position':'absolute',
@@ -245,7 +262,7 @@ var FileUploadJQ = (function(){
                        $('.mainIMGHolder').css({
                             'height': height,
                             'width': width,
-                            'background': 'url(../server/php/files/'+ file.name +')',
+                            'background': 'url('+ urlFile +')',
                             'background-size':'contain',
                             'overflow':'hidden',
                             'position':'absolute',
@@ -259,9 +276,6 @@ var FileUploadJQ = (function(){
 
 
                 });
-
-
-            });
         }
     });
     };
@@ -270,13 +284,43 @@ var FileUploadJQ = (function(){
         $('#watermark').fileupload({
         dataType: 'json',
          progressall: function (e, data) {
-        $('.aim-img').append('<div class="mainIMG css_animation spiner"></div>');
-        },
+            var progress = '<div id="progress"></div>';
+            $('.main-bl').css('position', 'relative').prepend(progress)
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('#progress').css({
+            'height': '17px',
+            'background-image':'url(img/progressbar.gif)',
+            'position':'absolute',
+            'top':'75px',
+            'left':'26px',
+            'max-width':'648px',
+            'border-radius': '7px'
+        }).css('width', progress + '%');
+    },
+    add:function (e,data) {
+        console.log('add ready')
+        data.submit();
+    },
         done: function (e, data) {
-            $.each(data.result.files, function (index, file) {
-                $('.mainWatermark').text(file.name);
-                $('input[name="watermark"]').val(file.name)
-                $('.mainIMGHolder').append('<img src="server/php/files/'+ file.name +'" class="mainMark">');
+                $('#progress').remove();
+                var nameFile = data.result.files[0].name,
+                urlFile = data.result.files[0].url
+                $('.mainWatermark').text(nameFile);
+                $('input[name="watermark"]').val(nameFile);
+//___________________________delete_watermark_if_isset________//
+                if (!($('.mainMark').length)){
+                    Coordin.init();
+                };
+                if ($('.mainMark').length){
+                    $('.mainMark').remove();
+                };
+                $('#moveX').val(0);
+                $('#moveY').val(0);
+//___________________________________________________________//
+                $('.mainIMGHolder').append('<img src="'+ urlFile +'" class="mainMark">');
+//___________________________________________________________//
+                $('.mainMark').css({left : '0' , top : '0'});
+//___________________________________________________________//
                 if($('.flagHolder')){
                     $('.flagHolder').remove();
                 }
@@ -290,22 +334,22 @@ var FileUploadJQ = (function(){
                     if(width > 648 || height > 648){
                     if(width > height){
                         $(this).css('width', '100%').show('fast').draggable({containment:'parent'});
-                        ZAMOS.init(width,height,file.name);
+                        ZAMOS.init(width,height,nameFile);
                     } else {
                          $(this).css('height', '100%').show('fast').draggable({containment:'parent'});
-                         ZAMOS.init(width,height,file.name);
+                         ZAMOS.init(width,height,nameFile);
                     }
                     } else {
                         $(this).show('fast').draggable({containment:'parent'});
-                        ZAMOS.init(width,height,file.name);
+                        ZAMOS.init(width,height,nameFile);
                     }
                     //___________I_____________//
 
-                    Coordin.init();
+                    //Coordin.init();
                     //___________I____________//
 
                 });
-            });
+
         }
     });
     };
@@ -415,7 +459,7 @@ var Coordin = (function () {
 
     var _positionRadio = function(){
       var item = $(this).attr('data-item'),
-          img = $('.mainMark:last'),//  Моя правка
+          img = $('.mainMark'),//  Моя правка
           layer=$('.mainIMGHolder'),
           img_width= parseInt(img.css('width')),
           layer_width=parseInt(layer.css('width')),
