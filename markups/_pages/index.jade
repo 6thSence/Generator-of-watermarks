@@ -38,17 +38,15 @@ block block
                             .radio
                                 form.radio__list
                                     .radio__item
-                                        label.radio__item_label
-                                            input.radio__real.radio__real1(type='radio')
-                                            span.radio__fake.radio__fake1
-                                    .radio__item
-                                        label.radio__item_label
-                                            input.radio__real.radio__real2(type='radio')
-                                            span.radio__fake.radio__fake2            
+                                        input.radio__tiling_input.radio__tiling_input_true(type='radio' id="true" value="true" name="tiling" checked="checked")
+                                        label.radio__tiling.radio__tiling_true(for="true")
 
-                    .position-select__wrap   
+                                    .radio__item
+                                        input.radio__tiling_input.radio__tiling_input_false(type='radio' id="false" value="false" name="tiling")
+                                        label.radio__tiling.radio__tiling_false(for="false")
+                    .position-select__wrap
                         .position-select__choose.choose-position
-                            - for (var i = 0; i < 9; i++) 
+                            - for (var i = 0; i < 9; i++)
                                 .choose-position__item
 
                         .position-select__choose.count-position
@@ -60,7 +58,7 @@ block block
                                     a(tabindex='-1', role='button').position__choose.position__choose-reduce
 
                             .input-group_count
-                                label.input-group__label_count.count-position__item_yyy(for='moveY') 
+                                label.input-group__label_count.count-position__item_yyy(for='moveY')
                                 input#moveY.count-position__item(name='value_y', value='0', aria-valuenow='0', autocomplete='off', role='spinbutton')
                                 .dif__btn-group
                                     a(tabindex='-1', role='button').position__choose.position__choose-increase

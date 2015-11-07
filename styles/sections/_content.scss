@@ -372,3 +372,33 @@ body{
         box-shadow: 0 1px 1px 0 #ed7971 inset;
     }
 }
+
+.radio__tiling {
+    cursor: pointer;
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    &_true {
+        background: url(../img/images/tiling.jpg) no-repeat center;
+        &:hover {
+            background: url(../img/images/tiling_hover.jpg) no-repeat center;
+        }
+    }
+    &_false {
+        background: url(../img/images/notiling.jpg) no-repeat center;
+        &:hover{
+            background: url(../img/images/notiling_hover.jpg) no-repeat center;
+        }
+    }
+    &_input {
+        display: none;
+        position: relative;
+        &_false:checked + label {
+            background: url(../img/images/notiling_active.jpg) no-repeat center;
+        }
+        &_true:checked + label {
+            background: url(../img/images/tiling_active.jpg) no-repeat center;
+        }
+
+    }
+}
