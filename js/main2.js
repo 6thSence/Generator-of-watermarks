@@ -1,192 +1,128 @@
+//Сбор параметров
+;var dataParams = (function(){
 
-
-
-var submitForm = (function(){
-
-    var init = function () {
-        _setUpListners();
-
+    var params = {
+        originX        : 0,
+        originY        : 0,
+        transparency      : 1,
+        isPattern      : false,
+        x                 : 0,
+        y                 : 0,
+        originalImage  : "",
+        watermarkImage : ""
     };
-
-    var _setUpListners = function() {
-        $('#form').on('submit', function(e) {
-            e.preventDefault();
-            var
-                $this = $(this);
-            validateThis($this);
-            //if (validateThis($this);
-        });
+    var _addOriginX = function(){
+        params.originX = parseInt($('#moveX').val());
     };
-
-
-//Валидация формы
-    function validateThis(form) {
-        var
-            textType = form.find("[data-validation='text']");
-
-        textType.each(function(){
-            var
-                $this = $(this),
-                emptyField = $this.val() == '';
-
-            if (emptyField) {
-                $this.tooltip({
-                    content     : 'Загрузите изображение',
-                    position    : 'left'
-                });
-
-                $this.addClass('error');
-            } else {
-                $this.removeClass('error');
+    var _addOriginY  = function(){
+        params.originY =  parseInt($('#moveY').val());
+    };
+    var _addTransparency = function(x){
+        params.transparency= x;
+    };
+    var _addOriginalImage = function(x){
+        params.originalImage= x;
+    };
+    var _addWatermarkImage = function(x){
+        params.watermarkImage= x;
+    };
+    var _addIsPattern = function(x){
+        var radios = $("input[type=radio]");
+        for (var i= 0; i< radios.length; i++) {
+            if (radios[i].checked && radios[i].name === "tiling") {
+                params.isPattern=radios[i].value;
             }
-        });
-
-        return form.find('.error').length == 0;
-    }
-//Плагин tooltipster
-    $.fn.tooltip = function(options){
-
-        options = {
-            position: options.position || 'right',
-            content : options.content || "i'am tooltip"
-        };
-
-        var
-            markup = '<div class="tooltip tooltip_' + options.position + '">' +
-                '<div class="tooltip__inner">' + options.content + '</div>' +
-                '</div>';
-
-        var
-            $this = this,
-            body = $('body');
-
-        $this
-            .addClass('tooltipstered')
-            .attr('data-tooltip-position', options.position);
-
-        body.append(markup);
-
-        _positionIt($this, body.find('.tooltip').last(), options.position);
-
-        $(document).on('click', function(){
-            $('.tooltip').remove();
-        });
-
-        $(window).resize(function(){
-            var
-                tooltips = $('.tooltip');
-
-            var
-                tooltipsArray = [];
-
-            tooltips.each(function(){
-                tooltipsArray.push($(this));
-            });
-
-            $('.tooltipstered').each(function(index){
-                var
-                    position = $(this).data('tooltip-position');
-
-                _positionIt($(this), tooltipsArray[index], position);
-            });
-        });
-
-
-        function _positionIt(elem, tooltip, position) {
-
-            // измеряем элемент
-
-            var
-                elemWidth = elem.outerWidth(true),
-                elemHeight = elem.outerHeight(true),
-                topEdge = elem.offset().top,
-                bottomEdge = topEdge + elemHeight,
-                leftEdge = elem.offset().left,
-                rigthEdge = leftEdge + elemWidth;
-
-            // измеряем тултип
-
-            var
-                tooltipWidth = tooltip.outerWidth(true),
-                tooltipHeight = elem.outerHeight(true),
-                leftCentered = (elemWidth / 2) - (tooltipWidth / 2),
-                topCentered = (elemHeight / 2) - (tooltipHeight / 2);
-
-            var
-                positions = {};
-
-            switch(position) {
-                case 'right' :
-                    positions = {
-                        left: rigthEdge,
-                        top : topEdge + topCentered
-                    };
-                    break;
-                case 'top' :
-                    positions = {
-                        left: leftEdge + leftCentered,
-                        top : topEdge - tooltipHeight
-                    };
-                    break;
-                case 'bottom' :
-                    positions = {
-                        left : leftEdge + leftCentered,
-                        top : bottomEdge
-                    };
-                    break;
-                case 'left' :
-                    positions = {
-                        left : leftEdge - tooltipWidth,
-                        top : topEdge + topCentered
-                    };
-                    break;
-            }
-
-            tooltip
-                .offset(positions)
-                .css('opacity', '1');
         }
     };
+    var _addX = function(x){
+        params.x= x;
+    };
+    var _addY = function(x){
+        params.y= x;
+    };
+
+    var _getData = function(){
+        _addOriginX();
+        _addOriginY();
+        _addIsPattern();
+        return params;
+    }
 
     return {
-        init: init
-    };
+        getData            : _getData,
+        addOriginX          : _addOriginX,
+        addOriginY          : _addOriginY,
+        addTransparency     : _addTransparency,
+        addOriginalImage    : _addOriginalImage,
+        addWatermarkImage   : _addWatermarkImage,
+        addIsPattern        : _addIsPattern,
+        addX                : _addX,
+        addY                : _addY,
+
+    }
 
 })();
 
-submitForm.init();
-
-
-
-var OpacitySlider = (function(){
-
+//Скачать изображение, передача информации на backend
+var submitForm = (function(){
+    var init = function () {
+        _setUpListners();
+    };
     var _setUpListners = function() {
-        $( "#slider" ).slider({'value':100}).on( "slide", function( event, ui ) {
+        $('#submit').on('click', function(e) {
+            e.preventDefault();
+            console.log (dataParams.getData());
+            var url ='./php/download.php',
+                defObj = _ajax(dataParams.getData(), url);
+            if(defObj) {
+                defObj.done(function(ans){
+                    if (ans.status === 'OK') {
+                       console.log('ok');
+                    }else{
+                       console.log('не ok');
+                    }
+                })
+            }
+        });
+    };
+    var _ajax = function (data, url) {
+        return  $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'JSON',
+            data: data,
+        }).fail(function(){
+            console.log('На сервере произошла ошибка.');
+        });
+    };
+    return {
+        init: init,
+    }
+})();
+if ($('#submit')) { submitForm.init(); };
+
+
+//Прозрачность марки
+var OpacitySlider = (function(){
+    var _setUpListners = function() {
+        $( "#slider" ).slider({'value':100, 'range': 'min'}).on( "slide", function( event, ui ) {
         var opacity = ui.value/100;
+        dataParams.addTransparency(opacity);
         $('.mainMark,.flagHolder').css('opacity', opacity);
         $('input[name="opacity"]').val(opacity*100);
       });
     };
-    
-
-
     var init = function () {
         _setUpListners();
 
     };
-
-
-
-
     return {
         init: init
     };
-
 })();
+if ($('#slider')) { OpacitySlider.init(); };
 
-OpacitySlider.init();
-
-
+//Загрузка основного изображения
 var FileUploadJQ = (function(){
 
     var _setUpListners = function() {
@@ -207,13 +143,14 @@ var FileUploadJQ = (function(){
         }).css('width', progress + '%');
     },
     add:function (e,data) {
-        console.log('add ready')
+        //console.log('add ready')
         data.submit();
     },
         done: function (e, data) {
             var nameFile = data.result.files[0].name,
                 urlFile = data.result.files[0].url;
-            $('#progress').remove();    
+            dataParams.addOriginalImage(urlFile);
+            $('#progress').remove();
             $('#fileuploadImage').attr('disabled', 'disabled');
             $('input[name="aim-img"]').val(nameFile)
                 $('.mainImg').text(nameFile);
@@ -298,13 +235,14 @@ var FileUploadJQ = (function(){
         }).css('width', progress + '%');
     },
     add:function (e,data) {
-        console.log('add ready')
+        //console.log('add ready')
         data.submit();
     },
         done: function (e, data) {
                 $('#progress').remove();
                 var nameFile = data.result.files[0].name,
                 urlFile = data.result.files[0].url;
+                dataParams.addWatermarkImage(urlFile);
                 $('#progress').remove(); 
                 $('.mainWatermark').text(nameFile);
                 $('input[name="watermark"]').val(nameFile);
@@ -366,15 +304,10 @@ var FileUploadJQ = (function(){
     };
 
 })();
+if ($('#fileuploadImage')) { FileUploadJQ.init(); };
 
-FileUploadJQ.init();
-
-
-
+//Режим замощения изображений
 var ZAMOS = (function(){
-    
-
-
     var init = function (width,height,file) {
         var mainIMGHolderWidth = screen.width*2;
         var mainIMGHolderHeight = screen.height*2;
@@ -384,11 +317,13 @@ var ZAMOS = (function(){
         var flagArea = flagWidth * flagHeight;
         var integer = (mainIMGHolderArea/flagArea);
         $('label[for="true"]').on('click', function() {
+            $('#moveX').val(0);
+            $('#moveY').val(0);
             $( "#slider" ).slider({'value':100});
             $('.mainMark').hide().removeClass('mainMark').addClass('flag');
-        console.log(mainIMGHolderArea);
-        console.log(flagArea);
-        console.log(mainIMGHolderArea/flagArea);
+        //console.log(mainIMGHolderArea);
+        //console.log(flagArea);
+        //console.log(mainIMGHolderArea/flagArea);
             $('.mainIMGHolder').append('<div class="flagHolder"></div>');
             $('.flagHolder').css({
                 'position': 'absolute',
@@ -400,10 +335,8 @@ var ZAMOS = (function(){
                 'cursor':'move',
                 'font-size':'0'
             }).draggable();
-
-
-
-
+            dataParams.addX($('.flagHolder').css('left'));
+            dataParams.addY($('.flagHolder').css('top'));
 
 
             $('.flagHolder').hide();
@@ -414,14 +347,14 @@ var ZAMOS = (function(){
 
             $('#moveX').on('keyup', function() {
                 var z = $('#moveX').val();
-                console.log(z);
+                //console.log(z);
                 $('.flag').css('border-bottom', z+'px solid transparent');
                 
             });
 
             $('#moveY').on('keyup', function() {
                 var z = $('#moveY').val();
-                console.log(z);
+                //console.log(z);
                 $('.flag').css('border-left', z+'px solid transparent');
                 
             });
@@ -430,14 +363,9 @@ var ZAMOS = (function(){
 
 
     };
-
-
     return {
         init: init
     };
-
-
-    
 
 })();
 
@@ -448,22 +376,14 @@ var Coordin = (function () {
     var init = function(){
         _setupListener();
     };
-
-
     var _setupListener = function(){
-        console.log('ilia');
-
+        //console.log('ilia');
         //$(".mainMark").on('drag', _drag);
-
-
-
         $('#moveY').on('change', _setCoordinY);
         $('#moveX').on('change', _setCoordinX);
         $('.position__choose-increase').on('click', _increas);
         $('.position__choose-reduce').on('click', _reduce);
         $('.choose-position__item').on('click', _positionRadio);
-
-
     };
 
     var _positionRadio = function(){
@@ -480,8 +400,8 @@ var Coordin = (function () {
           inp_y = $('#moveY');
 
 
-        console.log('click');
-        console.log(item);
+        //console.log('click');
+        //console.log(item);
         switch (parseInt(item)){
             case 0:
                 //img.css({'left': '0' , 'top': '0'});
@@ -592,13 +512,13 @@ var Coordin = (function () {
                 inp_y.val(layer_height-img_height);
                 break;
             default :
-                console.log('hz')
+                //console.log('hz')
         }
 
     };
 
     var _increas = function(){
-        console.log('increas');
+        //console.log('increas');
         var inp = $(this).closest('.input-group_count').find('input'),
             img=$('.mainMark'),
             layer=$('.mainIMGHolder'),
@@ -636,7 +556,7 @@ var Coordin = (function () {
 
     };
     var _reduce = function(){
-        console.log('reduce');
+        //console.log('reduce');
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.mainMark').css('left'),
@@ -735,26 +655,22 @@ var Coordin = (function () {
     }
 })();
 
-
-
-$(function(){
-    //console.log('create-radio');
-    var child  = $('.choose-position').children().each(function (key,val) {
-        $(this).attr('data-item', key);
+if ($('.choose-position')) {
+    $(function () {
+        //console.log('create-radio');
+        var child = $('.choose-position').children().each(function (key, val) {
+            $(this).attr('data-item', key);
+        });
+        //console.log(child);
     });
-    //console.log(child);
-});
-
+};
 //_________________________________I_________________________//
 
 var main2 = (function(){
-
-
     var _increas2 = function(){
-
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
-            console.log(1)
+            //console.log(1)
             var coordin = $('.flag').css('border-bottom-width');
 
             var coordin_inc = parseInt(coordin) + 1,
@@ -804,8 +720,6 @@ var main2 = (function(){
 
     };
 
-
-
     var _setUpListners = function() {
         $('.flagHolder').on(' mouseup', function() {
             // console.log($(this).css('left'))
@@ -813,8 +727,6 @@ var main2 = (function(){
 
         });
     };
-
-
 
     var init = function () {
         _setUpListners();
@@ -828,8 +740,8 @@ var main2 = (function(){
     };
 
 })();
+if ($('.position__choose-increase') && $('.position__choose-reduce') && $('.flagHolder')) { main2.init(); };
 
-main2.init();
 //Fadeloader (красивишная загрузка страницы)
 $('body').fadeloader({
     mode: 'children',
@@ -840,29 +752,27 @@ $('body').fadeloader({
 });
 
 //div на квадраты
-
 var RadioSquare = (function(){
     var init = function(){
-        console.log('draw init');
+        //console.log('draw init');
         _setupListener();
     };
 
     var _setupListener = function (){
-        $('#true').on('click', _drawing);
-        $('#moveX').on('change', _incHeight);
-        $('#moveY').on('change', _incWidth);
+         $('#true').on('click', _drawing);
+         $('#moveX').on('keyup', _incHeight);
+         $('#moveY').on('keyup', _incWidth);
         // $('.position__choose-increase').on('click' , _button);
-
     };
 
     var _button = function(){
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
-            console.log('inc height');
+            //console.log('inc height');
             _incHeight();
         }
         if (inp.attr('id') === 'moveY'){
-            console.log('inc width');
+            //console.log('inc width');
             _incWidth();
         }
 
@@ -884,7 +794,7 @@ var RadioSquare = (function(){
     };
     var _drawing = function(){
 
-            console.log('draw');
+            //console.log('draw');
         var marg_top= ($('#moveX').val())/ 2,
             marg_left= ($('#moveY').val())/ 2,
             otst_left = (51 - marg_left)+'px',

@@ -1,0 +1,4 @@
+AddDefaultCharset UTF-8
+RewriteEngine on
+
+RewriteRule ^([a-z]+)$ index.php?lang=$1 [QSA]
