@@ -961,6 +961,40 @@ var ReSeT = (function(){
         init: init
     };
 })();
+ReSeT.init();
 
 
+var ReSeT = (function(){
+    var _setUpListners = function() {
+        $('.btn__clear').on('click', function(event) {
+            event.preventDefault();
+            if($('.mainIMGHolder').length){$('.mainIMGHolder').remove();}
+            if($('.flagHolder').length){$('.flagHolder').remove();}
+            if($('#horizontal').length){$('#horizontal').remove();}
+            if($('#vertical').length){$('#vertical').remove();}
+            $('#fileuploadImage').removeAttr('disabled');
+            $('#watermark').attr('disabled', 'disabled');
+            $('#moveX').val(0);
+            $('#moveY').val(0);
+            $('input[name="opacity"]').val(0);
+            $( "#slider" ).slider({'value':100});
+            $('.mainImg').text('Image.jpg');
+            $('.mainWatermark').text('Image.jpg');
+
+            dataParams.addWatermarkImage('');
+            dataParams.addOriginalImage('');
+            dataParams.addTransparency(1);
+            dataParams.addX('');
+            dataParams.addY('');
+
+        });
+    };
+    var init = function () {
+        _setUpListners();
+
+    };
+    return {
+        init: init
+    };
+})();
 ReSeT.init();
