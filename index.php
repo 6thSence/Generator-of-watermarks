@@ -151,7 +151,7 @@
 		</footer>
 	</body>
 	<!-- bower:js -->
-	<script src="bower/jquery/dist/jquery.js"></script>
+	<script src="bower/jquery/jquery.js"></script>
 	<script src="bower/jquery-ui/jquery-ui.js"></script>
 	<!-- endbower -->
 	<script src="js/vendor/jquery.ui.widget.js"></script>
