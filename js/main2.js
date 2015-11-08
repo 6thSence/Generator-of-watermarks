@@ -253,22 +253,30 @@ var _setUpListners2 = function(zzz) {
 
         data.submit();
     },
-    done: function (e, data) {
-        $('#progress').remove();
-        var nameFile = data.result.files[0].name,
-        urlFile = data.result.files[0].url;
-        dataParams.addWatermarkImage(urlFile);
-        $('#progress').remove(); 
-        $('.mainWatermark').text(nameFile);
-        $('input[name="watermark"]').val(nameFile);
-        var buff = 0;
-        if(!($('.mainMark').length)){
-            buff = 1;
-        }
-                if($('.mainMark').length){// || $('.flag').length){
-    $('.mainMark').remove();
+        done: function (e, data) {
+                $('#progress').remove();
+                var nameFile = data.result.files[0].name,
+                urlFile = data.result.files[0].url;
+                dataParams.addWatermarkImage(urlFile);
+                $('#progress').remove(); 
+                $('.mainWatermark').text(nameFile);
+                $('input[name="watermark"]').val(nameFile);
+                $('#moveX').val(0);
+                $('#moveY').val(0);
+                var buff = 0;
+            /////////////////////////////////////////////////////////////////
+                var buffModul = 0;
+                if( !($('.mainMark').length) && !($('.flag').length)){
+                   buffModul = 1;
+                }
+
+                if(!($('.mainMark').length)){
+                    buff = 1;
+                }
+                if($('.mainMark').length || $('.flag').length){
+                    $('.mainMark').remove();
                     // $('.flagHolder').remove();
-                    // $('.flag').remove();
+                     $('.flag').remove();
                 }
                 $('.mainIMGHolder').append('<img src="'+ urlFile +'" class="mainMark">');
                 $('.mainMark').css({left : '0', top : '0'});
@@ -285,26 +293,25 @@ var _setUpListners2 = function(zzz) {
                     var realWidth = width/zzz+'px';
                     var realHeight = height/zzz+'px';
                     if(width > 648 || height > 648){
-                        if (buff === 1){
-                            ZAMOS.init(width,height,urlFile);
-                        }
+
                         if(width > height){
                             $(this).css('width', '100%').show('fast').draggable({containment:'parent'});
-                        // ZAMOS.init(width,height,nameFile);
+            
                     } else {
                        $(this).css('height', '100%').show('fast').draggable({containment:'parent'});
-                         // ZAMOS.init(width,height,nameFile);
                      }
                  } else {
                     $(this).show('fast').attr('width', realWidth).draggable({containment:'parent'});
-                    if (buff === 1){
-                        ZAMOS.init(urlFile);
-                    }                        
+                                         
                 }
-                    //___________I_____________//
 
+                    $('#false').prop('checked', 'checked');
+                    toggelModule.first();
+                    if (buffModul === 1){
+                         toggelModule.init();
+                    }
                     if (buff === 1){
-                        Coordin.init();
+                       // Coordin.init();
                     }
                     //___________I____________//
                     
@@ -331,11 +338,13 @@ if ($('#fileuploadImage')) { FileUploadJQ.init(); };
 //Режим замощения изображений
 var ZAMOS = (function(){
     var init = function (file) {
-        var mainIMGHolderWidth = screen.width*2;
-        var mainIMGHolderHeight = screen.height*2;
-        var mainIMGHolderArea = mainIMGHolderWidth*mainIMGHolderHeight;
-        $('label[for="true"]').on('click', function() {
-            dataParams.addTransparency(1);
+        var mainIMGHolderWidth = screen.width/1.2;
+        var mainIMGHolderHeight = screen.height/1.2;
+        var mainIMGHolderArea = mainIMGHolderWidth * mainIMGHolderHeight;
+        var flagWidth = $('.mainMark').width();
+        var flagHeight = $('.mainMark').height();
+        var flagArea = flagWidth * flagHeight;
+        var integer = (mainIMGHolderArea/flagArea);
             $('#moveX').val(0);
             $('#moveY').val(0);
             $( "#slider" ).slider({'value':100});
@@ -410,7 +419,7 @@ var ZAMOS = (function(){
                 
             });
             
-        });
+        //});
 
 
 };
@@ -641,12 +650,14 @@ var _reduce = function(){
     var _setCoordinY = function () {
 
         var $this = $(this),
-        coordin = $(this).val(),
-        position = coordin +'px',
-        img=$('.mainMark'),
-        layer=$('.mainIMGHolder'),
-        img_height= parseInt(img.css('height')),
-        layer_height=parseInt(layer.css('height'));
+            coordin = parseInt($(this).val()),
+            position = coordin +'px',
+            img=$('.mainMark'),
+            layer=$('.mainIMGHolder'),
+            img_height= parseInt(img.css('height')),
+            layer_height=parseInt(layer.css('height'));
+        $this.val(coordin);
+
         if(coordin <= (layer_height - img_height) || coordin >= 0){
             $('.mainMark').css('top' , position);
         }
@@ -662,13 +673,14 @@ var _reduce = function(){
     var _setCoordinX = function () {
 
         var $this = $(this),
-        coordin = $(this).val(),
-        img=$('.mainMark'),
-        layer=$('.mainIMGHolder'),
-        position = coordin +'px',
-        img_width= parseInt(img.css('width')),
-        layer_width=parseInt(layer.css('width'));
 
+            coordin = parseInt($(this).val()),
+            img=$('.mainMark'),
+            layer=$('.mainIMGHolder'),
+            position = coordin +'px',
+            img_width= parseInt(img.css('width')),
+            layer_width=parseInt(layer.css('width'));
+        $this.val(coordin);
         if(coordin <= (layer_width - img_width) || coordin >= 0){
             $('.mainMark').css('left' , position);
         }
@@ -682,7 +694,8 @@ var _reduce = function(){
         }
     };
     var drag = function($this){
-        $this.on('drag', _drag);
+        //$this.on('drag', _drag);
+        $('.mainMark').on('drag', _drag);
     };
     var _drag = function() {
         //console.log('drag');
@@ -699,10 +712,18 @@ var _reduce = function(){
             }
         });
     };
+    var destroy = function(){
+        $('#moveY').off();
+        $('#moveX').off();
+        $('.position__choose-increase').off();
+        $('.position__choose-reduce').off();
+        $('.choose-position__item').off();
+    };
 
     return{
         init : init,
-        drag: drag
+        drag: drag,
+        destroy : destroy
     }
 })();
 
@@ -823,13 +844,78 @@ var main2 = (function(){
         $('.position__choose-reduce').on('click', _reduce2);
     };
 
+    var destroy = function(){
+        $('.radio__tiling_true').off();
+        $('.position__choose-increase').off();
+        $('.position__choose-reduce').off();
+    };
+
 
     return {
-        init: init
+        init: init,
+        destroy: destroy
     };
 
 })();
 if ($('.position__choose-increase') && $('.position__choose-reduce') && $('.flagHolder')) { main2.init(); };
+//_________________________________TOGLEMODUL____________________________________//
+var toggelModule = (function(){
+
+    var init = function(){
+        console.log('toggle_init');
+        //_first();
+        _setupListener();
+    };
+
+    var first = function () {
+        Coordin.destroy();
+        main2.destroy;
+      Coordin.init();
+    };
+    var _setupListener = function(){
+        $('input[name=tiling]:radio').on('change', _initSomth);
+    };
+    var _initSomth = function(){
+        if ($('#true').prop('checked')){
+            console.log('radio1');
+            _initZamos();
+        }
+        if ($('#false').prop('checked')){
+            console.log('radio2');
+            _initSingle();
+        }
+
+    };
+
+    var _initSingle = function(){
+        main2.destroy();
+        var urlFile =($('.flag').attr('src'));
+        $('.flagHolder, #vertical, #horizontal, .flag').remove();
+        $('.mainIMGHolder').append('<img src="'+ urlFile +'" class="mainMark">');
+        $('.mainMark').css({left : '0', top : '0', cursor :'move'}).draggable({containment:'parent'});
+        $('#moveX').val(0);
+        $('#moveY').val(0);
+        Coordin.init();
+        Coordin.drag();
+    };
+    var _initZamos = function () {
+        Coordin.destroy();
+        // var width = $('.mainMark').width();
+        // var height = $('.mainMark').height();
+        var urlFile = $('.mainMark').attr('src');
+        // var indexPath = urlFile.lastIndexOf('/'),
+        //     file =  urlFile.slice(indexPath+1);
+        ZAMOS.init(urlFile);
+        main2.init();
+    };
+
+    return{
+        init : init,
+        first : first
+    };
+
+})();
+//_________________________________TOGLEMODUL____________________________________//
 
 //Fadeloader (красивишная загрузка страницы)
 $('body').fadeloader({
@@ -875,4 +961,6 @@ var ReSeT = (function(){
         init: init
     };
 })();
+
+
 ReSeT.init();
