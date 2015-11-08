@@ -456,7 +456,7 @@ var Coordin = (function () {
         //$(".mainMark").on('drag', _drag);
 
 
-        
+
         $('#moveY').on('change', _setCoordinY);
         $('#moveX').on('change', _setCoordinX);
         $('.position__choose-increase').on('click', _increas);
@@ -848,9 +848,9 @@ var RadioSquare = (function(){
     };
 
     var _setupListener = function (){
-        // $('#true').on('click', _drawing);
-        // $('#moveX').on('change', _incHeight);
-        // $('#moveY').on('change', _incWidth);
+        $('#true').on('click', _drawing);
+        $('#moveX').on('change', _incHeight);
+        $('#moveY').on('change', _incWidth);
         // $('.position__choose-increase').on('click' , _button);
 
     };
