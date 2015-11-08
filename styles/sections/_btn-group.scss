@@ -4,7 +4,8 @@
     margin-top: 55px;
     padding: 0px 9px;
     margin-bottom: 25px;
-    // @include clearfix;
+    @include clearfix;
+    // clear: both;
 }
 
 .btn{
@@ -15,9 +16,10 @@
     line-height: 20px;
     text-align: center;
     color: #fff;
-    width: 100px;
+    width: 99px;
     font-family: 'robotomedium', sans-serif;
     @include outline;
+    cursor: pointer;
 }
 
 .btn__clear{
