@@ -248,7 +248,7 @@ var _setUpListners2 = function(zzz) {
         add:function (e,data) {
         //console.log('add ready')
         if($('.flagHolder').length){
-            $('.flagHolder, #vertical, #horizontal').remove();
+            //$('.flagHolder, #vertical, #horizontal').remove();
         }
 
         data.submit();
@@ -266,18 +266,20 @@ var _setUpListners2 = function(zzz) {
                 var buff = 0;
             /////////////////////////////////////////////////////////////////
                 var buffModul = 0;
-                if( !($('.mainMark').length) && !($('.flag').length)){
+            console.log($('.flag').length);
+                if( ($('.mainMark').length) || ($('.flag').length)){
                    buffModul = 1;
+                    $('.flagHolder, #vertical, #horizontal').remove();
+                    $('.mainMark').remove();
+                    $('.flag').remove();
                 }
-
-
                 if(!($('.mainMark').length)){
                     buff = 1;
                 }
                 if($('.mainMark').length || $('.flag').length){
-                    $('.mainMark').remove();
+                    //$('.mainMark').remove();
                     // $('.flagHolder').remove();
-                     $('.flag').remove();
+                     //$('.flag').remove();
                 }
                 $('.mainIMGHolder').append('<img src="'+ urlFile +'" class="mainMark">');
                 $('.mainMark').css({left : '0', top : '0'});
@@ -308,7 +310,7 @@ var _setUpListners2 = function(zzz) {
                 }
                     $('#false').prop('checked', 'checked');
                     toggelModule.first();
-                    if (buffModul === 1){
+                    if (buffModul === 0){
                          toggelModule.init();
                     }
                     if (buff === 1){
@@ -338,21 +340,23 @@ if ($('#fileuploadImage')) { FileUploadJQ.init(); };
 
 //Режим замощения изображений
 var ZAMOS = (function(){
-    var init = function (file) {
+    var init = function (file, flagAreaOut) {
         var mainIMGHolderWidth = screen.width/1.2;
         var mainIMGHolderHeight = screen.height/1.2;
         var mainIMGHolderArea = mainIMGHolderWidth * mainIMGHolderHeight;
-        var flagWidth = $('.mainMark').width();
-        var flagHeight = $('.mainMark').height();
-        var flagArea = flagWidth * flagHeight;
+        //var flagWidth = $('.mainMark').width();
+        //var flagHeight = $('.mainMark').height();
+        var flagArea = flagAreaOut;
         var integer = (mainIMGHolderArea/flagArea);
             $('#moveX').val(0);
             $('#moveY').val(0);
+        //console.log(flagArea +'flag area');
+        //console.log(integer +'flag area');
             $( "#slider" ).slider({'value':100});
-            var kooficientSjatia = $('.mainMark').attr('width');
+            var kooficientSjatia = $('.mainMark').width();
             // console.log(kooficientSjatia);
-        var flagWidth = $('.mainMark').width();
-        var flagHeight = $('.mainMark').height();
+       // var flagWidth = $('.mainMark').width();
+       // var flagHeight = $('.mainMark').height();
             $('.mainMark').remove();
         //console.log(mainIMGHolderArea);
         //console.log(flagArea);
@@ -376,8 +380,8 @@ var ZAMOS = (function(){
             // dataParams.addY($('.flagHolder').css('top'));
 
 
-        var flagArea = flagWidth * flagHeight;
-        var integer = (mainIMGHolderArea/flagArea);
+        //var flagArea = flagWidth * flagHeight;
+        //var integer = (mainIMGHolderArea/flagArea);
 
 
             $('.flagHolder').hide();
@@ -393,9 +397,9 @@ var ZAMOS = (function(){
 
 
 
-            console.log(integer)
-            console.log(mainIMGHolderArea)
-            console.log(flagArea)
+            console.log(integer);
+            console.log(mainIMGHolderArea);
+            console.log(flagArea);
 
             // src="server/php/files/'+ file +'"
             $('#moveX').on('keyup', function() {
@@ -834,12 +838,12 @@ var main2 = (function(){
                 'height':'100%',
                 'background-color':'#e3736c'
             });
-            main2.init()
+            //main2.init()
 
         };
 
         var init = function () {
-        // _redCross();
+         _redCross();
         $('.radio__tiling_true').on('click',_redCross);
         $('.position__choose-increase').on('click', _increas2);
         $('.position__choose-reduce').on('click', _reduce2);
@@ -890,10 +894,13 @@ var toggelModule = (function(){
 
     var _initSingle = function(){
         main2.destroy();
-        var urlFile =($('.flag').attr('src'));
+        var urlFile =($('.flag').attr('src')),
+            width = $('.flag').width(),
+            height = $('.flag').height();
+
         $('.flagHolder, #vertical, #horizontal, .flag').remove();
         $('.mainIMGHolder').append('<img src="'+ urlFile +'" class="mainMark">');
-        $('.mainMark').css({left : '0', top : '0', cursor :'move'}).draggable({containment:'parent'});
+        $('.mainMark').css({left : '0', top : '0', cursor :'move', width : width , height : height}).draggable({containment:'parent'});
         $('#moveX').val(0);
         $('#moveY').val(0);
         Coordin.init();
@@ -901,12 +908,14 @@ var toggelModule = (function(){
     };
     var _initZamos = function () {
         Coordin.destroy();
-        // var width = $('.mainMark').width();
-        // var height = $('.mainMark').height();
+        var width = $('.mainMark').width();
+        var height = $('.mainMark').height();
+        var area = width*height;
+        console.log('OUT AREA:'+ area);
         var urlFile = $('.mainMark').attr('src');
         // var indexPath = urlFile.lastIndexOf('/'),
         //     file =  urlFile.slice(indexPath+1);
-        ZAMOS.init(urlFile);
+        ZAMOS.init(urlFile, area);
         main2.init();
     };
 
@@ -928,7 +937,6 @@ $('body').fadeloader({
 });
 
 
-
 var ReSeT = (function(){
     var _setUpListners = function() {
         $('.btn__clear').on('click', function(event) {
@@ -945,42 +953,7 @@ var ReSeT = (function(){
             $( "#slider" ).slider({'value':100});
             $('.mainImg').text('Image.jpg');
             $('.mainWatermark').text('Image.jpg');
-
-            dataParams.addWatermarkImage('');
-            dataParams.addOriginalImage('');
-            dataParams.addTransparency(1);
-            dataParams.addX('');
-            dataParams.addY('');
-
-        });
-    };
-    var init = function () {
-        _setUpListners();
-
-    };
-    return {
-        init: init
-    };
-})();
-ReSeT.init();
-
-
-var ReSeT = (function(){
-    var _setUpListners = function() {
-        $('.btn__clear').on('click', function(event) {
-            event.preventDefault();
-            if($('.mainIMGHolder').length){$('.mainIMGHolder').remove();}
-            if($('.flagHolder').length){$('.flagHolder').remove();}
-            if($('#horizontal').length){$('#horizontal').remove();}
-            if($('#vertical').length){$('#vertical').remove();}
-            $('#fileuploadImage').removeAttr('disabled');
-            $('#watermark').attr('disabled', 'disabled');
-            $('#moveX').val(0);
-            $('#moveY').val(0);
-            $('input[name="opacity"]').val(0);
-            $( "#slider" ).slider({'value':100});
-            $('.mainImg').text('Image.jpg');
-            $('.mainWatermark').text('Image.jpg');
+            $('.aim-img').append('<img src="" class="mainMark">');
 
             dataParams.addWatermarkImage('');
             dataParams.addOriginalImage('');
