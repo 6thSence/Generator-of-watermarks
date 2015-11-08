@@ -34,6 +34,7 @@
             }
         }
     };
+
     var _addX = function(x){
         params.x= x;
     };
@@ -71,19 +72,21 @@ var submitForm = (function(){
     var _setUpListners = function() {
         $('#submit').on('click', function(e) {
             e.preventDefault();
+            dataParams.addX($('.flagHolder').css('left'));
+            dataParams.addY($('.flagHolder').css('top'));
             console.log (dataParams.getData());
             var url ='./php/download.php',
-                defObj = _ajax(dataParams.getData(), url);
+            defObj = _ajax(dataParams.getData(), url);
 
             if(defObj) {
                 defObj.done(function(ans){
                     if (ans.status === 'OK') {
-                       console.log('ok');
+                     console.log('ok');
                        window.location = ans.link; // Link to file
-                    } else{
-                       console.log('не ok');
-                    }
-                })
+                   } else{
+                     console.log('не ok');
+                 }
+             })
             }
 
         });
@@ -109,11 +112,11 @@ if ($('#submit')) { submitForm.init(); };
 var OpacitySlider = (function(){
     var _setUpListners = function() {
         $( "#slider" ).slider({'value':100, 'range': 'min'}).on( "slide", function( event, ui ) {
-        var opacity = ui.value/100;
-        dataParams.addTransparency(opacity);
-        $('.mainMark,.flagHolder').css('opacity', opacity);
-        $('input[name="opacity"]').val(opacity*100);
-      });
+            var opacity = ui.value/100;
+            dataParams.addTransparency(opacity);
+            $('.mainMark,.flagHolder').css('opacity', opacity);
+            $('input[name="opacity"]').val(opacity*100);
+        });
     };
     var init = function () {
         _setUpListners();
@@ -127,117 +130,122 @@ if ($('#slider')) { OpacitySlider.init(); };
 
 //Загрузка основного изображения
 var FileUploadJQ = (function(){
-
+    var zzz;
     var _setUpListners = function() {
         $('#fileuploadImage').fileupload({
+            dataType: 'json',
+            progressall: function (e, data) {
+                var progress = '<div id="progress"></div>';
+                $('.main-bl').css('position', 'relative').prepend(progress)
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress').css({
+                    'height': '17px',
+                    'background-image':'url(img/progressbar.gif)',
+                    'position':'absolute',
+                    'top':'75px',
+                    'left':'26px',
+                    'max-width':'648px',
+                    'border-radius': '7px'
+                }).css('width', progress + '%');
+            },
+            add:function (e,data) {
+        //console.log('add ready')
+        data.submit();
+    },
+    // fail:function () {
+
+    // },
+    done: function (e, data) {
+        var nameFile = data.result.files[0].name,
+        urlFile = data.result.files[0].url;
+        dataParams.addOriginalImage(urlFile);
+        $('#progress').remove();
+        $('#fileuploadImage').attr('disabled', 'disabled');
+        $('input[name="aim-img"]').val(nameFile)
+        $('.mainImg').text(nameFile);
+        $('#watermark').removeAttr('disabled');
+        $('body').append('<img src="'+ urlFile +'" class="mainIMG">');
+        $(".mainIMG").hide().on('load', function(event) {
+            var width = $(this).width();
+            var height = $(this).height();
+            $('.aim-img').append('<div class="mainIMGHolder"></div>').css('position', 'relative');
+            if(width > 648 || height > 648){
+                if(width > height){
+                    var finalSize = (width/height);
+                    var zzz = width/parseInt($('.mainIMGHolder').css('width'));
+                    _setUpListners2(zzz);
+                    $('.mainIMGHolder').css({
+                        'width': '648px',
+                        'height': 648/finalSize+'px',
+                        'background': 'url('+ urlFile +')',
+                        'background-size':'contain',
+                        'overflow':'hidden',
+                        'position':'absolute',
+                        'top':'0',
+                        'bottom':'0',
+                        'left':'0',
+                        'right':'0',
+                        'margin':'auto'
+                    });
+
+                } else {
+                   var finalSize = (height/width);
+                   _setUpListners2();
+                   $('.mainIMGHolder').css({
+                    'height': '533px',
+                    'width': 533/finalSize+'px',
+                    'background': 'url('+ urlFile +')',
+                    'background-size':'contain',
+                    'overflow':'hidden',
+                    'position':'absolute',
+                    'top':'0',
+                    'bottom':'0',
+                    'left':'0',
+                    'right':'0',
+                    'margin':'auto'
+                });
+               }
+           } else {
+            _setUpListners2();
+            $('.mainIMGHolder').css({
+                'height': height,
+                'width': width,
+                'background': 'url('+ urlFile +')',
+                'background-size':'contain',
+                'overflow':'hidden',
+                'position':'absolute',
+                'top':'0',
+                'bottom':'0',
+                'left':'0',
+                'right':'0',
+                'margin':'auto'
+            });
+        }
+
+
+    });
+}
+});
+};
+
+var _setUpListners2 = function(zzz) {
+    $('#watermark').fileupload({
         dataType: 'json',
         progressall: function (e, data) {
             var progress = '<div id="progress"></div>';
             $('.main-bl').css('position', 'relative').prepend(progress)
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        $('#progress').css({
-            'height': '17px',
-            'background-image':'url(img/progressbar.gif)',
-            'position':'absolute',
-            'top':'75px',
-            'left':'26px',
-            'max-width':'648px',
-            'border-radius': '7px'
-        }).css('width', progress + '%');
-    },
-    add:function (e,data) {
-        //console.log('add ready')
-        data.submit();
-    },
-        done: function (e, data) {
-            var nameFile = data.result.files[0].name,
-                urlFile = data.result.files[0].url;
-            dataParams.addOriginalImage(urlFile);
-            $('#progress').remove();
-            $('#fileuploadImage').attr('disabled', 'disabled');
-            $('input[name="aim-img"]').val(nameFile)
-                $('.mainImg').text(nameFile);
-                $('#watermark').removeAttr('disabled');
-                $('body').append('<img src="'+ urlFile +'" class="mainIMG">');
-                $(".mainIMG").hide().on('load', function(event) {
-                    var width = $(this).width();
-                    var height = $(this).height();
-                    $('.aim-img').append('<div class="mainIMGHolder"></div>').css('position', 'relative');
-                    if(width > 648 || height > 648){
-                    if(width > height){
-                        var finalSize = (width/height);
-                        _setUpListners2();
-                        $('.mainIMGHolder').css({
-                            'width': '648px',
-                            'height': 648/finalSize+'px',
-                            'background': 'url('+ urlFile +')',
-                            'background-size':'contain',
-                            'overflow':'hidden',
-                            'position':'absolute',
-                            'top':'0',
-                            'bottom':'0',
-                            'left':'0',
-                            'right':'0',
-                            'margin':'auto'
-                        });
-                    } else {
-                         var finalSize = (height/width);
-                         _setUpListners2();
-                         $('.mainIMGHolder').css({
-                            'height': '533px',
-                            'width': 533/finalSize+'px',
-                            'background': 'url('+ urlFile +')',
-                            'background-size':'contain',
-                            'overflow':'hidden',
-                            'position':'absolute',
-                            'top':'0',
-                            'bottom':'0',
-                            'left':'0',
-                            'right':'0',
-                            'margin':'auto'
-                        });
-                    }
-                    } else {
-                        _setUpListners2();
-                       $('.mainIMGHolder').css({
-                            'height': height,
-                            'width': width,
-                            'background': 'url('+ urlFile +')',
-                            'background-size':'contain',
-                            'overflow':'hidden',
-                            'position':'absolute',
-                            'top':'0',
-                            'bottom':'0',
-                            'left':'0',
-                            'right':'0',
-                            'margin':'auto'
-                        });
-                    }
-
-                        
-                });
-        }
-    });
-    };
-
-     var _setUpListners2 = function() {
-        $('#watermark').fileupload({
-        dataType: 'json',
-         progressall: function (e, data) {
-            var progress = '<div id="progress"></div>';
-            $('.main-bl').css('position', 'relative').prepend(progress)
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        $('#progress').css({
-            'height': '17px',
-            'background-image':'url(img/progressbar.gif)',
-            'position':'absolute',
-            'top':'75px',
-            'left':'26px',
-            'max-width':'648px',
-            'border-radius': '7px'
-        }).css('width', progress + '%');
-    },
-    add:function (e,data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress').css({
+                'height': '17px',
+                'background-image':'url(img/progressbar.gif)',
+                'position':'absolute',
+                'top':'75px',
+                'left':'26px',
+                'max-width':'648px',
+                'border-radius': '7px'
+            }).css('width', progress + '%');
+        },
+        add:function (e,data) {
         //console.log('add ready')
         if($('.flagHolder').length){
             $('.flagHolder, #vertical, #horizontal').remove();
@@ -245,20 +253,20 @@ var FileUploadJQ = (function(){
 
         data.submit();
     },
-        done: function (e, data) {
-                $('#progress').remove();
-                var nameFile = data.result.files[0].name,
-                urlFile = data.result.files[0].url;
-                dataParams.addWatermarkImage(urlFile);
-                $('#progress').remove(); 
-                $('.mainWatermark').text(nameFile);
-                $('input[name="watermark"]').val(nameFile);
-                var buff = 0;
-                if(!($('.mainMark').length)){
-                    buff = 1;
-                }
+    done: function (e, data) {
+        $('#progress').remove();
+        var nameFile = data.result.files[0].name,
+        urlFile = data.result.files[0].url;
+        dataParams.addWatermarkImage(urlFile);
+        $('#progress').remove(); 
+        $('.mainWatermark').text(nameFile);
+        $('input[name="watermark"]').val(nameFile);
+        var buff = 0;
+        if(!($('.mainMark').length)){
+            buff = 1;
+        }
                 if($('.mainMark').length){// || $('.flag').length){
-                    $('.mainMark').remove();
+    $('.mainMark').remove();
                     // $('.flagHolder').remove();
                     // $('.flag').remove();
                 }
@@ -274,18 +282,25 @@ var FileUploadJQ = (function(){
                 }).on('load', function(event) {
                     var width = $(this).width();
                     var height = $(this).height();
+                    var realWidth = width/zzz+'px';
+                    var realHeight = height/zzz+'px';
                     if(width > 648 || height > 648){
-                    if(width > height){
-                        $(this).css('width', '100%').show('fast').draggable({containment:'parent'});
-                        ZAMOS.init(width,height,nameFile);
+                        if (buff === 1){
+                            ZAMOS.init(width,height,urlFile);
+                        }
+                        if(width > height){
+                            $(this).css('width', '100%').show('fast').draggable({containment:'parent'});
+                        // ZAMOS.init(width,height,nameFile);
                     } else {
-                         $(this).css('height', '100%').show('fast').draggable({containment:'parent'});
-                         ZAMOS.init(width,height,nameFile);
-                    }
-                    } else {
-                        $(this).show('fast').draggable({containment:'parent'});
-                        ZAMOS.init(width,height,nameFile);                        
-                    }
+                       $(this).css('height', '100%').show('fast').draggable({containment:'parent'});
+                         // ZAMOS.init(width,height,nameFile);
+                     }
+                 } else {
+                    $(this).show('fast').attr('width', realWidth).draggable({containment:'parent'});
+                    if (buff === 1){
+                        ZAMOS.init(urlFile);
+                    }                        
+                }
                     //___________I_____________//
 
                     if (buff === 1){
@@ -295,67 +310,92 @@ var FileUploadJQ = (function(){
                     
                 });
 
-        }
-    });
-    };
+}
+});
+};
 
 
-    var init = function () {
-        _setUpListners();
+var init = function () {
+    _setUpListners();
 
-    };
+};
 
 
-    return {
-        init: init
-    };
+return {
+    init: init
+};
 
 })();
 if ($('#fileuploadImage')) { FileUploadJQ.init(); };
 
 //Режим замощения изображений
 var ZAMOS = (function(){
-    var init = function (width,height,file) {
+    var init = function (file) {
         var mainIMGHolderWidth = screen.width*2;
         var mainIMGHolderHeight = screen.height*2;
-        var flagWidth = width;
-        var flagHeight = height;
-        var mainIMGHolderArea = mainIMGHolderWidth * mainIMGHolderHeight;
-        var flagArea = flagWidth * flagHeight;
-        var integer = (mainIMGHolderArea/flagArea);
+        var mainIMGHolderArea = mainIMGHolderWidth*mainIMGHolderHeight;
         $('label[for="true"]').on('click', function() {
+            dataParams.addTransparency(1);
             $('#moveX').val(0);
             $('#moveY').val(0);
             $( "#slider" ).slider({'value':100});
-            $('.mainMark').hide().removeClass('mainMark').addClass('flag');
+            var kooficientSjatia = $('.mainMark').attr('width');
+            // console.log(kooficientSjatia);
+        var flagWidth = $('.mainMark').width();
+        var flagHeight = $('.mainMark').height();
+            $('.mainMark').remove();
         //console.log(mainIMGHolderArea);
         //console.log(flagArea);
         //console.log(mainIMGHolderArea/flagArea);
-            $('.mainIMGHolder').append('<div class="flagHolder"></div>');
-            $('.flagHolder').css({
-                'position': 'absolute',
-                'width': mainIMGHolderWidth+'px',
-                'height': mainIMGHolderHeight+'px',
-                'border':'1px solid green',
-                'top': -1*screen.height+'px',
-                'left':-1*screen.width+'px',
-                'cursor':'move',
-                'font-size':'0'
-            }).draggable();
-            dataParams.addX($('.flagHolder').css('left'));
-            dataParams.addY($('.flagHolder').css('top'));
+        $('.mainIMGHolder').append('<div class="flagHolder"></div>');
+        $('.flagHolder').css({
+            'position': 'absolute',
+            'width': mainIMGHolderWidth+'px',
+            'height': mainIMGHolderHeight+'px',
+            'border':'1px solid green',
+            'top': '50%',
+            'left':'50%',
+            'cursor':'move',
+            'margin-left': -1*mainIMGHolderWidth/2+'px',
+            'margin-top': -1*mainIMGHolderHeight/2+'px',
+            'font-size':'0'
+        }).draggable();
+
+
+            // dataParams.addX($('.flagHolder').css('left'));
+            // dataParams.addY($('.flagHolder').css('top'));
+
+
+        var flagArea = flagWidth * flagHeight;
+        var integer = (mainIMGHolderArea/flagArea);
 
 
             $('.flagHolder').hide();
-            $('.flagHolder:last-child').show('500');
+            $('.flagHolder').show('500');
             for(var i = 0;i<=integer;i++){
-            $('.flagHolder').append('<img src="server/php/files/'+ file +'" class="flag">');                
+                $('.flagHolder').append('<img  class="flag">');                
             }
+            $('.flag').attr({
+                'src': file,
+                'width': kooficientSjatia
+            });
 
+
+
+
+            console.log(integer)
+            console.log(mainIMGHolderArea)
+            console.log(flagArea)
+
+            // src="server/php/files/'+ file +'"
             $('#moveX').on('keyup', function() {
                 var z = $('#moveX').val();
                 //console.log(z);
                 $('.flag').css('border-bottom', z+'px solid transparent');
+                $('#vertical').css({
+                    'margin-top': (-1*z)/2+'px',
+                    'height': z+'px'
+                });
                 
             });
 
@@ -363,16 +403,20 @@ var ZAMOS = (function(){
                 var z = $('#moveY').val();
                 //console.log(z);
                 $('.flag').css('border-left', z+'px solid transparent');
+                $('#horizontal').css({
+                    'margin-left': (-1*z)/2+'px',
+                    'width': z+'px'
+                });
                 
             });
             
         });
 
 
-    };
-    return {
-        init: init
-    };
+};
+return {
+    init: init
+};
 
 })();
 
@@ -413,130 +457,130 @@ var Coordin = (function () {
             case 0:
                 //img.css({'left': '0' , 'top': '0'});
                 img.stop(true,true).animate(
-                    {
-                        'left': '0',
-                        'top': '0'
-                    },
-                    1000
+                {
+                    'left': '0',
+                    'top': '0'
+                },
+                1000
                 );
                 inp_x.val(0);
                 inp_y.val(0);
                 break;
-            case 1:
+                case 1:
                 //img.css({'left': center_width, 'top': '0'});
                 img.stop(true,true).animate(
-                    {
-                        'left': center_width,
-                        'top': '0'
-                    },
-                    1000
+                {
+                    'left': center_width,
+                    'top': '0'
+                },
+                1000
                 );
                 inp_x.val(center_width);
                 inp_y.val(0);
                 break;
-            case 2:
+                case 2:
                 //img.css({'left': layer_width-img_width , 'top': '0'});
                 img.stop(true,true).animate(
-                    {
-                        'left': layer_width-img_width,
-                        'top': '0'
-                    },
-                    1000
+                {
+                    'left': layer_width-img_width,
+                    'top': '0'
+                },
+                1000
                 );
                 inp_x.val(layer_width-img_width);
                 inp_y.val(0);
                 break;
-            case 3:
+                case 3:
                 //img.css({'left': '0' , 'top': center_hight});
                 img.stop(true,true).animate(
-                    {
-                        'left': '0',
-                        'top': center_hight
-                    },
-                    1000
+                {
+                    'left': '0',
+                    'top': center_hight
+                },
+                1000
                 );
                 inp_x.val(0);
                 inp_y.val(center_hight);
                 break;
-            case 4:
+                case 4:
                 //img.css({'left': center_width , 'top': center_hight});
                 img.stop(true,true).animate(
-                    {
+                {
                     'left': center_width,
                     'top': center_hight
-                    },
-                    1000
+                },
+                1000
                 );
                 inp_x.val(center_width);
                 inp_y.val(center_hight);
                 break;
-            case 5:
+                case 5:
                 //img.css({'left': layer_width-img_width , 'top': center_hight});
                 img.stop(true,true).animate(
-                    {
-                        'left': layer_width-img_width,
-                        'top': center_hight
-                    },
-                    1000
+                {
+                    'left': layer_width-img_width,
+                    'top': center_hight
+                },
+                1000
                 );
                 inp_x.val(layer_width-img_width);
                 inp_y.val(center_hight);
                 break;
-            case 6:
+                case 6:
                 //img.css({'left': '0' , 'top': layer_height-img_height});
                 img.stop(true,true).animate(
-                    {
-                        'left': '0',
-                        'top': layer_height-img_height
-                    },
-                    1000
+                {
+                    'left': '0',
+                    'top': layer_height-img_height
+                },
+                1000
                 );
                 inp_x.val(0);
                 inp_y.val(layer_height-img_height);
                 break;
-            case 7:
+                case 7:
                 //img.css({'left': center_width , 'top': layer_height-img_height});
                 img.stop(true,true).animate(
-                    {
-                        'left': center_width,
-                        'top': layer_height-img_height
-                    },
-                    1000
+                {
+                    'left': center_width,
+                    'top': layer_height-img_height
+                },
+                1000
                 );
                 inp_x.val(center_width);
                 inp_y.val(layer_height-img_height);
                 break;
-            case 8:
+                case 8:
                 //img.css({'left': layer_width-img_width , 'top': layer_height-img_height});
                 img.stop(true,true).animate(
-                    {
-                        'left': layer_width-img_width,
-                        'top': layer_height-img_height
-                    },
-                    1000
+                {
+                    'left': layer_width-img_width,
+                    'top': layer_height-img_height
+                },
+                1000
                 );
                 inp_x.val(layer_width-img_width);
                 inp_y.val(layer_height-img_height);
                 break;
-            default :
+                default :
                 //console.log('hz')
-        }
+            }
 
-    };
+        };
 
-    var _increas = function(){
+        var _increas = function(){
         //console.log('increas');
         var inp = $(this).closest('.input-group_count').find('input'),
-            img=$('.mainMark'),
-            layer=$('.mainIMGHolder'),
-            img_width= parseInt(img.css('width')),
-            layer_width=parseInt(layer.css('width')),
-            img_height= parseInt(img.css('height')),
-            layer_height=parseInt(layer.css('height'));
+        img=$('.mainMark'),
+        layer=$('.mainIMGHolder'),
+        img_width= parseInt(img.css('width')),
+        layer_width=parseInt(layer.css('width')),
+        img_height= parseInt(img.css('height')),
+        layer_height=parseInt(layer.css('height'));
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.mainMark').css('left'),
-                coordin_inc = parseInt(coordin) + 10,
-                pos = coordin_inc +'px';
+            coordin_inc = parseInt(coordin) + 10,
+            pos = coordin_inc +'px';
 
             if ((coordin_inc)<= (layer_width - img_width)) {
                 $('.mainMark').css('left', pos);
@@ -549,26 +593,26 @@ var Coordin = (function () {
         }
         if (inp.attr('id') === 'moveY'){
             var coordin = $('.mainMark').css('top'),
-                coordin_inc = parseInt(coordin) + 10,
-                pos = coordin_inc +'px';
+            coordin_inc = parseInt(coordin) + 10,
+            pos = coordin_inc +'px';
             if ((coordin_inc)<= (layer_height - img_height)) {
-                 $('.mainMark').css('top' , pos);
-                inp.val(coordin_inc);
-            }
-            if ((coordin_inc)>= (layer_height - img_height)) {
-                $('.mainMark').css('top' , layer_height - img_height);
-                inp.val(layer_height - img_height);
-            }
+               $('.mainMark').css('top' , pos);
+               inp.val(coordin_inc);
+           }
+           if ((coordin_inc)>= (layer_height - img_height)) {
+            $('.mainMark').css('top' , layer_height - img_height);
+            inp.val(layer_height - img_height);
         }
+    }
 
-    };
-    var _reduce = function(){
+};
+var _reduce = function(){
         //console.log('reduce');
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.mainMark').css('left'),
-                coordin_red = parseInt(coordin) - 10,
-                pos = coordin_red +'px';
+            coordin_red = parseInt(coordin) - 10,
+            pos = coordin_red +'px';
             if(coordin_red >= 0) {
                 $('.mainMark').css('left', pos);
                 inp.val(coordin_red);
@@ -580,8 +624,8 @@ var Coordin = (function () {
         }
         if (inp.attr('id') === 'moveY'){
             var coordin = $('.mainMark').css('top'),
-                coordin_red = parseInt(coordin) - 10,
-                pos = coordin_red +'px';
+            coordin_red = parseInt(coordin) - 10,
+            pos = coordin_red +'px';
             if(coordin_red >= 0) {
                 $('.mainMark').css('top', pos);
                 inp.val(coordin_red);
@@ -597,12 +641,12 @@ var Coordin = (function () {
     var _setCoordinY = function () {
 
         var $this = $(this),
-            coordin = $(this).val(),
-            position = coordin +'px',
-            img=$('.mainMark'),
-            layer=$('.mainIMGHolder'),
-            img_height= parseInt(img.css('height')),
-            layer_height=parseInt(layer.css('height'));
+        coordin = $(this).val(),
+        position = coordin +'px',
+        img=$('.mainMark'),
+        layer=$('.mainIMGHolder'),
+        img_height= parseInt(img.css('height')),
+        layer_height=parseInt(layer.css('height'));
         if(coordin <= (layer_height - img_height) || coordin >= 0){
             $('.mainMark').css('top' , position);
         }
@@ -618,12 +662,12 @@ var Coordin = (function () {
     var _setCoordinX = function () {
 
         var $this = $(this),
-            coordin = $(this).val(),
-            img=$('.mainMark'),
-            layer=$('.mainIMGHolder'),
-            position = coordin +'px',
-            img_width= parseInt(img.css('width')),
-            layer_width=parseInt(layer.css('width'));
+        coordin = $(this).val(),
+        img=$('.mainMark'),
+        layer=$('.mainIMGHolder'),
+        position = coordin +'px',
+        img_width= parseInt(img.css('width')),
+        layer_width=parseInt(layer.css('width'));
 
         if(coordin <= (layer_width - img_width) || coordin >= 0){
             $('.mainMark').css('left' , position);
@@ -643,12 +687,12 @@ var Coordin = (function () {
     var _drag = function() {
         //console.log('drag');
         var moveX = $('#moveX'),
-            moveY = $('#moveY');
+        moveY = $('#moveY');
 
         $(this).draggable({
             drag: function (event, ui) {
                 moveX.val(ui.position.left);
-                moveY.val(ui.position.top);
+                moveY.val(ui.position.top);        
                 //console.log(ui.position.left);
                 //console.log(ui.position.top);
                 //ui.position.top = y;
@@ -675,14 +719,14 @@ if ($('.choose-position')) {
 
 var main2 = (function(){
     var _increas2 = function(){
-        
+
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
             //console.log(1)
             var coordin = $('.flag').css('border-bottom-width');
 
             var coordin_inc = parseInt(coordin) + 1,
-                pos = coordin_inc;
+            pos = coordin_inc;
             $('.flag').css('border-bottom' , pos+'px solid transparent');
             inp.val(pos);
 
@@ -694,8 +738,8 @@ var main2 = (function(){
         }
         if (inp.attr('id') === 'moveY'){
             var coordin = $('.flag').css('border-left-width'),
-                coordin_inc = parseInt(coordin) + 1,
-                pos = coordin_inc;
+            coordin_inc = parseInt(coordin) + 1,
+            pos = coordin_inc;
             $('.flag').css('border-left' , pos+'px solid transparent');
             inp.val(pos);
 
@@ -711,7 +755,7 @@ var main2 = (function(){
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.flag').css('border-bottom-width'),
-                coordin_inc = parseInt(coordin) - 1;
+            coordin_inc = parseInt(coordin) - 1;
             var pos = coordin_inc;
             $('.flag').css('border-bottom' , pos+'px solid transparent');
             if(pos <= 0){
@@ -720,7 +764,7 @@ var main2 = (function(){
                 inp.val(pos);
             }
 
-             $('#vertical').css({
+            $('#vertical').css({
                 'margin-top': (-1*pos)/2+'px',
                 'height': pos+'px'
             });
@@ -730,7 +774,7 @@ var main2 = (function(){
         }
         if (inp.attr('id') === 'moveY'){
             var coordin = $('.flag').css('border-left-width'),
-                coordin_inc = parseInt(coordin) - 1;
+            coordin_inc = parseInt(coordin) - 1;
             var pos = coordin_inc;
             $('.flag').css('border-left' , pos+'px solid transparent');
             if(pos <= 0){
@@ -752,27 +796,27 @@ var main2 = (function(){
             // console.log($(this).css('left'))
             // console.log($(this).css('top'))
 
-            $('.choose-position').css('position', 'relative').prepend('<div id="vertical"></div> <div id="horizontal"></div>');
-        $('#vertical').css({
-            'position': 'absolute',
-            'top':'50%',
-            'left': '1px',
-            'width':'100px',
-            'background-color':'#e3736c'
-        });
-        $('#horizontal').css({
-            'position': 'absolute',
-            'top':'0',
-            'left': '50%',
-            'width':'0',
-            'height':'100%',
-            'background-color':'#e3736c'
-        });
-        main2.init()
+            $('.choose-position').css('position', 'relative').css('overflow', 'hidden').prepend('<div id="vertical"></div> <div id="horizontal"></div>');
+            $('#vertical').css({
+                'position': 'absolute',
+                'top':'50%',
+                'left': '1px',
+                'width':'100px',
+                'background-color':'#e3736c'
+            });
+            $('#horizontal').css({
+                'position': 'absolute',
+                'top':'0',
+                'left': '50%',
+                'width':'0',
+                'height':'100%',
+                'background-color':'#e3736c'
+            });
+            main2.init()
 
-    };
+        };
 
-    var init = function () {
+        var init = function () {
         // _redCross();
         $('.radio__tiling_true').on('click',_redCross);
         $('.position__choose-increase').on('click', _increas2);
@@ -796,67 +840,39 @@ $('body').fadeloader({
     onComplete : ''
 });
 
-//div на квадраты
-// var RadioSquare = (function(){
-//     var init = function(){
-//         //console.log('draw init');
-//         _setupListener();
-//     };
-
-//     var _setupListener = function (){
-//          $('#true').on('click', _drawing);
-//          $('#moveX').on('keyup', _incHeight);
-//          $('#moveY').on('keyup', _incWidth);
-//         // $('.position__choose-increase').on('click' , _button);
-//     };
-
-//     var _button = function(){
-//         var inp = $(this).closest('.input-group_count').find('input');
-//         if (inp.attr('id') === 'moveX'){
-//             //console.log('inc height');
-//             _incHeight();
-//         }
-//         if (inp.attr('id') === 'moveY'){
-//             //console.log('inc width');
-//             _incWidth();
-//         }
 
 
-//     };
-//     var _incHeight = function(){
-//         var marg_top = $(this).val()/ 2,
-//             otst_top = (51 - marg_top)+'px',
-//             height = (marg_top*2)+'px';
-//         $('#horizontal').css({height : height , top : otst_top});
+var ReSeT = (function(){
+    var _setUpListners = function() {
+        $('.btn__clear').on('click', function(event) {
+            event.preventDefault();
+            if($('.mainIMGHolder').length){$('.mainIMGHolder').remove();}
+            if($('.flagHolder').length){$('.flagHolder').remove();}
+            if($('#horizontal').length){$('#horizontal').remove();}
+            if($('#vertical').length){$('#vertical').remove();}
+            $('#fileuploadImage').removeAttr('disabled');
+            $('#watermark').attr('disabled', 'disabled');
+            $('#moveX').val(0);
+            $('#moveY').val(0);
+            $('input[name="opacity"]').val(0);
+            $( "#slider" ).slider({'value':100});
+            $('.mainImg').text('Image.jpg');
+            $('.mainWatermark').text('Image.jpg');
 
-//     };
-//     var _incWidth = function(){
-//         var marg_left = $(this).val()/ 2,
-//             otst_left = (51 - marg_left)+'px',
-//             width = (marg_left*2)+'px';
-//         $('#vertical').css({width : width , left : otst_left});
+            dataParams.addWatermarkImage('');
+            dataParams.addOriginalImage('');
+            dataParams.addTransparency(1);
+            dataParams.addX('');
+            dataParams.addY('');
 
-//     };
-//     var _drawing = function(){
+        });
+    };
+    var init = function () {
+        _setUpListners();
 
-//             //console.log('draw');
-//         var marg_top= ($('#moveX').val())/ 2,
-//             marg_left= ($('#moveY').val())/ 2,
-//             otst_left = (51 - marg_left)+'px',
-//             otst_top = (51 - marg_top)+'px',
-//             width = (marg_left*2)+'px',
-//             height = (marg_top*2)+'px';
-//         $('.choose-position').css({position : 'relative', overflow: 'hidden'}).append('<div id="vertical"></div><div id="horizontal"></div>');
-//         $('#vertical').css({ position : 'absolute', top : '0', left: otst_left,  'background-color': '#f97e76', width: width, height : '100%'});
-//         $('#horizontal').css({ position : 'absolute', top : otst_top, left: '0',  'background-color': '#f97e76', width: '91.5%', height : height});
-
-//     };
-//     return{
-//         init : init
-//     }
-// })();
-
-// if ($('input[name = "tiling"]').length){
-//     RadioSquare.init();
-// }
-
+    };
+    return {
+        init: init
+    };
+})();
+ReSeT.init();
