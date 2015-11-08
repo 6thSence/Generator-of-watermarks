@@ -29,5 +29,6 @@ gem install compass
 # Setup apache
 cp confs/watermarkGen.conf /etc/apache2/sites-available/watermarkGen.conf
 ln -s /etc/apache2/sites-available/watermarkGen.conf /etc/apache2/sites-enabled/watermarkGen.conf
+a2enmod rewrite
 apachectl restart
 

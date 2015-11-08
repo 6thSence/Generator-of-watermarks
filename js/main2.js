@@ -74,15 +74,18 @@ var submitForm = (function(){
             console.log (dataParams.getData());
             var url ='./php/download.php',
                 defObj = _ajax(dataParams.getData(), url);
+
             if(defObj) {
                 defObj.done(function(ans){
                     if (ans.status === 'OK') {
                        console.log('ok');
-                    }else{
+                       window.location = ans.link; // Link to file
+                    } else{
                        console.log('не ok');
                     }
                 })
             }
+
         });
     };
     var _ajax = function (data, url) {
@@ -90,13 +93,13 @@ var submitForm = (function(){
             url: url,
             type: 'POST',
             dataType: 'JSON',
-            data: data,
+            data: data
         }).fail(function(){
             console.log('На сервере произошла ошибка.');
         });
     };
     return {
-        init: init,
+        init: init
     }
 })();
 if ($('#submit')) { submitForm.init(); };

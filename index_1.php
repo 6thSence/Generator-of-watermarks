@@ -1,21 +1,25 @@
 <?php
-	session_start();
-	include_once 'php/config.php';
-	include_once 'php/functions.php';
-	include_once 'php/lang.php';
+session_start();
+include_once 'php/config.php';
+include_once 'php/functions.php';
+include_once 'php/lang.php';
+require_once 'server/php/UploadHandler.php';
 
-	$lang_param = $_GET['lang'];
-	if($lang_param) {
-		$_SESSION['lang'] = $lang_param;
-	}
+error_reporting(E_ALL | E_STRICT);
+$upload_handler = new UploadHandler();
 
-	$current_language = $_SESSION['lang'];
-	if(!$current_language || !$lang[$current_language]) {
-		$_SESSION['lang'] = $default_language;
-		$current_language = $default_language;
-	}
+$lang_param = $_GET['lang'];
+if($lang_param) {
+	$_SESSION['lang'] = $lang_param;
+}
 
-	$text = $lang[$current_language];
+$current_language = $_SESSION['lang'];
+if(!$current_language || !$lang[$current_language]) {
+	$_SESSION['lang'] = $default_language;
+	$current_language = $default_language;
+}
+
+$text = $lang[$current_language];
 ?>
 
 <html lang="ru-RU">

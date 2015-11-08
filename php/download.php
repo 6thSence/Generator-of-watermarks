@@ -6,19 +6,21 @@ include_once 'functions.php';
 require '../vendor/autoload.php';
 use WideImage\WideImage;
 
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
+if(isPost()) {
+    $originX = post('originX');
+    $originY = post('originY');
+    $transparency = post('transparency') * 100;
+    $originalImagePath = post('originalImage');
+    $watermarkImagePath = post('watermarkImage');
 
-    $originX = post('origin-x');
-    $originY = post('origin-y');
-    $transparency = post('transparency');
-    $originalImage = post_image('original-image');
-    $watermarkImage = post_image('watermark-image');
+    $original = WideImage::load($originalImagePath);
+    $watermark = WideImage::load($watermarkImagePath);
 
-    $original = WideImage::load('original-image');
-    $watermark = WideImage::load('watermark-image');
-
-    $isPattern = post('is-pattern');
+    $isPattern = post('isPattern');
     if(isBoolean($isPattern)) {
+        $initialX = str_replace('px', '', post('x'));
+        $initialY = str_replace('px', '', post('y'));
+
         $watermarkWidth = $watermark->getWidth();
         $watermarkHeight = $watermark->getHeight();
 
@@ -26,9 +28,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $imageHeight = $original->getHeight();
 
         $result = $original;
-        // Получать координаты самого верхнего элемента (может иметь отрицательные координаты)
-        for($x = 0; ; $x += ($watermarkWidth + $originX)) {
-            for($y = 0; ; $y += ($watermarkHeight + $originY)) {
+        for($x = $initialX; ; $x += ($watermarkWidth + $originX)) {
+            for($y = $initialY; ; $y += ($watermarkHeight + $originY)) {
                 $result = $result->merge($watermark, $x, $y, $transparency);
                 if ($y > $imageHeight) break;
             }
@@ -39,10 +40,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = $original->merge($watermark, $originX, $originY, $transparency);
     }
 
-    $file_name = make_filename($originalImage['name'], 'jpg');
+    $file_name = make_filename($originalImagePath, 'jpg');
     $file_dir = get_filedir($file_name);
     $result->saveToFile($file_dir);
-    send_file($file_name, $file_dir) ? send_success('successTransfer') : send_error('errorDownload');
+    send_file($file_name);
+    exit();
 }
 
 
