@@ -103,6 +103,8 @@
 .position-select__wrap{
     // @include clearfix;
     width: 230px;
+    clear: both;
+    display: table;
 }
 /* choose-position */
 .choose-position{

@@ -1192,12 +1192,14 @@ body {
 /*************************/
 .position-select__wrap {
   width: 230px;
+  clear: both;
+  display: table;
 }
 
 /* choose-position */
 .choose-position {
   vertical-align: top;
-  width: 110px;
+  width: 102px;
   display: inline-block;
   font-size: 0;
   letter-spacing: 0px;

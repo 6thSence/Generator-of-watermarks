@@ -236,6 +236,10 @@ var FileUploadJQ = (function(){
     },
     add:function (e,data) {
         //console.log('add ready')
+        if($('.flagHolder').length){
+            $('.flagHolder, #vertical, #horizontal').remove();
+        }
+
         data.submit();
     },
         done: function (e, data) {
@@ -252,8 +256,8 @@ var FileUploadJQ = (function(){
                 }
                 if($('.mainMark').length){// || $('.flag').length){
                     $('.mainMark').remove();
-                    //$('.flagHolder').remove();
-                    //$('.flag').remove();
+                    // $('.flagHolder').remove();
+                    // $('.flag').remove();
                 }
                 $('.mainIMGHolder').append('<img src="'+ urlFile +'" class="mainMark">');
                 $('.mainMark').css({left : '0', top : '0'});
@@ -668,6 +672,7 @@ if ($('.choose-position')) {
 
 var main2 = (function(){
     var _increas2 = function(){
+        
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
             //console.log(1)
@@ -677,6 +682,12 @@ var main2 = (function(){
                 pos = coordin_inc;
             $('.flag').css('border-bottom' , pos+'px solid transparent');
             inp.val(pos);
+
+            $('#vertical').css({
+                'margin-top': (-1*pos)/2+'px',
+                'height': pos+'px'
+            });
+
         }
         if (inp.attr('id') === 'moveY'){
             var coordin = $('.flag').css('border-left-width'),
@@ -684,6 +695,11 @@ var main2 = (function(){
                 pos = coordin_inc;
             $('.flag').css('border-left' , pos+'px solid transparent');
             inp.val(pos);
+
+            $('#horizontal').css({
+                'margin-left': (-1*pos)/2+'px',
+                'width': pos+'px'
+            });
         }
 
     };
@@ -699,8 +715,13 @@ var main2 = (function(){
                 inp.val(0);
             } else {
                 inp.val(pos);
-
             }
+
+             $('#vertical').css({
+                'margin-top': (-1*pos)/2+'px',
+                'height': pos+'px'
+            });
+
 
 
         }
@@ -714,22 +735,43 @@ var main2 = (function(){
             } else {
                 inp.val(pos);
             }
+            $('#horizontal').css({
+                'margin-left': (-1*pos)/2+'px',
+                'width': pos+'px'
+            });
 
 
         }
 
     };
 
-    var _setUpListners = function() {
-        $('.flagHolder').on(' mouseup', function() {
+    var _redCross = function() {
             // console.log($(this).css('left'))
             // console.log($(this).css('top'))
 
+            $('.choose-position').css('position', 'relative').prepend('<div id="vertical"></div> <div id="horizontal"></div>');
+        $('#vertical').css({
+            'position': 'absolute',
+            'top':'50%',
+            'left': '1px',
+            'width':'100px',
+            'background-color':'#e3736c'
         });
+        $('#horizontal').css({
+            'position': 'absolute',
+            'top':'0',
+            'left': '50%',
+            'width':'0',
+            'height':'100%',
+            'background-color':'#e3736c'
+        });
+        main2.init()
+
     };
 
     var init = function () {
-        _setUpListners();
+        // _redCross();
+        $('.radio__tiling_true').on('click',_redCross);
         $('.position__choose-increase').on('click', _increas2);
         $('.position__choose-reduce').on('click', _reduce2);
     };
@@ -752,66 +794,66 @@ $('body').fadeloader({
 });
 
 //div на квадраты
-var RadioSquare = (function(){
-    var init = function(){
-        //console.log('draw init');
-        _setupListener();
-    };
+// var RadioSquare = (function(){
+//     var init = function(){
+//         //console.log('draw init');
+//         _setupListener();
+//     };
 
-    var _setupListener = function (){
-         $('#true').on('click', _drawing);
-         $('#moveX').on('keyup', _incHeight);
-         $('#moveY').on('keyup', _incWidth);
-        // $('.position__choose-increase').on('click' , _button);
-    };
+//     var _setupListener = function (){
+//          $('#true').on('click', _drawing);
+//          $('#moveX').on('keyup', _incHeight);
+//          $('#moveY').on('keyup', _incWidth);
+//         // $('.position__choose-increase').on('click' , _button);
+//     };
 
-    var _button = function(){
-        var inp = $(this).closest('.input-group_count').find('input');
-        if (inp.attr('id') === 'moveX'){
-            //console.log('inc height');
-            _incHeight();
-        }
-        if (inp.attr('id') === 'moveY'){
-            //console.log('inc width');
-            _incWidth();
-        }
+//     var _button = function(){
+//         var inp = $(this).closest('.input-group_count').find('input');
+//         if (inp.attr('id') === 'moveX'){
+//             //console.log('inc height');
+//             _incHeight();
+//         }
+//         if (inp.attr('id') === 'moveY'){
+//             //console.log('inc width');
+//             _incWidth();
+//         }
 
 
-    };
-    var _incHeight = function(){
-        var marg_top = $(this).val()/ 2,
-            otst_top = (51 - marg_top)+'px',
-            height = (marg_top*2)+'px';
-        $('#horizontal').css({height : height , top : otst_top});
+//     };
+//     var _incHeight = function(){
+//         var marg_top = $(this).val()/ 2,
+//             otst_top = (51 - marg_top)+'px',
+//             height = (marg_top*2)+'px';
+//         $('#horizontal').css({height : height , top : otst_top});
 
-    };
-    var _incWidth = function(){
-        var marg_left = $(this).val()/ 2,
-            otst_left = (51 - marg_left)+'px',
-            width = (marg_left*2)+'px';
-        $('#vertical').css({width : width , left : otst_left});
+//     };
+//     var _incWidth = function(){
+//         var marg_left = $(this).val()/ 2,
+//             otst_left = (51 - marg_left)+'px',
+//             width = (marg_left*2)+'px';
+//         $('#vertical').css({width : width , left : otst_left});
 
-    };
-    var _drawing = function(){
+//     };
+//     var _drawing = function(){
 
-            //console.log('draw');
-        var marg_top= ($('#moveX').val())/ 2,
-            marg_left= ($('#moveY').val())/ 2,
-            otst_left = (51 - marg_left)+'px',
-            otst_top = (51 - marg_top)+'px',
-            width = (marg_left*2)+'px',
-            height = (marg_top*2)+'px';
-        $('.choose-position').css({position : 'relative', overflow: 'hidden'}).append('<div id="vertical"></div><div id="horizontal"></div>');
-        $('#vertical').css({ position : 'absolute', top : '0', left: otst_left,  'background-color': '#f97e76', width: width, height : '100%'});
-        $('#horizontal').css({ position : 'absolute', top : otst_top, left: '0',  'background-color': '#f97e76', width: '91.5%', height : height});
+//             //console.log('draw');
+//         var marg_top= ($('#moveX').val())/ 2,
+//             marg_left= ($('#moveY').val())/ 2,
+//             otst_left = (51 - marg_left)+'px',
+//             otst_top = (51 - marg_top)+'px',
+//             width = (marg_left*2)+'px',
+//             height = (marg_top*2)+'px';
+//         $('.choose-position').css({position : 'relative', overflow: 'hidden'}).append('<div id="vertical"></div><div id="horizontal"></div>');
+//         $('#vertical').css({ position : 'absolute', top : '0', left: otst_left,  'background-color': '#f97e76', width: width, height : '100%'});
+//         $('#horizontal').css({ position : 'absolute', top : otst_top, left: '0',  'background-color': '#f97e76', width: '91.5%', height : height});
 
-    };
-    return{
-        init : init
-    }
-})();
+//     };
+//     return{
+//         init : init
+//     }
+// })();
 
-if ($('input[name = "tiling"]').length){
-    RadioSquare.init();
-}
+// if ($('input[name = "tiling"]').length){
+//     RadioSquare.init();
+// }
 
