@@ -759,9 +759,9 @@ var RadioSquare = (function(){
     };
 
     var _setupListener = function (){
-        // $('#true').on('click', _drawing);
-        // $('#moveX').on('change', _incHeight);
-        // $('#moveY').on('change', _incWidth);
+         $('#true').on('click', _drawing);
+         $('#moveX').on('keyup', _incHeight);
+         $('#moveY').on('keyup', _incWidth);
         // $('.position__choose-increase').on('click' , _button);
     };
 
