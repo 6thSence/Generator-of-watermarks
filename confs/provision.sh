@@ -16,7 +16,7 @@ apt-get install -y npm
 ln -s /usr/bin/nodejs /usr/bin/node
 npm install -g bower
 
-# Install php requirement
+# Install php requirements
 cd /var/www/WatermarkGen/
 curl -sS https://getcomposer.org/installer | php
 php composer.phar install
@@ -27,6 +27,7 @@ bower install --allow-root
 gem install compass
 
 # Setup apache
+# Change allow_rewrite in apache2.conf!!!
 cp confs/watermarkGen.conf /etc/apache2/sites-available/watermarkGen.conf
 ln -s /etc/apache2/sites-available/watermarkGen.conf /etc/apache2/sites-enabled/watermarkGen.conf
 a2enmod rewrite
