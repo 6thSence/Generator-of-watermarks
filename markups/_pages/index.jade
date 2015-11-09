@@ -49,16 +49,15 @@ block block
                                 .choose-position__item
 
                         .position-select__choose.count-position
-                            .input-group_count
-                                label.input-group__label_count.count-position__item_xxx(for='moveX')
+                            .input-group_count.count-position__item_xxx
+                                label.input-group__label_count(for='moveX')
                                 input#moveX.count-position__item(name='value_x', value='0', aria-valuenow='0', autocomplete='off', role='spinbutton')
                                 .dif__btn-group
                                     a(tabindex='-1', role='button').position__choose.position__choose-increase
                                     a(tabindex='-1', role='button').position__choose.position__choose-reduce
 
-                            .input-group_count
-
-                                label.input-group__label_count.count-position__item_yyy(for='moveY') 
+                            .input-group_count.count-position__item_yyy
+                                label.input-group__label_count(for='moveY') 
                                 input#moveY.count-position__item(name='value_y', value='0', aria-valuenow='0', autocomplete='off', role='spinbutton')
                                 .dif__btn-group
                                     a(tabindex='-1', role='button').position__choose.position__choose-increase
