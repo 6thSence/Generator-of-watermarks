@@ -948,13 +948,9 @@ var ReSeT = (function(){
             $( "#slider" ).slider({'value':100});
             $('.mainImg').text('Image.jpg');
             $('.mainWatermark').text('Image.jpg');
-// <<<<<<< HEAD
             $('#true').prop('checked', 'none');
             $('#false').prop('checked', 'checked');
-// =======
             $('.aim-img').append('<img src="" class="mainMark">');
-
-// >>>>>>> b0003e66a80dfe84ed042a29d1416502e7229d60
             dataParams.addWatermarkImage('');
             dataParams.addOriginalImage('');
             dataParams.addTransparency(1);
