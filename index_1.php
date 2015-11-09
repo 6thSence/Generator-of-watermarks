@@ -76,8 +76,8 @@ $text = $lang[$current_language];
 
 				<!-- Сабмит/Ресет -->
 				<div class="btn__box">
-					<button type="reset" class="btn btn__clear"><?php echo $text["reset"] ?></button>
-					<button type="submit" class="btn btn__save"><?php echo $text["download"] ?></button>
+					<button type="reset" class="btn btn__clear" disabled="disabled"><?php echo $text["reset"] ?></button>
+					<button type="submit" class="btn btn__save" disabled="disabled"><?php echo $text["download"] ?></button>
 				</div>
 
 			</form>

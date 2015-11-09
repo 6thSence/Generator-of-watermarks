@@ -92,11 +92,11 @@
 											<div class="radio">
 												<form class="radio__list">
 													<div class="radio__item">
-														<input type="radio" id="true" value="true" name="tiling" class="radio__tiling_input radio__tiling_input_true">
+														<input type="radio" id="true" value="true" name="tiling" class="radio__tiling_input radio__tiling_input_true" disabled="disabled">
 														<label for="true" class="radio__tiling radio__tiling_true"></label>
 													</div>
 													<div class="radio__item">
-														<input type="radio" id="false" value="false" name="tiling" checked="checked" class="radio__tiling_input radio__tiling_input_false">
+														<input type="radio" id="false" value="false" name="tiling" checked="checked" class="radio__tiling_input radio__tiling_input_false" disabled="disabled">
 														<label for="false" class="radio__tiling radio__tiling_false"></label>
 													</div>
 												</form>
@@ -118,12 +118,12 @@
 											<div class="input-group_count">
 												<label for="moveX" class="input-group__label_count count-position__item_xxx"></label>
 												<input id="moveX" name="value_x" value="0" aria-valuenow="0" autocomplete="off" role="spinbutton" class="count-position__item">
-												<div class="dif__btn-group"><a tabindex="-1" role="button" class="position__choose position__choose-increase"></a><a tabindex="-1" role="button" class="position__choose position__choose-reduce"></a></div>
+												<div class="dif__btn-group"><a tabindex="-1" role="button" id="moveXincrease" class="position__choose position__choose-increase"></a><a tabindex="-1" role="button" id="moveXreduce" class="position__choose position__choose-reduce"></a></div>
 											</div>
 											<div class="input-group_count">
 												<label for="moveY" class="input-group__label_count count-position__item_yyy"> </label>
 												<input id="moveY" name="value_y" value="0" aria-valuenow="0" autocomplete="off" role="spinbutton" class="count-position__item">
-												<div class="dif__btn-group"><a tabindex="-1" role="button" class="position__choose position__choose-increase"></a><a tabindex="-1" role="button" class="position__choose position__choose-reduce"></a></div>
+												<div class="dif__btn-group"><a tabindex="-1" role="button" id="moveYincrease" class="position__choose position__choose-increase"></a><a tabindex="-1" role="button" id="moveYreduce" class="position__choose position__choose-reduce"></a></div>
 											</div>
 										</div>
 									</div>
@@ -136,8 +136,8 @@
 								</div>
 							</div>
 							<div class="btn__box">
-								<button id="reset" type="reset" class="btn btn__clear"><?php echo $text["reset"] ?></button>
-								<button id="submit" type="submit" class="btn btn__save"><?php echo $text["download"] ?></button>
+								<button id="reset" type="reset" class="btn btn__clear" disabled="disabled"><?php echo $text["reset"] ?></button>
+								<button id="submit" type="submit" class="btn btn__save" disabled="disabled"><?php echo $text["download"] ?></button>
 							</div>
 						</form>
 					</div>

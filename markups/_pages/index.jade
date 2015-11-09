@@ -37,11 +37,11 @@ block block
                             .radio
                                 form.radio__list
                                     .radio__item
-                                        input.radio__tiling_input.radio__tiling_input_true(type='radio' id="true" value="true" name="tiling" )
+                                        input.radio__tiling_input.radio__tiling_input_true(type='radio' id="true" value="true" name="tiling"  disabled="disabled")
                                         label.radio__tiling.radio__tiling_true(for="true")
 
                                     .radio__item
-                                        input.radio__tiling_input.radio__tiling_input_false(type='radio' id="false" value="false" name="tiling" checked="checked")
+                                        input.radio__tiling_input.radio__tiling_input_false(type='radio' id="false" value="false" name="tiling" checked="checked" disabled="disabled")
                                         label.radio__tiling.radio__tiling_false(for="false")
                     .position-select__wrap
                         .position-select__choose.choose-position
@@ -67,5 +67,5 @@ block block
                     label.form__label.transparency-title Прозрачность
                     #slider                            
             .btn__box
-                button.btn.btn__clear#reset(type='reset') Сброс
-                button.btn.btn__save#submit(type='submit') Скачать
+                button.btn.btn__clear#reset(type='reset' disabled="disabled") Сброс
+                button.btn.btn__save#submit(type='submit' disabled="disabled") Скачать
