@@ -75,15 +75,16 @@ var submitForm = (function(){
             dataParams.addX($('.flagHolder').css('left'));
             dataParams.addY($('.flagHolder').css('top'));
             console.log (dataParams.getData());
-            var url ='./php/download.php',
+             var url ='./php/download.php',
             defObj = _ajax(dataParams.getData(), url);
-
             if(defObj) {
                 defObj.done(function(ans){
+
                     if (ans.status === 'OK') {
                      console.log('ok');
-                       window.location = ans.link; // Link to file
-                   } else{
+                     window.location = ans.link; // Link to file
+                      $.fileDownload('php/downloadImg.php',{url : ans.url});
+                    } else{
                      console.log('не ok');
                  }
              })
