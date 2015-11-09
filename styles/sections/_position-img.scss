@@ -4,6 +4,21 @@
     display: block;
 }
 
+/*****radio******/
+.radio{
+    text-align: right;
+}
+
+.radio__item{
+    width: 20px;
+    display: inline-block;
+}
+
+.radio__item_label{
+    position: relative;
+    cursor: pointer;
+}
+
 /*************************/
 .position-select__wrap{
     // @include clearfix;
