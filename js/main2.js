@@ -270,6 +270,7 @@ var _setUpListners2 = function(zzz) {
                    buffModul = 1;
                 }
 
+
                 if(!($('.mainMark').length)){
                     buff = 1;
                 }
@@ -294,6 +295,7 @@ var _setUpListners2 = function(zzz) {
                     var realHeight = height/zzz+'px';
                     if(width > 648 || height > 648){
 
+
                         if(width > height){
                             $(this).css('width', '100%').show('fast').draggable({containment:'parent'});
             
@@ -304,7 +306,6 @@ var _setUpListners2 = function(zzz) {
                     $(this).show('fast').attr('width', realWidth).draggable({containment:'parent'});
                                          
                 }
-
                     $('#false').prop('checked', 'checked');
                     toggelModule.first();
                     if (buffModul === 1){
