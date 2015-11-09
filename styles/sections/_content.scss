@@ -48,6 +48,7 @@ body{
     width: 260px;
     height: auto;
     background: #f1f1f5;
+    @include clearfix;
 }
 
 /****controls-title****/
