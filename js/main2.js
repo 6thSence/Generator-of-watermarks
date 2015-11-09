@@ -969,3 +969,32 @@ var ReSeT = (function(){
     };
 })();
 ReSeT.init();
+
+//Отображение кнопок репоста
+var ShareShow = (function(){
+
+    var init = function () {
+        _setUpListners();
+    };
+
+    var _setUpListners = function() {
+        //$('#like').on('click', _showLike);
+        $('#share').on('hover', _showLike);
+    };
+
+    var  _showLike = function (e) {
+        e.preventDefault();
+        if ($('#share').hasClass('open')) {
+            $('#share').removeClass('open').animate({left: '-43px' });;
+        } else {
+            $('#share').addClass('open').animate({left: '0px' });
+        }
+    }
+
+    return {
+        init: init
+    };
+
+})();
+
+if($('#share')) { ShareShow.init(); };

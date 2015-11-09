@@ -20,7 +20,7 @@
 
     var _setUpListeners = function () {
         $('#vk-share').on('click', _vkShare);
-        $('.fb-share').on('click', _fbShare);
+        $('#fb-share').on('click', _fbShare);
         $('#tw-share').on('click', _twShare);
     };
 
