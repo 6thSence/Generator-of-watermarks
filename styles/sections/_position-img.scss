@@ -19,86 +19,6 @@
     cursor: pointer;
 }
 
-.radio__real{
-    position: absolute;
-    top: 0;
-    left: -9999px;
-}
-
-.radio__fake{
-    display: inline-block;
-    cursor: pointer;
-}
-
-    .radio__label{
-        display: inline-block;
-        padding-left: 30px;
-    }
-
-   .radio__fake1{
-        position: relative;
-        &:before {
-                content: '';
-                display: block;
-                background-image: url('../img/images/4.png');
-                position: absolute;
-                right: -6px;
-                top: -20px;
-                width: 20px;
-                height: 20px;;
-                // @include sprite($radio_unchek);
-        }
-   }
-
-   .radio__real1:checked + .radio__fake1{
-        width: 20px;
-        height: 20px;
-       &:before {
-            content: '';
-            display: block;
-            position: absolute;
-            right: -4px;
-            top: -3px;
-            width: 20px;
-            height: 20px;;
-            background-image: url('../img/images/4.png');
-            // @include sprite($radio_checked);
-        }
-   }
-
-
-  .radio__fake2{
-        position: relative;
-        &:before {
-                content: '';
-                display: block;
-                background-image: url('../img/images/1.png');
-                position: absolute;
-                right: -9px;
-                top: -20px;
-                width: 20px;
-                height: 20px;;
-                // @include sprite($radio_unchek);
-        }
-   }
-
-   .radio__real2:checked + .radio__fake2{
-        width: 20px;
-        height: 20px;
-       &:before {
-            content: '';
-            display: block;
-            position: absolute;
-            right: -8px;
-            top: -3px;
-            width: 20px;
-            height: 20px;;
-            background-image: url('../img/images/1_hover.png');
-            // @include sprite($radio_checked);
-        }
-   }
-
-
 /*************************/
 .position-select__wrap{
     // @include clearfix;
@@ -108,16 +28,14 @@
 }
 /* choose-position */
 .choose-position{
-    vertical-align: top;
-    // width: 50%;
-    width: 110px;
-    // display: block;
-    // float: left;
-    display: inline-block;
+    width: 102px;
+    float: left;
     font-size: 0;
     letter-spacing: 0px;
     word-spacing: 0px;
+    border: 1px solid #c1cfd9;
     border-radius: 7px;
+    overflow: hidden;
 }
 
 
@@ -129,6 +47,7 @@
     margin: 0px;
     padding: 0px;
     background-color: #dbe1e8;
+    cursor: pointer;
     @include clearfix;
 
     &:hover{
@@ -140,29 +59,12 @@
         background-color: #f97e76;
         border-color: #f97e76;
     }
-
-    &:nth-of-type(1){
-        border-top-left-radius: 5px;
-    }
-
-    &:nth-of-type(3){
-        border-top-right-radius: 5px;
-    }
-
-    &:nth-of-type(7){
-        border-bottom-left-radius: 5px;
-    }
-
-    &:nth-of-type(9){
-        border-bottom-right-radius: 5px;
-    }
 }
 
 /*count-position*/
 .count-position{
-    vertical-align: top;
-    width: 110px;
-    display: inline-block;
+    width: 100px;
+    float: right;
     color: #444a53;
 }
 
@@ -179,7 +81,7 @@
         display: block;
         position: absolute;
         background-image: url('../img/images/vert.png');
-        right: -8px;
+        left: 3px;
         top: 10px;
         width: 10px;
         height: 29px;
@@ -194,7 +96,7 @@
         display: block;
         position: absolute;
         font-size: 16px;
-        right: -6px;
+        left: 0;
         top: 10px;
         width: 10px;
         height: 29px;
@@ -208,7 +110,7 @@
         display: block;
         background-image: url('../img/images/horiz.png');
         position: absolute;
-        right: -9px;
+        left: -16px;
         top: 21px;
         width: 29px;
         height: 10px;
@@ -241,7 +143,7 @@
     border-width: 1px;
     border-color: #c1cfd9;
     margin-bottom: 10px;
-    margin-left: 14px;
+    margin-left: 17px;
     background: transparent;
     color: #444a53;
     cursor: pointer;
@@ -252,18 +154,17 @@
 .dif__btn-group{
     display: inline-block;
     vertical-align: top;
-    margin-right: 5px;
+    margin-right: 13px;
+    // margin-left: 4px;
 }
 
-// .position-select__choose{
-//     width: 110px;
-// }
 
 .position__choose{
     display: block;
     width: 15px;
     height: 8px;
     cursor: pointer;
+    @include outline;
 }
 
 .position__choose-increase{  

@@ -1,0 +1,102 @@
+
+
+/* --------- mixins --------- */
+
+@mixin inlineblock {
+	display: inline-block;
+	vertical-align: top;
+}
+
+@mixin clearfix {
+    &:before,
+	&:after {
+		content: "";
+		display: table;
+	}
+	
+	&:after {
+		clear: both;
+	}
+}
+
+@mixin border-radius ($radius: 5px) {
+	-webkit-border-radius: $radius;
+	-moz-border-radius:    $radius;
+	border-radius:         $radius;
+
+	-moz-background-clip:    padding;
+	-webkit-background-clip: padding-box;
+	background-clip:         padding-box;
+}
+
+@mixin box-shadow ($string...) {
+	-webkit-box-shadow: $string;
+	-moz-box-shadow:    $string;
+	box-shadow:         $string;
+}
+
+@mixin transition ($transition...) {
+	-webkit-transition: $transition;
+	-moz-transition:    $transition;
+	-ms-transition:     $transition;
+	-o-transition:      $transition;
+	transition:      $transition;
+}
+
+@mixin box-sizing {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
+@mixin placecolor($color: #000000) {
+    &::-webkit-input-placeholder {
+        color: $color;
+    }
+    &:-moz-placeholder {
+        color: $color;
+    }
+    &::-moz-placeholder {
+        color: $color;
+    }
+    &:-ms-input-placeholder {
+        color: $color;
+    }
+}
+
+@mixin vertical-gradient ($top-color: #ffffff, $bottom-color: #000000) {
+	background-color: $top-color;
+	background-image: -webkit-gradient(linear, left top, left bottom, from($top-color), to($bottom-color)); /* Chrome, Safari 4+ */
+	background-image: -webkit-linear-gradient(top, $top-color, $bottom-color); /* Chrome 10-25, iOS 5+, Safari 5.1+ */
+	background-image:    -moz-linear-gradient(top, $top-color, $bottom-color); /* Firefox 3.6-15 */
+	background-image:      -o-linear-gradient(top, $top-color, $bottom-color); /* Opera 11.10-12.00 */
+	background-image:         linear-gradient(to bottom, $top-color, $bottom-color); /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr=$top-color, EndColorStr=$bottom-color);
+}
+
+@mixin outline {
+  &:focus {
+	outline: none;
+  }
+}
+
+@mixin list-item-link-inline-block {
+  &__list, &__item, &__link {
+	display: inline-block;
+	text-decoration: none;
+  }
+}
+
+@mixin get-sprite ($map, $icon) {
+  $sprite-image: sprite-file($map, $icon);
+  $sprite-map: sprite-url($map);
+  $sprite-position: sprite-position($map, $icon);
+
+  background: $sprite-map $sprite-position no-repeat;
+
+  $sprite-height: image-height($sprite-image);
+  $sprite-width: image-width($sprite-image);
+
+  height: $sprite-height;
+  width: $sprite-width;
+}

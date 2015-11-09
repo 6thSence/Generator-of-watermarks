@@ -28,13 +28,12 @@ block block
                             img(src="../img/images/cloud.png" alt="").file__up-img
                         input(id="watermark" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input='#watermark' disabled).file__up
                         //- input(id="mainMARKName" class="filesNames")
-            .form__group.placement
+            .form__group
                 .form__group-wrap.group-wrap__placement
                     header.header__placement
                         label.form__label.place-title Положение
                         span.place-title__change-view
-                            //- +radio(' radio', ['', ''])
-                            //- include _common/_chose-view
+
                             .radio
                                 form.radio__list
                                     .radio__item
@@ -50,29 +49,23 @@ block block
                                 .choose-position__item
 
                         .position-select__choose.count-position
-                            .input-group_count
-                                label.input-group__label_count.count-position__item_xxx(for='moveX')
+                            .input-group_count.count-position__item_xxx
+                                label.input-group__label_count(for='moveX')
                                 input#moveX.count-position__item(name='value_x', value='0', aria-valuenow='0', autocomplete='off', role='spinbutton')
                                 .dif__btn-group
                                     a(tabindex='-1', role='button').position__choose.position__choose-increase
                                     a(tabindex='-1', role='button').position__choose.position__choose-reduce
 
-                            .input-group_count
-
-                                label.input-group__label_count.count-position__item_yyy(for='moveY') 
+                            .input-group_count.count-position__item_yyy
+                                label.input-group__label_count(for='moveY') 
                                 input#moveY.count-position__item(name='value_y', value='0', aria-valuenow='0', autocomplete='off', role='spinbutton')
                                 .dif__btn-group
                                     a(tabindex='-1', role='button').position__choose.position__choose-increase
                                     a(tabindex='-1', role='button').position__choose.position__choose-reduce
-
             .form__group
                 .form__group-wrap.group-wrap__transparency
                     label.form__label.transparency-title Прозрачность
-                    #slider
-                                        
+                    #slider                            
             .btn__box
                 button.btn.btn__clear#reset(type='reset') Сброс
                 button.btn.btn__save#submit(type='submit') Скачать
-
-
-
