@@ -299,9 +299,9 @@ var _setUpListners2 = function(zzz) {
                         if(width > height){
                             $(this).css('width', '100%').show('fast').draggable({containment:'parent'});
             
-                    } else {
-                       $(this).css('height', '100%').show('fast').draggable({containment:'parent'});
-                     }
+                    } //else {
+                    //    $(this).css('height', '100%').show('fast').draggable({containment:'parent'});
+                    //  }
                  } else {
                     $(this).show('fast').attr('width', realWidth).draggable({containment:'parent'});
                                          
@@ -338,18 +338,18 @@ if ($('#fileuploadImage')) { FileUploadJQ.init(); };
 
 //Режим замощения изображений
 var ZAMOS = (function(){
-    var init = function (file) {
-        var mainIMGHolderWidth = screen.width/1.2;
-        var mainIMGHolderHeight = screen.height/1.2;
-        var mainIMGHolderArea = mainIMGHolderWidth * mainIMGHolderHeight;
-        var flagWidth = $('.mainMark').width();
-        var flagHeight = $('.mainMark').height();
-        var flagArea = flagWidth * flagHeight;
-        var integer = (mainIMGHolderArea/flagArea);
+    var init = function (file,integer,mainIMGHolderWidth,mainIMGHolderHeight) {
+        // var mainIMGHolderWidth = screen.width/1.2;
+        // var mainIMGHolderHeight = screen.height/1.2;
+        // var mainIMGHolderArea = mainIMGHolderWidth * mainIMGHolderHeight;
+        // var flagWidth = $('.mainMark').width();
+        // var flagHeight = $('.mainMark').height();
+        // var flagArea = flagWidth * flagHeight;
+        // var integer = (mainIMGHolderArea/flagArea);
             $('#moveX').val(0);
             $('#moveY').val(0);
             $( "#slider" ).slider({'value':100});
-            var kooficientSjatia = $('.mainMark').attr('width');
+            var kooficientSjatia = $('.mainMark').width();
             // console.log(kooficientSjatia);
         var flagWidth = $('.mainMark').width();
         var flagHeight = $('.mainMark').height();
@@ -376,15 +376,21 @@ var ZAMOS = (function(){
             // dataParams.addY($('.flagHolder').css('top'));
 
 
-        var flagArea = flagWidth * flagHeight;
-        var integer = (mainIMGHolderArea/flagArea);
+        // var flagArea = flagWidth * flagHeight;
+        // var integer = (mainIMGHolderArea/flagArea);
 
 
-            $('.flagHolder').hide();
-            $('.flagHolder').show('500');
+            // $('.flagHolder').hide();
+            // $('.flagHolder').show('500');
+            crazy:
             for(var i = 0;i<=integer;i++){
-                $('.flagHolder').append('<img  class="flag">');                
+                $('.flagHolder').append('<img  class="flag">'); 
+                console.log(integer); 
+                if(integer === Infinity){
+                    break crazy;
+                }          
             }
+            integer = 0;
             $('.flag').attr({
                 'src': file,
                 'width': kooficientSjatia
@@ -393,9 +399,9 @@ var ZAMOS = (function(){
 
 
 
-            console.log(integer)
-            console.log(mainIMGHolderArea)
-            console.log(flagArea)
+            // console.log(integer)
+            // console.log(mainIMGHolderArea)
+            // console.log(flagArea)
 
             // src="server/php/files/'+ file +'"
             $('#moveX').on('keyup', function() {
@@ -890,23 +896,33 @@ var toggelModule = (function(){
 
     var _initSingle = function(){
         main2.destroy();
-        var urlFile =($('.flag').attr('src'));
+        var urlFile =($('.flag').attr('src')),
+            width = $('.flag').width(),
+            height = $('.flag').height();
+
         $('.flagHolder, #vertical, #horizontal, .flag').remove();
         $('.mainIMGHolder').append('<img src="'+ urlFile +'" class="mainMark">');
-        $('.mainMark').css({left : '0', top : '0', cursor :'move'}).draggable({containment:'parent'});
+        $('.mainMark').css({left : '0', top : '0', cursor :'move','width':width,'height':height}).draggable({containment:'parent'});
         $('#moveX').val(0);
         $('#moveY').val(0);
         Coordin.init();
         Coordin.drag();
     };
     var _initZamos = function () {
+        var mainIMGHolderWidth = screen.width/1.2;
+        var mainIMGHolderHeight = screen.height/1.2;
+        var mainIMGHolderArea = mainIMGHolderWidth * mainIMGHolderHeight;
+        var flagWidth = $('.mainMark:last').width();
+        var flagHeight = $('.mainMark:last').height();
+        var flagArea = flagWidth * flagHeight;
+        var integer = (mainIMGHolderArea/flagArea);
         Coordin.destroy();
         // var width = $('.mainMark').width();
         // var height = $('.mainMark').height();
         var urlFile = $('.mainMark').attr('src');
         // var indexPath = urlFile.lastIndexOf('/'),
         //     file =  urlFile.slice(indexPath+1);
-        ZAMOS.init(urlFile);
+        ZAMOS.init(urlFile,integer,mainIMGHolderWidth,mainIMGHolderHeight);
         main2.init();
     };
 
@@ -945,7 +961,8 @@ var ReSeT = (function(){
             $( "#slider" ).slider({'value':100});
             $('.mainImg').text('Image.jpg');
             $('.mainWatermark').text('Image.jpg');
-
+            $('#true').prop('checked', 'none');
+            $('#false').prop('checked', 'checked');
             dataParams.addWatermarkImage('');
             dataParams.addOriginalImage('');
             dataParams.addTransparency(1);
@@ -965,37 +982,4 @@ var ReSeT = (function(){
 ReSeT.init();
 
 
-var ReSeT = (function(){
-    var _setUpListners = function() {
-        $('.btn__clear').on('click', function(event) {
-            event.preventDefault();
-            if($('.mainIMGHolder').length){$('.mainIMGHolder').remove();}
-            if($('.flagHolder').length){$('.flagHolder').remove();}
-            if($('#horizontal').length){$('#horizontal').remove();}
-            if($('#vertical').length){$('#vertical').remove();}
-            $('#fileuploadImage').removeAttr('disabled');
-            $('#watermark').attr('disabled', 'disabled');
-            $('#moveX').val(0);
-            $('#moveY').val(0);
-            $('input[name="opacity"]').val(0);
-            $( "#slider" ).slider({'value':100});
-            $('.mainImg').text('Image.jpg');
-            $('.mainWatermark').text('Image.jpg');
 
-            dataParams.addWatermarkImage('');
-            dataParams.addOriginalImage('');
-            dataParams.addTransparency(1);
-            dataParams.addX('');
-            dataParams.addY('');
-
-        });
-    };
-    var init = function () {
-        _setUpListners();
-
-    };
-    return {
-        init: init
-    };
-})();
-ReSeT.init();
