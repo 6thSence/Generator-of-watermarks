@@ -200,80 +200,7 @@ body {
   background-color: #fff;
 }
 
-/****form__input*****/
-/*.input-group__input{
-    background-color: #fff;
-    border: 1px solid #c1cfd9;
-    color: #c1cfd9;
-    padding: 8px 6px;
-    width: 180px;
-    border-radius: 5px;
-    font-size: 12px;
-}
 
-
-.input-group__icon{
-    background-image: url('../img/images/cloud.png');
-    width: 30px;
-    height: 30px;
-}
-
-.file__up-img{
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-
-.file-holder{
-    position: relative;
-    width: 220px;
-    background-color: #fff;
-    border: 1px solid #c1cfd9;
-    color: #c1cfd9;
-    overflow: hidden;
-    border-radius: 5px;  
-    display: block;
-    line-height: 12px;
-    cursor: pointer;
-}
-
-.file-holder__name{
-    font-family: "SegoeUILight", sans-serif;
-    width: 170px;
-    background-color: #fff;
-    font-size: 12px;
-    height: 100%;
-    float: left;
-    padding: 7px 2px;
-    padding-right: 0;
-    margin: 0 !important;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.file-holder__btn{
-    float: right;
-    width: 38px;
-    text-align: center;
-}
-
-.file__up{
-    position: absolute;
-    top: 0;
-    right: 0;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    -ms-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}*/
 /****form__group*****/
 .form__group {
   border-bottom: 1px solid #f97e76;
@@ -551,18 +478,20 @@ body {
 /*************************/
 .position-select__wrap {
   width: 230px;
+  clear: both;
+  display: table;
 }
 
 /* choose-position */
-.choose-position {
-  width: 102px;
-  float: left;
-  font-size: 0;
-  letter-spacing: 0px;
-  word-spacing: 0px;
-  border: 1px solid #c1cfd9;
-  border-radius: 7px;
-  overflow: hidden;
+.choose-position{
+    width: 102px;
+    float: left;
+    font-size: 0;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    border: 1px solid #c1cfd9;
+    border-radius: 7px;
+    overflow: hidden;
 }
 
 .choose-position__item {
@@ -574,21 +503,6 @@ body {
   padding: 0px;
   background-color: #dbe1e8;
   cursor: pointer;
-   /* &:nth-of-type(1){
-        border-top-left-radius: 5px;
-    }
-
-    &:nth-of-type(3){
-        border-top-right-radius: 5px;
-    }
-
-    &:nth-of-type(7){
-        border-bottom-left-radius: 5px;
-    }
-
-    &:nth-of-type(9){
-        border-bottom-right-radius: 5px;
-    }*/
 }
 .choose-position__item:before, .choose-position__item:after {
   content: "";

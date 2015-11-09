@@ -67,81 +67,6 @@ body{
     background-color: #fff;
 }
 
-/****form__input*****/
-
-/*.input-group__input{
-    background-color: #fff;
-    border: 1px solid #c1cfd9;
-    color: #c1cfd9;
-    padding: 8px 6px;
-    width: 180px;
-    border-radius: 5px;
-    font-size: 12px;
-}
-
-
-.input-group__icon{
-    background-image: url('../img/images/cloud.png');
-    width: 30px;
-    height: 30px;
-}
-
-.file__up-img{
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-
-.file-holder{
-    position: relative;
-    width: 220px;
-    background-color: #fff;
-    border: 1px solid #c1cfd9;
-    color: #c1cfd9;
-    overflow: hidden;
-    border-radius: 5px;  
-    display: block;
-    line-height: 12px;
-    cursor: pointer;
-}
-
-.file-holder__name{
-    font-family: "SegoeUILight", sans-serif;
-    width: 170px;
-    background-color: #fff;
-    font-size: 12px;
-    height: 100%;
-    float: left;
-    padding: 7px 2px;
-    padding-right: 0;
-    margin: 0 !important;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.file-holder__btn{
-    float: right;
-    width: 38px;
-    text-align: center;
-}
-
-.file__up{
-    position: absolute;
-    top: 0;
-    right: 0;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-    -ms-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}*/
 
 
 /****form__group*****/
@@ -221,8 +146,6 @@ body{
 
 
 /* radio */
-
-
 .radio__tiling {
     cursor: pointer;
     display: inline-block;

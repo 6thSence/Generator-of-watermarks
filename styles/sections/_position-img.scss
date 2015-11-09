@@ -4,104 +4,12 @@
     display: block;
 }
 
-/*****radio******/
-.radio{
-    text-align: right;
-}
-
-.radio__item{
-    width: 20px;
-    display: inline-block;
-}
-
-.radio__item_label{
-    position: relative;
-    cursor: pointer;
-}
-
-.radio__real{
-    position: absolute;
-    top: 0;
-    left: -9999px;
-}
-
-.radio__fake{
-    display: inline-block;
-    cursor: pointer;
-}
-
-    .radio__label{
-        display: inline-block;
-        padding-left: 30px;
-    }
-
-   .radio__fake1{
-        position: relative;
-        &:before {
-                content: '';
-                display: block;
-                background-image: url('../img/images/4.png');
-                position: absolute;
-                right: -6px;
-                top: -20px;
-                width: 20px;
-                height: 20px;;
-                // @include sprite($radio_unchek);
-        }
-   }
-
-   .radio__real1:checked + .radio__fake1{
-        width: 20px;
-        height: 20px;
-       &:before {
-            content: '';
-            display: block;
-            position: absolute;
-            right: -4px;
-            top: -3px;
-            width: 20px;
-            height: 20px;;
-            background-image: url('../img/images/4.png');
-            // @include sprite($radio_checked);
-        }
-   }
-
-
-  .radio__fake2{
-        position: relative;
-        &:before {
-                content: '';
-                display: block;
-                background-image: url('../img/images/1.png');
-                position: absolute;
-                right: -9px;
-                top: -20px;
-                width: 20px;
-                height: 20px;;
-                // @include sprite($radio_unchek);
-        }
-   }
-
-   .radio__real2:checked + .radio__fake2{
-        width: 20px;
-        height: 20px;
-       &:before {
-            content: '';
-            display: block;
-            position: absolute;
-            right: -8px;
-            top: -3px;
-            width: 20px;
-            height: 20px;;
-            background-image: url('../img/images/1_hover.png');
-            // @include sprite($radio_checked);
-        }
-   }
-
 /*************************/
 .position-select__wrap{
     // @include clearfix;
     width: 230px;
+    clear: both;
+    display: table;
 }
 /* choose-position */
 .choose-position{
@@ -136,29 +44,11 @@
         background-color: #f97e76;
         border-color: #f97e76;
     }
-
-   /* &:nth-of-type(1){
-        border-top-left-radius: 5px;
-    }
-
-    &:nth-of-type(3){
-        border-top-right-radius: 5px;
-    }
-
-    &:nth-of-type(7){
-        border-bottom-left-radius: 5px;
-    }
-
-    &:nth-of-type(9){
-        border-bottom-right-radius: 5px;
-    }*/
 }
 
 /*count-position*/
 .count-position{
-    // vertical-align: top;
     width: 100px;
-    // display: inline-block;
     float: right;
     color: #444a53;
 }

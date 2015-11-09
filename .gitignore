@@ -7,4 +7,12 @@ bower/
 dist/
 composer.phar
 .DS_Store
-
+server/php/files/*.jpg
+server/php/files/*.jpeg
+server/php/files/*.png
+server/php/files/*.gif
+server/php/files/thumbnail/*.jpg
+server/php/files/thumbnail/*.jpeg
+server/php/files/thumbnail/*.png
+server/php/files/thumbnail/*.gif
+uploads/
