@@ -514,7 +514,7 @@ body {
   display: block;
   font-size: 16px;
   position: absolute;
-  right: -25px;
+  left: 0;
   top: 15px;
   width: 29px;
   height: 10px;
@@ -564,6 +564,9 @@ body {
 
 .position__choose-reduce {
   background-image: url("../img/images/dec.png");
+}
+.position__choose-reduce:hover {
+  background-image: url("../img/images/dec_hover.png");
 }
 
 /* btn__box */
