@@ -9,13 +9,17 @@
         x                 : 0,
         y                 : 0,
         originalImage  : "",
-        watermarkImage : ""
+        watermarkImage : "",
+        zzz            : 0,
+    };
+    var _addZZZ = function(x){
+        params.zzz = x;
     };
     var _addOriginX = function(){
-        params.originX = parseInt($('#moveX').val());
+        params.originX = parseInt($('#moveX').val())*params.zzz;
     };
     var _addOriginY  = function(){
-        params.originY =  parseInt($('#moveY').val());
+        params.originY =  parseInt($('#moveY').val())*params.zzz;
     };
     var _addTransparency = function(x){
         params.transparency= x;
@@ -59,6 +63,7 @@
         addIsPattern        : _addIsPattern,
         addX                : _addX,
         addY                : _addY,
+        addZZZ              : _addZZZ
 
     }
 
@@ -172,7 +177,7 @@ var FileUploadJQ = (function(){
             var height = $(this).height();
             $('.aim-img').append('<div class="mainIMGHolder"></div>').css('position', 'relative');
                     var zzz = width/parseInt($('.mainIMGHolder').css('width'));
-                    
+                    dataParams.addZZZ(zzz);
             if(width > 648 || height > 533){
                 if(width > height){
                     var finalSize = (width/height);
@@ -392,7 +397,6 @@ var ZAMOS = (function(){
 
             $('#moveX').on('keyup', function() {
                 var z = $('#moveX').val();
-                //console.log(z);
                 $('.flag').css('border-bottom', z+'px solid transparent');
                 $('#vertical').css({
                     'margin-top': (-1*z)/2+'px',
@@ -403,7 +407,6 @@ var ZAMOS = (function(){
 
             $('#moveY').on('keyup', function() {
                 var z = $('#moveY').val();
-                //console.log(z);
                 $('.flag').css('border-left', z+'px solid transparent');
                 $('#horizontal').css({
                     'margin-left': (-1*z)/2+'px',
