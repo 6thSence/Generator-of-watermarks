@@ -407,6 +407,9 @@ var ZAMOS = (function(){
                     'margin-top': (-1*z)/2+'px',
                     'height': z+'px'
                 });
+                if(z === 0){
+                    $('#vertical').css('height', '0.5px');
+                }
                 $('#moveX').val(z);
                 
             });
@@ -418,11 +421,15 @@ var ZAMOS = (function(){
                     z = 0
                 }
                 console.log(z);
-                $('.flag').css('border-left', z+'px solid transparent');
+                $('.flag').css('border-right', z+'px solid transparent');
                 $('#horizontal').css({
                     'margin-left': (-1*z)/2+'px',
                     'width': z+'px'
                 });
+                if(z === 0){
+                    $('#horizontal').css('width', '0.5px');
+                }
+
                 $('#moveY').val(z);
                 
             });
@@ -801,10 +808,10 @@ var main2 = (function(){
 
         }
         if (inp.attr('id') === 'moveY'){
-            var coordin = $('.flag').css('border-left-width'),
+            var coordin = $('.flag').css('border-right-width'),
             coordin_inc = parseInt(coordin) + 1,
             pos = coordin_inc;
-            $('.flag').css('border-left' , pos+'px solid transparent');
+            $('.flag').css('border-right' , pos+'px solid transparent');
             inp.val(pos);
 
             $('#horizontal').css({
@@ -837,10 +844,10 @@ var main2 = (function(){
 
         }
         if (inp.attr('id') === 'moveY'){
-            var coordin = $('.flag').css('border-left-width'),
+            var coordin = $('.flag').css('border-right-width'),
             coordin_inc = parseInt(coordin) - 1;
             var pos = coordin_inc;
-            $('.flag').css('border-left' , pos+'px solid transparent');
+            $('.flag').css('border-right' , pos+'px solid transparent');
             if(pos <= 0){
                 inp.val(0);
             } else {
@@ -921,8 +928,8 @@ var toggelModule = (function(){
         main2.destroy;
       Coordin.init();
         Coordin.positionOn();
-        $('label[for="moveX"]').removeClass('count-position__item_xxx').addClass('count-position__item_x');
-        $('label[for="moveY"]').removeClass('count-position__item_yyy').addClass('count-position__item_y');
+        $('.count-position__item_yyy').removeClass('count-position__item_yyy').addClass('count-position__item_y');
+        $('.count-position__item_xxx').removeClass('count-position__item_xxx').addClass('count-position__item_x');
     };
     var _setupListener = function(){
         $('input[name=tiling]:radio').on('change', _initSomth);
@@ -950,8 +957,8 @@ var toggelModule = (function(){
         $('.mainMark').css({left : '0', top : '0', cursor :'move','width':width,'height':height}).draggable({containment:'parent'});
         $('#moveX').val(0);
         $('#moveY').val(0);
-        $('label[for="moveX"]').removeClass('count-position__item_xxx').addClass('count-position__item_x');
-        $('label[for="moveY"]').removeClass('count-position__item_yyy').addClass('count-position__item_y');
+        $('.count-position__item_yyy').removeClass('count-position__item_yyy').addClass('count-position__item_y');
+        $('.count-position__item_xxx').removeClass('count-position__item_xxx').addClass('count-position__item_x');
         Coordin.init();
         Coordin.drag();
         Coordin.positionOn();
@@ -966,8 +973,8 @@ var toggelModule = (function(){
         // var integer = (mainIMGHolderArea/flagArea);
         Coordin.destroy();
         Coordin.positionOff();
-        $('label[for="moveX"]').removeClass('count-position__item_x').addClass('count-position__item_xxx');
-        $('label[for="moveY"]').removeClass('count-position__item_y').addClass('count-position__item_yyy');
+        $('.count-position__item_y').removeClass('count-position__item_y').addClass('count-position__item_yyy');
+        $('.count-position__item_x').removeClass('count-position__item_x').addClass('count-position__item_xxx');
         var width = $('.mainMark').width();
         var height = $('.mainMark').height();
         var area = width*height;
@@ -994,10 +1001,7 @@ $('body').fadeloader({
     fadeSpeed : 1500,
     displayType : 'block',
     easeLoad : 'easeInOutBack',
-    onComplete : function(){
-        $('label[for="moveX"]').removeClass('count-position__item_xxx').addClass('count-position__item_x');
-        $('label[for="moveY"]').removeClass('count-position__item_yyy').addClass('count-position__item_y');
-    }
+    onComplete : ''
 });
 
 
@@ -1018,8 +1022,8 @@ var ReSeT = (function(){
             $( "#slider" ).slider({'value':100});
             $('.mainImg').text('Image.jpg');
             $('.mainWatermark').text('Image.jpg');
-            $('label[for="moveX"]').removeClass('count-position__item_xxx').addClass('count-position__item_x');
-            $('label[for="moveY"]').removeClass('count-position__item_yyy').addClass('count-position__item_y');
+            $('.count-position__item_yyy').removeClass('count-position__item_yyy').addClass('count-position__item_y');
+            $('.count-position__item_xxx').removeClass('count-position__item_xxx').addClass('count-position__item_x');
             $('#true').prop('checked', 'none');
             $('#false').prop('checked', 'checked');// =======
             $('.aim-img').append('<img src="" class="mainMark">');
