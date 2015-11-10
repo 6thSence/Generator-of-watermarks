@@ -24,13 +24,24 @@ function get_file_link($name) {
     return ''.$images.$name;
 }
 
-function send_file($file_name) {
+function send_filename($file_name) {
     $data = array(
         'status' => 'OK',
-        'link' => get_file_link($file_name)
+        'link' => $file_name
     );
-
     echo json_encode($data);
+}
+
+function send_file($file_name) {
+    $file_dir = get_filedir($file_name);
+    header('Content-Description: File Transfer');
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename='.$file_name);
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    header('Content-Length: '.filesize($file_dir));
+    readfile($file_dir);
 }
 
 function isBoolean($value) {

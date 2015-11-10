@@ -81,9 +81,9 @@ var submitForm = (function(){
                 defObj.done(function(ans){
 
                     if (ans.status === 'OK') {
-                     console.log('ok');
-                     window.location = ans.link; // Link to file
-                      $.fileDownload('php/downloadImg.php',{url : ans.url});
+                        console.log('ok');
+                        // Не влезай, убьет!
+                        window.location= ("php/downloadImg.php?file=" + ans.link);
                     } else{
                      console.log('не ok');
                  }

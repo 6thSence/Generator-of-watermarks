@@ -43,7 +43,7 @@ if(isPost()) {
     $file_name = make_filename($originalImagePath, 'jpg');
     $file_dir = get_filedir($file_name);
     $result->saveToFile($file_dir);
-    send_file($file_name);
+    send_filename($file_name);
     exit();
 }
 
