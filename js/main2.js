@@ -86,6 +86,7 @@ var submitForm = (function(){
                         window.location= ("php/downloadImg.php?file=" + ans.link);
                     } else{
                      console.log('не ok');
+                     console.log('Status: ' + ans.status + ' Message: ' + ans.text);
                  }
              })
             }
