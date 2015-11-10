@@ -116,7 +116,7 @@ if ($('#submit')) { submitForm.init(); };
 //РџСЂРѕР·СЂР°С‡РЅРѕСЃС‚СЊ РјР°СЂРєРё
 var OpacitySlider = (function(){
     var _setUpListners = function() {
-        $( "#slider" ).slider({'value':100, 'range': 'min'}).on( "slide", function( event, ui ) {
+        $( "#slider" ).slider({disabled: true,'value':100, 'range': 'min'}).on( "slide", function( event, ui ) {
             var opacity = ui.value/100;
             dataParams.addTransparency(opacity);
             $('.mainMark,.flagHolder').css('opacity', opacity);
@@ -329,13 +329,13 @@ var _setUpListners2 = function(zzz) {
                          toggelModule.init();
                     }
                     if (buff === 1){
-                       // Coordin.init();
+        
                     }
                     $('#moveX').removeAttr('disabled');
                     $('#moveY').removeAttr('disabled');
 
-                    //___________I____________//
-                    
+                     $( "#slider" ).slider({disabled:false});
+                    $('#moveX,#moveY').removeAttr('disabled').spinner({disabled: false});
                 });
 
 }
@@ -392,6 +392,63 @@ var ZAMOS = (function(){
                 'width': kooficientSjatia
             });
 
+            $('#moveX').on('keyup', function(event) {
+                // var $this = $(this);
+                if (parseInt($(this).val()) > 100){
+                    var coordin = 100;
+                }else if(parseInt($(this).val())){
+                    var coordin = parseInt($(this).val())
+                } else {
+                    coordin = 0;
+                }
+                 $('.flag').css('border-bottom', coordin+'px solid transparent');
+                 $(this).val(coordin);
+                 if(coordin===0){
+                    $('#vertical').css({
+                            'margin-top': (-1*coordin)/2+'px',
+                            'height':'1px'
+                        });
+                 } else if(coordin>100){
+                    $('#vertical').css({
+                            'margin-top': (-1*100)/2+'px',
+                            'height':'100px'
+                        });
+                   $('#moveX').val(100)
+                 } else {
+
+                  $('#vertical').css({
+                            'margin-top': (-1*coordin)/2+'px',
+                            'height': coordin+'px'
+                        });
+                 }
+            });
+
+            $('#moveY').on('keyup', function(event) {
+                // var $this = $(this);
+                if (parseInt($(this).val()) > 100){
+                    var coordin = 100;
+                }else if(parseInt($(this).val())){
+                    var coordin = parseInt($(this).val())
+                } else {
+                    coordin = 0;
+                }
+                 $('.flag').css('border-right', coordin+'px solid transparent');
+                 $(this).val(coordin);
+                 if(coordin===0){
+                     $('#horizontal').css({
+                            'margin-left': (-1*coordin)/2+'px',
+                            'width': '1px'
+                        });
+                 } else {
+
+                  $('#horizontal').css({
+                            'margin-left': (-1*coordin)/2+'px',
+                            'width': coordin+'px'
+                        });
+                 }
+            });
+
+
 
 };
 return {
@@ -412,8 +469,8 @@ var Coordin = (function () {
         //$(".mainMark").on('drag', _drag);
         $('#moveY').on('keyup', _setCoordinY);
         $('#moveX').on('keyup', _setCoordinX);
-        $('.position__choose-increase').on('click', _increas);
-        $('.position__choose-reduce').on('click', _reduce);
+        // $('.position__choose-increase').on('click', _increas);
+        // $('.position__choose-reduce').on('click', _reduce);
         $('.choose-position__item').on('click', _positionRadio);
     };
 
@@ -627,6 +684,7 @@ var _reduce = function(){
         }else{
             coordin = 0;
         }
+        var coordin = parseInt($(this).val())
         var position = coordin +'px',
             img=$('.mainMark'),
             layer=$('.mainIMGHolder'),
@@ -986,6 +1044,9 @@ var ReSeT = (function(){
             $('#true').attr('disabled', 'disabled');
             $('#moveX').attr('disabled', 'disabled');
             $('#moveY').attr('disabled', 'disabled');
+            $( "#slider" ).slider({disabled:true});
+            $('#moveX,#moveY').spinner({disabled: true});
+
             //$('#true').off();
             main2.redCrossDestroy();
             Coordin.positionOff();
@@ -1045,22 +1106,25 @@ var ShareShow = (function(){
 
 })();
 
-if($('#share')) { ShareShow.init(); };
+if($('#share')) { ShareShow.init();};
 
 var Spiners = (function(){
     var _setUpListners = function() {
-        $('#moveX,#moveY').spinner({
+        $('#moveX,#moveY').attr('disabled', 'disabled').spinner({
+            disabled: true,
             icons: { down: "custom-down-icon", up: "custom-up-icon" },
+            min:0,
             spin: function( event, ui ) {
                 if(event.target.id === 'moveX'){
-                         console.log(ui.value)
+                    // ui.value = parseInt($('#moveX').val());
+                    console.log(ui.value)
                     if($('.mainMark')){
-                         $('.mainMark').css('top', ui.value);
-                         $('#moveX').spinner( "option", "max", $('.mainIMGHolder').height()-$('.mainMark').height());
+                         $('.mainMark').css('left',ui.value+'px');
+                         $('#moveX').val(ui.value).spinner( "option", "max", $('.mainIMGHolder').width()-$('.mainMark').width());
                      }//$('.mainMark')
 
-                    if($('.flag')){
-                        // $('#moveX').spinner( "option", "max", 100);
+                    if($('.flag').length){
+                        $('#moveX').spinner( "option", "max", 100);
                         $('#moveX').removeAttr('aria-valuemax').attr('aria-valuemax', '100');
                         $('.flag').css('border-bottom', ui.value+'px solid transparent');
                         $('#vertical').css({
@@ -1075,12 +1139,12 @@ var Spiners = (function(){
 
                 if(event.target.id === 'moveY'){
                     if($('.mainMark')){
-                         $('.mainMark').css('left', ui.value);
-                         $('#moveY').spinner( "option", "max", $('.mainIMGHolder').width()-$('.mainMark').width());
+                         $('.mainMark').css('top', ui.value);
+                         $('#moveY').val(ui.value).spinner( "option", "max", $('.mainIMGHolder').height()-$('.mainMark').height());
                      }//$('.mainMark')
 
-                    if($('.flag')){
-                        // $('#moveY').spinner( "option", "max", 100);
+                    if($('.flag').length){
+                        $('#moveY').spinner( "option", "max", 100);
                         $('.flag').css('border-right', ui.value+'px solid transparent');
                         $('#horizontal').css({
                             'margin-left': (-1*ui.value)/2+'px',
@@ -1096,15 +1160,26 @@ var Spiners = (function(){
             }
 }       );
     };
+
+    var _onlyNumber = function () {
+        $('#moveX,#moveY').on('keyup', function() {
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!')
+             var $this = $(this);
+             if(parseInt($this.val())){
+                var number = parseInt($this.val())
+             } else {
+                var number = 0;
+             }
+                
+        $this.val(number)            
+        });
+    }
     var init = function () {
         _setUpListners();
-
+        _onlyNumber();
     };
     return {
         init: init
     };
 })();
 if ($('#moveX') && $('#moveY')) { Spiners.init(); };
-
-
-  
