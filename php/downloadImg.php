@@ -1,6 +1,7 @@
 <?php
 
-$file = $_POST['url'];
-header('Content-Disposition: attachment; filename=Gener.jpg');
-readfile($file);
-exit;
+session_start();
+include_once 'functions.php';
+
+$file_name = get('file');
+send_file($file_name);

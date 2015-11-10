@@ -4,14 +4,14 @@
 	include_once 'php/functions.php';
 	include_once 'php/lang.php';
 
-	$lang_param = $_GET['lang'];
+	$lang_param = get('lang');
 	if($lang_param) {
-		$_SESSION['lang'] = $lang_param;
+		set_session('lang', $lang_param);
 	}
 
-	$current_language = $_SESSION['lang'];
+	$current_language = get_session('lang');
 	if(!$current_language || !$lang[$current_language]) {
-		$_SESSION['lang'] = $default_language;
+		set_session('lang', $default_language);
 		$current_language = $default_language;
 	}
 

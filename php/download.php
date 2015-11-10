@@ -17,7 +17,7 @@ if(isPost()) {
     $watermark = WideImage::load($watermarkImagePath);
 
     $isPattern = post('isPattern');
-    if(isBoolean($isPattern)) {
+    if(bool($isPattern)) {
         $initialX = str_replace('px', '', post('x'));
         $initialY = str_replace('px', '', post('y'));
 
@@ -43,8 +43,7 @@ if(isPost()) {
     $file_name = make_filename($originalImagePath, 'jpg');
     $file_dir = get_filedir($file_name);
     $result->saveToFile($file_dir);
-    send_file($file_name);
-    exit();
+    send_filename($file_name);
 }
 
 

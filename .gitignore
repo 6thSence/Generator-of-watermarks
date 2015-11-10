@@ -5,6 +5,7 @@ node_modules/
 vendor/
 bower/
 dist/
+index.html
 composer.phar
 .DS_Store
 server/php/files/*.jpg
