@@ -651,6 +651,10 @@ body {
   color: #444a53;
 }
 
+.share {
+  position: relative;
+  left: -43px;
+}
 .share .share__btn-wrap {
   box-sizing: content-box;
 }

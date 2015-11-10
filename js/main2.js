@@ -72,19 +72,21 @@ var submitForm = (function(){
     var _setUpListners = function() {
         $('#submit').on('click', function(e) {
             e.preventDefault();
-            dataParams.addX($('.flagHolder').css('left'));
-            dataParams.addY($('.flagHolder').css('top'));
+            dataParams.addX(parseInt($('.flagHolder').css('left')));
+            dataParams.addY(parseInt($('.flagHolder').css('top')));
             console.log (dataParams.getData());
-            var url ='./php/download.php',
+             var url ='./php/download.php',
             defObj = _ajax(dataParams.getData(), url);
-
             if(defObj) {
                 defObj.done(function(ans){
+
                     if (ans.status === 'OK') {
-                     console.log('ok');
-                       window.location = ans.link; // Link to file
-                   } else{
+                        console.log('ok');
+                        // Не влезай, убьет!
+                        window.location= ("php/downloadImg.php?file=" + ans.link);
+                    } else{
                      console.log('не ok');
+                     console.log('Status: ' + ans.status + ' Message: ' + ans.text);
                  }
              })
             }
@@ -130,7 +132,6 @@ if ($('#slider')) { OpacitySlider.init(); };
 
 //Загрузка основного изображения
 var FileUploadJQ = (function(){
-    var zzz;
     var _setUpListners = function() {
         $('#fileuploadImage').fileupload({
             dataType: 'json',
@@ -159,7 +160,9 @@ var FileUploadJQ = (function(){
         var nameFile = data.result.files[0].name,
         urlFile = data.result.files[0].url;
         dataParams.addOriginalImage(urlFile);
-        $('#progress').remove();
+        
+
+
         $('#fileuploadImage').attr('disabled', 'disabled');
         $('input[name="aim-img"]').val(nameFile)
         $('.mainImg').text(nameFile);
@@ -169,10 +172,12 @@ var FileUploadJQ = (function(){
             var width = $(this).width();
             var height = $(this).height();
             $('.aim-img').append('<div class="mainIMGHolder"></div>').css('position', 'relative');
-            if(width > 648 || height > 648){
+                    var zzz = width/parseInt($('.mainIMGHolder').css('width'));
+                    
+            if(width > 648 || height > 533){
                 if(width > height){
                     var finalSize = (width/height);
-                    var zzz = width/parseInt($('.mainIMGHolder').css('width'));
+
                     _setUpListners2(zzz);
                     $('.mainIMGHolder').css({
                         'width': '648px',
@@ -206,6 +211,7 @@ var FileUploadJQ = (function(){
                 });
                }
            } else {
+                   console.log('mbb')
             _setUpListners2();
             $('.mainIMGHolder').css({
                 'height': height,
@@ -221,7 +227,7 @@ var FileUploadJQ = (function(){
                 'margin':'auto'
             });
         }
-
+        $('#progress').remove();
 
     });
 }
@@ -258,6 +264,12 @@ var _setUpListners2 = function(zzz) {
                 var nameFile = data.result.files[0].name,
                 urlFile = data.result.files[0].url;
                 dataParams.addWatermarkImage(urlFile);
+
+                $('#submit').removeAttr('disabled');
+                $('#reset').removeAttr('disabled');
+                $('#false').removeAttr('disabled');
+                $('#true').removeAttr('disabled');
+
                 $('#progress').remove(); 
                 $('.mainWatermark').text(nameFile);
                 $('input[name="watermark"]').val(nameFile);
@@ -344,44 +356,35 @@ var ZAMOS = (function(){
         var mainIMGHolderWidth = screen.width/1.2;
         var mainIMGHolderHeight = screen.height/1.2;
         var mainIMGHolderArea = mainIMGHolderWidth * mainIMGHolderHeight;
-        //var flagWidth = $('.mainMark').width();
-        //var flagHeight = $('.mainMark').height();
         var flagArea = flagAreaOut;
         var integer = (mainIMGHolderArea/flagArea);
+        var kooficientSjatia = $('.mainMark').width();
             $('#moveX').val(0);
             $('#moveY').val(0);
-        //console.log(flagArea +'flag area');
-        //console.log(integer +'flag area');
             $( "#slider" ).slider({'value':100});
-            var kooficientSjatia = $('.mainMark').width();
-            // console.log(kooficientSjatia);
-       // var flagWidth = $('.mainMark').width();
-       // var flagHeight = $('.mainMark').height();
+         
             $('.mainMark').remove();
-        //console.log(mainIMGHolderArea);
-        //console.log(flagArea);
-        //console.log(mainIMGHolderArea/flagArea);
+    
         $('.mainIMGHolder').append('<div class="flagHolder"></div>');
         $('.flagHolder').css({
             'position': 'absolute',
             'width': mainIMGHolderWidth+'px',
             'height': mainIMGHolderHeight+'px',
             'border':'1px solid green',
-            'top': '50%',
-            'left':'50%',
+            'top': -1*mainIMGHolderHeight/3+'px',
+            'left':-1*mainIMGHolderWidth/3+'px',
+            // 'right':'0',
+            // 'bottom':'0',
+            // 'margin':'auto',
             'cursor':'move',
-            'margin-left': -1*mainIMGHolderWidth/2+'px',
-            'margin-top': -1*mainIMGHolderHeight/2+'px',
             'font-size':'0'
-        }).draggable();
+        }).draggable({containment: [0,0,$('.mainIMGHolder').offset().left-1,$('.mainIMGHolder').offset().top-1]});
+        console.log($('.aim-img').offset().top)
 
 
-            crazy:
             for(var i = 0;i<=integer;i++){
-                $('.flagHolder').append('<img  class="flag">'); 
-                console.log(integer);      
+                $('.flagHolder').append('<img  class="flag">');       
             }
-            integer = 0;
             $('.flag').attr({
                 'src': file,
                 'width': kooficientSjatia
@@ -410,7 +413,12 @@ var ZAMOS = (function(){
                 
             });
             
-        //});
+        // $('.flagHolder').on('drag', function(event,ui) {
+            
+
+        //     }
+            
+        // });
 
 
 };
@@ -579,7 +587,7 @@ var Coordin = (function () {
         layer_height=parseInt(layer.css('height'));
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.mainMark').css('left'),
-            coordin_inc = parseInt(coordin) + 10,
+            coordin_inc = parseInt(coordin) + 10,///////////
             pos = coordin_inc +'px';
 
             if ((coordin_inc)<= (layer_width - img_width)) {
@@ -593,7 +601,7 @@ var Coordin = (function () {
         }
         if (inp.attr('id') === 'moveY'){
             var coordin = $('.mainMark').css('top'),
-            coordin_inc = parseInt(coordin) + 10,
+            coordin_inc = parseInt(coordin) + 10,///////////
             pos = coordin_inc +'px';
             if ((coordin_inc)<= (layer_height - img_height)) {
                $('.mainMark').css('top' , pos);
@@ -710,11 +718,32 @@ var _reduce = function(){
         $('.position__choose-reduce').off();
         $('.choose-position__item').off();
     };
+    var positionOff = function(){
+        console.log('pos off');
+        $('.choose-position__item').unbind('mouseenter mouseleave');
+        $('.choose-position__item').css('cursor', 'default');
+        $('.choose-position__item').on('mouseenter mouseleave', function(){
+            $(this).css({border: '1px solid #c1cfd9' , 'background-color' : '#dbe1e8'});
+        });
+    };
+    var positionOn = function(){
+        console.log('pos on');
+        $('.choose-position__item').unbind('mouseenter mouseleave');
+        $('.choose-position__item').css('cursor', 'pointer');
+        $('.choose-position__item').on('mouseenter', function(){
+            $(this).css({border: '1px solid #c1cfd9' , 'background-color' : '#f97e76'});
+        });
+        $('.choose-position__item').on('mouseleave', function(){
+            $(this).css({border: '1px solid #c1cfd9' , 'background-color' : '#dbe1e8'});
+        });
+    };
 
     return{
         init : init,
         drag: drag,
-        destroy : destroy
+        destroy : destroy,
+        positionOn : positionOn,
+        positionOff : positionOff
     }
 })();
 
@@ -814,6 +843,7 @@ var main2 = (function(){
                 'top':'50%',
                 'left': '1px',
                 'width':'100px',
+                'height':'0.5px',
                 'background-color':'#e3736c'
             });
             $('#horizontal').css({
@@ -822,15 +852,20 @@ var main2 = (function(){
                 'left': '50%',
                 'width':'0',
                 'height':'100%',
+                'width':'0.5px',
                 'background-color':'#e3736c'
             });
             //main2.init()
 
         };
+    var redCrossDestroy =function(){
+      $('#vartical').remove();
+      $('#horizontal').remove();
+    };
 
         var init = function () {
          _redCross();
-        $('.radio__tiling_true').on('click',_redCross);
+        //$('.radio__tiling_true').on('click',_redCross);
         $('.position__choose-increase').on('click', _increas2);
         $('.position__choose-reduce').on('click', _reduce2);
     };
@@ -844,11 +879,12 @@ var main2 = (function(){
 
     return {
         init: init,
-        destroy: destroy
+        destroy: destroy,
+        redCrossDestroy : redCrossDestroy
     };
 
 })();
-if ($('.position__choose-increase') && $('.position__choose-reduce') && $('.flagHolder')) { main2.init(); };
+// if ($('.position__choose-increase') && $('.position__choose-reduce') && $('.flagHolder')) { main2.init(); };
 //_________________________________TOGLEMODUL____________________________________//
 var toggelModule = (function(){
 
@@ -862,6 +898,7 @@ var toggelModule = (function(){
         Coordin.destroy();
         main2.destroy;
       Coordin.init();
+        Coordin.positionOn();
     };
     var _setupListener = function(){
         $('input[name=tiling]:radio').on('change', _initSomth);
@@ -891,16 +928,18 @@ var toggelModule = (function(){
         $('#moveY').val(0);
         Coordin.init();
         Coordin.drag();
+        Coordin.positionOn();
     };
     var _initZamos = function () {
-        var mainIMGHolderWidth = screen.width/1.2;
-        var mainIMGHolderHeight = screen.height/1.2;
-        var mainIMGHolderArea = mainIMGHolderWidth * mainIMGHolderHeight;
-        var flagWidth = $('.mainMark:last').width();
-        var flagHeight = $('.mainMark:last').height();
-        var flagArea = flagWidth * flagHeight;
-        var integer = (mainIMGHolderArea/flagArea);
+        // var mainIMGHolderWidth = screen.width/1.2;
+        // var mainIMGHolderHeight = screen.height/1.2;
+        // var mainIMGHolderArea = mainIMGHolderWidth * mainIMGHolderHeight;
+        // var flagWidth = $('.mainMark:last').width();
+        // var flagHeight = $('.mainMark:last').height();
+        // var flagArea = flagWidth * flagHeight;
+        // var integer = (mainIMGHolderArea/flagArea);
         Coordin.destroy();
+        Coordin.positionOff();
         var width = $('.mainMark').width();
         var height = $('.mainMark').height();
         var area = width*height;
@@ -948,9 +987,21 @@ var ReSeT = (function(){
             $( "#slider" ).slider({'value':100});
             $('.mainImg').text('Image.jpg');
             $('.mainWatermark').text('Image.jpg');
+
+
             $('#true').prop('checked', 'none');
-            $('#false').prop('checked', 'checked');
+            $('#false').prop('checked', 'checked');// =======
             $('.aim-img').append('<img src="" class="mainMark">');
+
+            $('#submit').attr('disabled', 'disabled');
+            $('#reset').attr('disabled', 'disabled');
+            $('#false').attr('disabled', 'disabled');
+            $('#true').attr('disabled', 'disabled');
+            //$('#true').off();
+            main2.redCrossDestroy();
+            Coordin.positionOff();
+            $('.position__choose').off();
+            $('.choose-position__item').off();
             dataParams.addWatermarkImage('');
             dataParams.addOriginalImage('');
             dataParams.addTransparency(1);
@@ -969,3 +1020,75 @@ var ReSeT = (function(){
     };
 })();
 ReSeT.init();
+
+
+
+// var draggablePlus = (function(){
+//             // mainMark = $('.mainMark')
+//         var elem = document.getElementsByClassName('position__choose')[0];
+//     var _Down = function(e) {
+//         var moveX = document.getElementById('moveX'),
+//             moveY = document.getElementById('moveY'),
+//             mainMark = document.getElementsByClassName('mainMark')[0];
+
+//         var Plus = function () {
+            
+//             moveX.value = parseFloat(moveX.value) +1;
+                            
+//         };
+//           xxx=setInterval(Plus,100);        
+//             mainMark.style.top = moveX.value;
+//     }
+
+//     var _Up = function () {
+//             clearInterval(xxx);
+//         }
+    
+
+
+//     var init = function () {
+//         elem.addEventListener('mousedown',_Down,false);
+//         elem.addEventListener('mouseup',_Up,false);
+//     };
+//     return {
+//         init: init
+//     };
+// })();
+// // draggablePlus.init();
+
+//Отображение кнопок репоста
+var ShareShow = (function(){
+
+    var init = function () {
+        _setUpListners();
+    };
+
+    var _setUpListners = function() {
+        //$('#like').on('click', _showLike);
+       // $('#share').on('hover', _showLike);
+        $('.share__btn_like').on('mouseenter', function(){
+            $('.share').addClass('open').animate({left: '0px' });
+        });
+        $('.share').on('mouseleave', function(){
+            $(this).removeClass('open').animate({left: '-43px' });
+        });
+
+    };
+
+    //var  _showLike = function (e) {
+    //    e.preventDefault();
+    //    if ($('#share').hasClass('open')) {
+    //        $('#share').removeClass('open').animate({left: '-43px' });;
+    //    } else {
+    //        $('#share').addClass('open').animate({left: '0px' });
+    //    }
+    //}
+
+    return {
+        init: init
+    };
+
+})();
+
+if($('#share')) { ShareShow.init(); };
+
