@@ -2701,3 +2701,19 @@ body .ui-tooltip {
   /* support: IE8 */
   border-radius: 5px;
 }
+
+
+/***************************************************
+        ****************************** 
+***************************************************/
+
+.ui-spinner a.ui-spinner-button{
+  background-color: transparent!important;
+}
+.custom-up-icon{
+  background-image: url("../img/images/inc.png")!important;
+  border: 1px solid red!important;
+}
+.custom-down-icon{
+  background-image: url("../img/images/dec.png")!important;
+}

@@ -359,8 +359,8 @@ if ($('#fileuploadImage')) { FileUploadJQ.init(); };
 //Р РµР¶РёРј Р·Р°РјРѕС‰РµРЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёР№
 var ZAMOS = (function(){
     var init = function (file, flagAreaOut) {
-        var mainIMGHolderWidth = screen.width/1.2;
-        var mainIMGHolderHeight = screen.height/1.2;
+        var mainIMGHolderWidth = screen.width;
+        var mainIMGHolderHeight = screen.height;
         var mainIMGHolderArea = mainIMGHolderWidth * mainIMGHolderHeight;
         var flagArea = flagAreaOut;
         var integer = (mainIMGHolderArea/flagArea);
@@ -376,15 +376,11 @@ var ZAMOS = (function(){
             'position': 'absolute',
             'width': mainIMGHolderWidth+'px',
             'height': mainIMGHolderHeight+'px',
-            'border':'1px solid green',
             'top': -1*mainIMGHolderHeight/3+'px',
             'left':-1*mainIMGHolderWidth/3+'px',
-            // 'right':'0',
-            // 'bottom':'0',
-            // 'margin':'auto',
             'cursor':'move',
             'font-size':'0'
-        }).draggable({containment: [0,0,$('.mainIMGHolder').offset().left-1,$('.mainIMGHolder').offset().top-1]});
+        }).draggable({containment: [0,0,$('.mainIMGHolder').offset().left,$('.mainIMGHolder').offset().top]});
         console.log($('.aim-img').offset().top)
 
 
@@ -395,54 +391,6 @@ var ZAMOS = (function(){
                 'src': file,
                 'width': kooficientSjatia
             });
-
-
-            $('#moveX').on('keyup', function() {
-                //var z = parseInt($('#moveX').val());
-                //console.log(z);
-                if(parseInt($('#moveX').val())) {
-                    var z = parseInt($('#moveX').val());
-                }else{
-                    z = 0
-                }
-                $('.flag').css('border-bottom', z+'px solid transparent');
-                $('#vertical').css({
-                    'margin-top': (-1*z)/2+'px',
-                    'height': z+'px'
-                });
-                if(z === 0){
-                    $('#vertical').css('height', '0.5px');
-                }
-                $('#moveX').val(z);
-                
-            });
-
-            $('#moveY').on('keyup', function() {
-                if(parseInt($(this).val())) {
-                    var z = parseInt($(this).val());
-                }else{
-                    z = 0
-                }
-                console.log(z);
-                $('.flag').css('border-right', z+'px solid transparent');
-                $('#horizontal').css({
-                    'margin-left': (-1*z)/2+'px',
-                    'width': z+'px'
-                });
-                if(z === 0){
-                    $('#horizontal').css('width', '0.5px');
-                }
-
-                $('#moveY').val(z);
-                
-            });
-            
-        // $('.flagHolder').on('drag', function(event,ui) {
-            
-
-        //     }
-            
-        // });
 
 
 };
@@ -609,6 +557,7 @@ var Coordin = (function () {
         layer_width=parseInt(layer.css('width')),
         img_height= parseInt(img.css('height')),
         layer_height=parseInt(layer.css('height'));
+
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.mainMark').css('left'),
             coordin_inc = parseInt(coordin) + 10,///////////
@@ -1098,4 +1047,64 @@ var ShareShow = (function(){
 
 if($('#share')) { ShareShow.init(); };
 
+var Spiners = (function(){
+    var _setUpListners = function() {
+        $('#moveX,#moveY').spinner({
+            icons: { down: "custom-down-icon", up: "custom-up-icon" },
+            spin: function( event, ui ) {
+                if(event.target.id === 'moveX'){
+                         console.log(ui.value)
+                    if($('.mainMark')){
+                         $('.mainMark').css('top', ui.value);
+                         $('#moveX').spinner( "option", "max", $('.mainIMGHolder').height()-$('.mainMark').height());
+                     }//$('.mainMark')
 
+                    if($('.flag')){
+                        // $('#moveX').spinner( "option", "max", 100);
+                        $('#moveX').removeAttr('aria-valuemax').attr('aria-valuemax', '100');
+                        $('.flag').css('border-bottom', ui.value+'px solid transparent');
+                        $('#vertical').css({
+                            'margin-top': (-1*ui.value)/2+'px',
+                            'height': ui.value+'px'
+                        });
+                        if(ui.value === 0){
+                            $('#vertical').css('height', '1px');
+                        }//ui.value === 0
+                    }//$('.flag')
+                }//event.target.id === 'moveX'
+
+                if(event.target.id === 'moveY'){
+                    if($('.mainMark')){
+                         $('.mainMark').css('left', ui.value);
+                         $('#moveY').spinner( "option", "max", $('.mainIMGHolder').width()-$('.mainMark').width());
+                     }//$('.mainMark')
+
+                    if($('.flag')){
+                        // $('#moveY').spinner( "option", "max", 100);
+                        $('.flag').css('border-right', ui.value+'px solid transparent');
+                        $('#horizontal').css({
+                            'margin-left': (-1*ui.value)/2+'px',
+                            'width': ui.value+'px'
+                        });
+                        if(ui.value === 0){
+                            $('#horizontal').css('width', '0.5px');
+                        }//z === 0
+                    }//$('.flag')
+                }//event.target.id === 'moveY'
+
+                 
+            }
+}       );
+    };
+    var init = function () {
+        _setUpListners();
+
+    };
+    return {
+        init: init
+    };
+})();
+if ($('#moveX') && $('#moveY')) { Spiners.init(); };
+
+
+  
