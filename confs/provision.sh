@@ -27,15 +27,15 @@ bower install --allow-root
 gem install compass
 
 # Setup apache
-# Change allow_rewrite in apache2.conf!!!
-rm /etc/apache2/sites-enabled/*.conf
-rm /etc/apache2/sites-available/*.conf
+rm -rf /var/www/html
+rm /etc/apache2/sites-enabled/000*.conf
+rm /etc/apache2/sites-available/000*.conf
 cp confs/watermarkGen.conf /etc/apache2/sites-available/watermarkGen.conf
 ln -s /etc/apache2/sites-available/watermarkGen.conf /etc/apache2/sites-enabled/watermarkGen.conf
 mkdir uploads
-cd ..
-chown -R www-data WatermarkGen
-cd WatermarkGen
+chown -R www-data:www-data /var/www/WatermarkGen
 a2enmod rewrite
 apachectl restart
-
+echo "Change 'AllowOverride None' in <directory /var/www/> to 'AllowOverride All' in apache2.conf"
+echo "Enable mod_rewrite: a2enmod rewrite"
+echo "Restart apache: apachectl restart"
