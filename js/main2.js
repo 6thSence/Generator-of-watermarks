@@ -1,4 +1,4 @@
-//Сбор параметров
+
 ;var dataParams = (function(){
 
     var params = {
@@ -64,7 +64,7 @@
 
 })();
 
-//Скачать изображение, передача информации на backend
+//РЎРєР°С‡Р°С‚СЊ РёР·РѕР±СЂР°Р¶РµРЅРёРµ, РїРµСЂРµРґР°С‡Р° РёРЅС„РѕСЂРјР°С†РёРё РЅР° backend
 var submitForm = (function(){
     var init = function () {
         _setUpListners();
@@ -82,10 +82,10 @@ var submitForm = (function(){
 
                     if (ans.status === 'OK') {
                         console.log('ok');
-                        // Не влезай, убьет!
+                        // РќРµ РІР»РµР·Р°Р№, СѓР±СЊРµС‚!
                         window.location= ("php/downloadImg.php?file=" + ans.link);
                     } else{
-                     console.log('не ok');
+                     console.log('РЅРµ ok');
                      console.log('Status: ' + ans.status + ' Message: ' + ans.text);
                  }
              })
@@ -100,7 +100,7 @@ var submitForm = (function(){
             dataType: 'JSON',
             data: data
         }).fail(function(){
-            console.log('На сервере произошла ошибка.');
+            console.log('РќР° СЃРµСЂРІРµСЂРµ РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°.');
         });
     };
     return {
@@ -110,7 +110,7 @@ var submitForm = (function(){
 if ($('#submit')) { submitForm.init(); };
 
 
-//Прозрачность марки
+//РџСЂРѕР·СЂР°С‡РЅРѕСЃС‚СЊ РјР°СЂРєРё
 var OpacitySlider = (function(){
     var _setUpListners = function() {
         $( "#slider" ).slider({'value':100, 'range': 'min'}).on( "slide", function( event, ui ) {
@@ -130,7 +130,7 @@ var OpacitySlider = (function(){
 })();
 if ($('#slider')) { OpacitySlider.init(); };
 
-//Загрузка основного изображения
+//Р—Р°РіСЂСѓР·РєР° РѕСЃРЅРѕРІРЅРѕРіРѕ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
 var FileUploadJQ = (function(){
     var _setUpListners = function() {
         $('#fileuploadImage').fileupload({
@@ -328,6 +328,9 @@ var _setUpListners2 = function(zzz) {
                     if (buff === 1){
                        // Coordin.init();
                     }
+                    $('#moveX').removeAttr('disabled');
+                    $('#moveY').removeAttr('disabled');
+
                     //___________I____________//
                     
                 });
@@ -350,7 +353,7 @@ return {
 })();
 if ($('#fileuploadImage')) { FileUploadJQ.init(); };
 
-//Режим замощения изображений
+//Р РµР¶РёРј Р·Р°РјРѕС‰РµРЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёР№
 var ZAMOS = (function(){
     var init = function (file, flagAreaOut) {
         var mainIMGHolderWidth = screen.width/1.2;
@@ -438,8 +441,8 @@ var Coordin = (function () {
     var _setupListener = function(){
         //console.log('ilia');
         //$(".mainMark").on('drag', _drag);
-        $('#moveY').on('change', _setCoordinY);
-        $('#moveX').on('change', _setCoordinX);
+        $('#moveY').on('keyup', _setCoordinY);
+        $('#moveX').on('keyup', _setCoordinX);
         $('.position__choose-increase').on('click', _increas);
         $('.position__choose-reduce').on('click', _reduce);
         $('.choose-position__item').on('click', _positionRadio);
@@ -447,7 +450,7 @@ var Coordin = (function () {
 
     var _positionRadio = function(){
       var item = $(this).attr('data-item'),
-          img = $('.mainMark'),//  Моя правка
+          img = $('.mainMark'),//  РњРѕСЏ РїСЂР°РІРєР°
           layer=$('.mainIMGHolder'),
           img_width= parseInt(img.css('width')),
           layer_width=parseInt(layer.css('width')),
@@ -648,9 +651,13 @@ var _reduce = function(){
 
     var _setCoordinY = function () {
 
-        var $this = $(this),
-            coordin = parseInt($(this).val()),
-            position = coordin +'px',
+        var $this = $(this);
+        if (parseInt($(this).val())){
+            var coordin = parseInt($(this).val());
+        }else{
+            coordin = 0;
+        }
+        var position = coordin +'px',
             img=$('.mainMark'),
             layer=$('.mainIMGHolder'),
             img_height= parseInt(img.css('height')),
@@ -664,30 +671,35 @@ var _reduce = function(){
             $('.mainMark').css('top' , layer_height - img_height);
             $this.val(layer_height - img_height);
         }
-        if(coordin < 0){
+        if(coordin <= 0){
             $('.mainMark').css('top' , '0');
             $this.val('0');
         }
     };
     var _setCoordinX = function () {
 
-        var $this = $(this),
-
-            coordin = parseInt($(this).val()),
-            img=$('.mainMark'),
+        var $this = $(this);
+        if (parseInt($(this).val())){
+            var coordin = parseInt($(this).val());
+        }else{
+            coordin = 0;
+        }
+        var img=$('.mainMark'),
             layer=$('.mainIMGHolder'),
             position = coordin +'px',
             img_width= parseInt(img.css('width')),
             layer_width=parseInt(layer.css('width'));
         $this.val(coordin);
+
         if(coordin <= (layer_width - img_width) || coordin >= 0){
             $('.mainMark').css('left' , position);
         }
         if(coordin >= (layer_width - img_width)){
+            
             $('.mainMark').css('left' , layer_width - img_width);
             $this.val(layer_width - img_width);
         }
-        if(coordin < 0){
+        if(coordin <= 0){
             $('.mainMark').css('left' , '0');
             $this.val('0');
         }
@@ -850,7 +862,6 @@ var main2 = (function(){
                 'position': 'absolute',
                 'top':'0',
                 'left': '50%',
-                'width':'0',
                 'height':'100%',
                 'width':'0.5px',
                 'background-color':'#e3736c'
@@ -899,6 +910,8 @@ var toggelModule = (function(){
         main2.destroy;
       Coordin.init();
         Coordin.positionOn();
+        $('label[for="moveX"]').removeClass('count-position__item_xxx').addClass('count-position__item_x');
+        $('label[for="moveY"]').removeClass('count-position__item_yyy').addClass('count-position__item_y');
     };
     var _setupListener = function(){
         $('input[name=tiling]:radio').on('change', _initSomth);
@@ -926,6 +939,8 @@ var toggelModule = (function(){
         $('.mainMark').css({left : '0', top : '0', cursor :'move','width':width,'height':height}).draggable({containment:'parent'});
         $('#moveX').val(0);
         $('#moveY').val(0);
+        $('label[for="moveX"]').removeClass('count-position__item_xxx').addClass('count-position__item_x');
+        $('label[for="moveY"]').removeClass('count-position__item_yyy').addClass('count-position__item_y');
         Coordin.init();
         Coordin.drag();
         Coordin.positionOn();
@@ -940,6 +955,8 @@ var toggelModule = (function(){
         // var integer = (mainIMGHolderArea/flagArea);
         Coordin.destroy();
         Coordin.positionOff();
+        $('label[for="moveX"]').removeClass('count-position__item_x').addClass('count-position__item_xxx');
+        $('label[for="moveY"]').removeClass('count-position__item_y').addClass('count-position__item_yyy');
         var width = $('.mainMark').width();
         var height = $('.mainMark').height();
         var area = width*height;
@@ -960,13 +977,16 @@ var toggelModule = (function(){
 })();
 //_________________________________TOGLEMODUL____________________________________//
 
-//Fadeloader (красивишная загрузка страницы)
+//Fadeloader (РєСЂР°СЃРёРІРёС€РЅР°СЏ Р·Р°РіСЂСѓР·РєР° СЃС‚СЂР°РЅРёС†С‹)
 $('body').fadeloader({
     mode: 'children',
     fadeSpeed : 1500,
     displayType : 'block',
     easeLoad : 'easeInOutBack',
-    onComplete : ''
+    onComplete : function(){
+        $('label[for="moveX"]').removeClass('count-position__item_xxx').addClass('count-position__item_x');
+        $('label[for="moveY"]').removeClass('count-position__item_yyy').addClass('count-position__item_y');
+    }
 });
 
 
@@ -987,8 +1007,8 @@ var ReSeT = (function(){
             $( "#slider" ).slider({'value':100});
             $('.mainImg').text('Image.jpg');
             $('.mainWatermark').text('Image.jpg');
-
-
+            $('label[for="moveX"]').removeClass('count-position__item_xxx').addClass('count-position__item_x');
+            $('label[for="moveY"]').removeClass('count-position__item_yyy').addClass('count-position__item_y');
             $('#true').prop('checked', 'none');
             $('#false').prop('checked', 'checked');// =======
             $('.aim-img').append('<img src="" class="mainMark">');
@@ -997,6 +1017,8 @@ var ReSeT = (function(){
             $('#reset').attr('disabled', 'disabled');
             $('#false').attr('disabled', 'disabled');
             $('#true').attr('disabled', 'disabled');
+            $('#moveX').attr('disabled', 'disabled');
+            $('#moveY').attr('disabled', 'disabled');
             //$('#true').off();
             main2.redCrossDestroy();
             Coordin.positionOff();
@@ -1056,7 +1078,7 @@ ReSeT.init();
 // })();
 // // draggablePlus.init();
 
-//Отображение кнопок репоста
+//РћС‚РѕР±СЂР°Р¶РµРЅРёРµ РєРЅРѕРїРѕРє СЂРµРїРѕСЃС‚Р°
 var ShareShow = (function(){
 
     var init = function () {
