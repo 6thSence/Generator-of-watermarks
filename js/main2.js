@@ -717,11 +717,32 @@ var _reduce = function(){
         $('.position__choose-reduce').off();
         $('.choose-position__item').off();
     };
+    var positionOff = function(){
+        console.log('pos off');
+        $('.choose-position__item').unbind('mouseenter mouseleave');
+        $('.choose-position__item').css('cursor', 'default');
+        $('.choose-position__item').on('mouseenter mouseleave', function(){
+            $(this).css({border: '1px solid #c1cfd9' , 'background-color' : '#dbe1e8'});
+        });
+    };
+    var positionOn = function(){
+        console.log('pos on');
+        $('.choose-position__item').unbind('mouseenter mouseleave');
+        $('.choose-position__item').css('cursor', 'pointer');
+        $('.choose-position__item').on('mouseenter', function(){
+            $(this).css({border: '1px solid #c1cfd9' , 'background-color' : '#f97e76'});
+        });
+        $('.choose-position__item').on('mouseleave', function(){
+            $(this).css({border: '1px solid #c1cfd9' , 'background-color' : '#dbe1e8'});
+        });
+    };
 
     return{
         init : init,
         drag: drag,
-        destroy : destroy
+        destroy : destroy,
+        positionOn : positionOn,
+        positionOff : positionOff
     }
 })();
 
@@ -821,6 +842,7 @@ var main2 = (function(){
                 'top':'50%',
                 'left': '1px',
                 'width':'100px',
+                'height':'0.5px',
                 'background-color':'#e3736c'
             });
             $('#horizontal').css({
@@ -829,15 +851,20 @@ var main2 = (function(){
                 'left': '50%',
                 'width':'0',
                 'height':'100%',
+                'width':'0.5px',
                 'background-color':'#e3736c'
             });
             //main2.init()
 
         };
+    var redCrossDestroy =function(){
+      $('#vartical').remove();
+      $('#horizontal').remove();
+    };
 
         var init = function () {
          _redCross();
-        $('.radio__tiling_true').on('click',_redCross);
+        //$('.radio__tiling_true').on('click',_redCross);
         $('.position__choose-increase').on('click', _increas2);
         $('.position__choose-reduce').on('click', _reduce2);
     };
@@ -851,7 +878,8 @@ var main2 = (function(){
 
     return {
         init: init,
-        destroy: destroy
+        destroy: destroy,
+        redCrossDestroy : redCrossDestroy
     };
 
 })();
@@ -869,6 +897,7 @@ var toggelModule = (function(){
         Coordin.destroy();
         main2.destroy;
       Coordin.init();
+        Coordin.positionOn();
     };
     var _setupListener = function(){
         $('input[name=tiling]:radio').on('change', _initSomth);
@@ -898,6 +927,7 @@ var toggelModule = (function(){
         $('#moveY').val(0);
         Coordin.init();
         Coordin.drag();
+        Coordin.positionOn();
     };
     var _initZamos = function () {
         // var mainIMGHolderWidth = screen.width/1.2;
@@ -907,7 +937,8 @@ var toggelModule = (function(){
         // var flagHeight = $('.mainMark:last').height();
         // var flagArea = flagWidth * flagHeight;
         // var integer = (mainIMGHolderArea/flagArea);
-        // Coordin.destroy();
+        Coordin.destroy();
+        Coordin.positionOff();
         var width = $('.mainMark').width();
         var height = $('.mainMark').height();
         var area = width*height;
@@ -965,7 +996,11 @@ var ReSeT = (function(){
             $('#reset').attr('disabled', 'disabled');
             $('#false').attr('disabled', 'disabled');
             $('#true').attr('disabled', 'disabled');
-
+            //$('#true').off();
+            main2.redCrossDestroy();
+            Coordin.positionOff();
+            $('.position__choose').off();
+            $('.choose-position__item').off();
             dataParams.addWatermarkImage('');
             dataParams.addOriginalImage('');
             dataParams.addTransparency(1);
@@ -1029,17 +1064,24 @@ var ShareShow = (function(){
 
     var _setUpListners = function() {
         //$('#like').on('click', _showLike);
-        $('#share').on('hover', _showLike);
+       // $('#share').on('hover', _showLike);
+        $('.share__btn_like').on('mouseenter', function(){
+            $('.share').addClass('open').animate({left: '0px' });
+        });
+        $('.share').on('mouseleave', function(){
+            $(this).removeClass('open').animate({left: '-43px' });
+        });
+
     };
 
-    var  _showLike = function (e) {
-        e.preventDefault();
-        if ($('#share').hasClass('open')) {
-            $('#share').removeClass('open').animate({left: '-43px' });;
-        } else {
-            $('#share').addClass('open').animate({left: '0px' });
-        }
-    }
+    //var  _showLike = function (e) {
+    //    e.preventDefault();
+    //    if ($('#share').hasClass('open')) {
+    //        $('#share').removeClass('open').animate({left: '-43px' });;
+    //    } else {
+    //        $('#share').addClass('open').animate({left: '0px' });
+    //    }
+    //}
 
     return {
         init: init
