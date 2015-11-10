@@ -28,8 +28,14 @@ gem install compass
 
 # Setup apache
 # Change allow_rewrite in apache2.conf!!!
+rm /etc/apache2/sites-enabled/*.conf
+rm /etc/apache2/sites-available/*.conf
 cp confs/watermarkGen.conf /etc/apache2/sites-available/watermarkGen.conf
 ln -s /etc/apache2/sites-available/watermarkGen.conf /etc/apache2/sites-enabled/watermarkGen.conf
+mkdir uploads
+cd ..
+chown -R www-data WatermarkGen
+cd WatermarkGen
 a2enmod rewrite
 apachectl restart
 
