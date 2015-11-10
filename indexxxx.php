@@ -116,13 +116,13 @@
 										</div>
 										<div class="position-select__choose count-position">
 											<div class="input-group_count">
-												<label for="moveX" disabled="disabled"class="input-group__label_count count-position__item_xxx"></label>
-												<input id="moveX" disabled="disabled" name="value_x" value="0" aria-valuenow="0" autocomplete="off" role="spinbutton" class="count-position__item">
+												<label for="moveX" class="input-group__label_count count-position__item_xxx"></label>
+												<input id="moveX" name="value_x" value="0" aria-valuenow="0" autocomplete="off" role="spinbutton" class="count-position__item">
 												<div class="dif__btn-group"><a tabindex="-1" role="button" id="moveXincrease" class="position__choose position__choose-increase"></a><a tabindex="-1" role="button" id="moveXreduce" class="position__choose position__choose-reduce"></a></div>
 											</div>
 											<div class="input-group_count">
 												<label for="moveY" class="input-group__label_count count-position__item_yyy"> </label>
-												<input id="moveY" disabled="disabled" name="value_y" value="0" aria-valuenow="0" autocomplete="off" role="spinbutton" class="count-position__item">
+												<input id="moveY" name="value_y" value="0" aria-valuenow="0" autocomplete="off" role="spinbutton" class="count-position__item">
 												<div class="dif__btn-group"><a tabindex="-1" role="button" id="moveYincrease" class="position__choose position__choose-increase"></a><a tabindex="-1" role="button" id="moveYreduce" class="position__choose position__choose-reduce"></a></div>
 											</div>
 										</div>

@@ -35,6 +35,8 @@
     }
 }
 .share{
+    position: relative;
+    left: -43px;
     .share__btn-wrap{
         box-sizing: content-box;
         &:first-of-type{

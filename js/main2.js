@@ -75,15 +75,16 @@ var submitForm = (function(){
             dataParams.addX(parseInt($('.flagHolder').css('left')));
             dataParams.addY(parseInt($('.flagHolder').css('top')));
             console.log (dataParams.getData());
-            var url ='./php/download.php',
+             var url ='./php/download.php',
             defObj = _ajax(dataParams.getData(), url);
-
             if(defObj) {
                 defObj.done(function(ans){
+
                     if (ans.status === 'OK') {
                      console.log('ok');
-                       window.location = ans.link; // Link to file
-                   } else{
+                     window.location = ans.link; // Link to file
+                      $.fileDownload('php/downloadImg.php',{url : ans.url});
+                    } else{
                      console.log('не ok');
                  }
              })
@@ -158,7 +159,7 @@ var FileUploadJQ = (function(){
         var nameFile = data.result.files[0].name,
         urlFile = data.result.files[0].url;
         dataParams.addOriginalImage(urlFile);
-        $('#progress').remove();
+        
 
 
         $('#fileuploadImage').attr('disabled', 'disabled');
@@ -171,7 +172,7 @@ var FileUploadJQ = (function(){
             var height = $(this).height();
             $('.aim-img').append('<div class="mainIMGHolder"></div>').css('position', 'relative');
                     var zzz = width/parseInt($('.mainIMGHolder').css('width'));
-                    console.log(zzz+'kjjbkjbkbkbkbkb')
+                    
             if(width > 648 || height > 533){
                 if(width > height){
                     var finalSize = (width/height);
@@ -225,7 +226,7 @@ var FileUploadJQ = (function(){
                 'margin':'auto'
             });
         }
-
+        $('#progress').remove();
 
     });
 }
@@ -854,7 +855,7 @@ var main2 = (function(){
     };
 
 })();
-if ($('.position__choose-increase') && $('.position__choose-reduce') && $('.flagHolder')) { main2.init(); };
+// if ($('.position__choose-increase') && $('.position__choose-reduce') && $('.flagHolder')) { main2.init(); };
 //_________________________________TOGLEMODUL____________________________________//
 var toggelModule = (function(){
 
@@ -955,6 +956,7 @@ var ReSeT = (function(){
             $('.mainImg').text('Image.jpg');
             $('.mainWatermark').text('Image.jpg');
 
+
             $('#true').prop('checked', 'none');
             $('#false').prop('checked', 'checked');// =======
             $('.aim-img').append('<img src="" class="mainMark">');
@@ -963,7 +965,6 @@ var ReSeT = (function(){
             $('#reset').attr('disabled', 'disabled');
             $('#false').attr('disabled', 'disabled');
             $('#true').attr('disabled', 'disabled');
-
 
             dataParams.addWatermarkImage('');
             dataParams.addOriginalImage('');
@@ -983,6 +984,7 @@ var ReSeT = (function(){
     };
 })();
 ReSeT.init();
+
 
 
 // var draggablePlus = (function(){
@@ -1017,3 +1019,33 @@ ReSeT.init();
 //     };
 // })();
 // // draggablePlus.init();
+
+//Отображение кнопок репоста
+var ShareShow = (function(){
+
+    var init = function () {
+        _setUpListners();
+    };
+
+    var _setUpListners = function() {
+        //$('#like').on('click', _showLike);
+        $('#share').on('hover', _showLike);
+    };
+
+    var  _showLike = function (e) {
+        e.preventDefault();
+        if ($('#share').hasClass('open')) {
+            $('#share').removeClass('open').animate({left: '-43px' });;
+        } else {
+            $('#share').addClass('open').animate({left: '0px' });
+        }
+    }
+
+    return {
+        init: init
+    };
+
+})();
+
+if($('#share')) { ShareShow.init(); };
+

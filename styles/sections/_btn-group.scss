@@ -9,7 +9,7 @@
 }
 
 .btn{
-    padding: 10px 14px;
+    padding: 10px 0;
     border: 1px solid transparent;
     border-radius: 3px;
     font-size: 18px;
@@ -24,7 +24,8 @@
 
 .btn__clear{
     background-color: #c1cfd9;
-    margin-right: 37px;
+    // margin-right: 37px;
+    float: left;
     &:hover{
         border: 1px solid #a6b2bb;
         box-shadow: 0 3px 1px 0 #afbbc5 inset;
@@ -33,6 +34,7 @@
 
 .btn__save{
     background-color: #f97e76;
+    float: right;
     &:hover{
         border: 1px solid #e3736c;
         box-shadow: 0 3px 1px 0 #e7756e inset;
