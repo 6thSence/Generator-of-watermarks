@@ -1,0 +1,1 @@
+{"name":"Watermark-generator","tagline":"Генерация водяных знаков","body":">Инструкция по установке моего приложения\r\n\r\n1. git https://github.com/6thSence/Watermark-Generator.git site\r\n2. cd site\r\n3. npm install\r\n4. bower install\r\n5. gem install compass\r\n6. gulp","google":"","note":"Don't delete this file! It's used internally to help with page regeneration."}
