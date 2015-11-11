@@ -39,11 +39,15 @@ function make_filename($name, $ext) {
     return sha1($name).'.'.$ext;
 }
 
-function get_filedir($name) {
+function get_download_filedir($name) {
+    global $download_dir;
+    return ''.$download_dir.$name;
+}
+
+function get_upload_filedir($name) {
     global $upload_dir;
     return ''.$upload_dir.$name;
 }
-
 
 // Send functions
 function send_filename($file_name) {
@@ -55,7 +59,7 @@ function send_filename($file_name) {
 }
 
 function send_file($file_name) {
-    $file_dir = get_filedir($file_name);
+    $file_dir = get_download_filedir($file_name);
     header('Content-Description: File Transfer');
     header('Content-Type: application/octet-stream');
     header('Content-Disposition: attachment; filename='.$file_name);
