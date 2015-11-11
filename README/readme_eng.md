@@ -1,9 +1,9 @@
-[ENG]() [RU]() 
+[ENG](https://github.com/6thSence/Watermark-Generator/raw/readme/README/readme_eng.md) [RU](https://github.com/6thSence/Watermark-Generator/raw/readme/README/readme_ru.md) 
  
 # Watermark Generator 
 ### [Перейти на сайт](http://filimonow.ru/ "Watermark Generator")
 ### [Git Pages](http://6thsence.github.io/Watermark-Generator/ "Watermark Generator")
-![Иллюстрация к проекту](https://raw.github.com/6thSence/Watermark-Generator/readme/image/project.jpg)
+![Иллюстрация к проекту](https://github.com/6thSence/Watermark-Generator/raw/readme/README/ENG/image/project.png)
 # Описание
 
 ### Данный сервис решает задачу по добавлению водяного знака для изображения
@@ -11,25 +11,34 @@
 # Как использовать
 
 ## Загрузите изображения на которое будет наложен водяной знак.
+![Загрузите изображение](https://github.com/6thSence/Watermark-Generator/raw/readme/README/ENG/image/download_1.png)
 ## Загрузите водяной знак.
-
+![Загрузите изображение](https://github.com/6thSence/Watermark-Generator/raw/readme/README/ENG/image/download_1.png)
 ### Перемещение водяного знака.
 + с помощью `спинеров`: кликая мышкой по стрелочкам справа от цифровых значений вы сможете переместить водяной знак в соответствующую область изображения
+![Загрузите изображение](https://github.com/6thSence/Watermark-Generator/raw/readme/README/ENG/image/move_1.png)
 + с помощью `секторов`: кликнув левой кнопкой мышки по любому из них, вы переместите водяной знак в соответствующую область изображения
+![Загрузите изображение](https://github.com/6thSence/Watermark-Generator/raw/readme/README/ENG/image/move_2.png)
 + с помощью `мышки`: наведите курсор мышки на водяной знак, зажмите левую кнопку мышки, двигайте мышку в любую сторону
+![Загрузите изображение](https://github.com/6thSence/Watermark-Generator/raw/readme/README/ENG/image/move_3.png)
 
 ### Настройка прозрачности водяного знака. 
 + с помощью перемещения `спинера`. Зажав его левой кнопкой мышки и перемещая в горизонтальной плоскости, вы меняете плотность водяного знака 
+![Загрузите изображение](https://github.com/6thSence/Watermark-Generator/raw/readme/README/ENG/image/opacity.png)
     
 ### Замощение водяного знака. 
 + убедитесь в выборе `режима замощения`( кликните левой кнопкой мыши по кнопке )
+![Загрузите изображение](https://github.com/6thSence/Watermark-Generator/raw/readme/README/ENG/image/tiling_1.png)
 + с помощью `спинеров`: кликая мышкой по стрелочкам справа от цифровых значений вы сможете увеличить отступ между водяными знаками или уменьшить(если отступ кажется вам слишком большим)
+![Загрузите изображение](https://github.com/6thSence/Watermark-Generator/raw/readme/README/ENG/image/tiling_2.png)
     
 ## Скачать изображение 
 + Кликните левой кнопкой мыши по кнопке `Скачать`    
+![Загрузите изображение](https://github.com/6thSence/Watermark-Generator/raw/readme/README/ENG/image/download.png)
     
 ## Вернуть исходные  настройки к водяному знаку
 + Кликните левой кнопкой мыши по кнопке `Сброс`
+![Загрузите изображение](https://github.com/6thSence/Watermark-Generator/raw/readme/README/ENG/image/reset.png)
 
 # Скачать проект
    1. git https://github.com/6thSence/Watermark-Generator.git  WatermarkGenerator
