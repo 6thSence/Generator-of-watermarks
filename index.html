@@ -71,11 +71,11 @@
 											<div class="radio">
 												<form class="radio__list">
 													<div class="radio__item">
-														<input type="radio" id="true" value="true" name="tiling" class="radio__tiling_input radio__tiling_input_true" disabled="disabled">
+														<input type="radio" id="true" value="true" name="tiling" disabled="disabled" class="radio__tiling_input radio__tiling_input_true">
 														<label for="true" class="radio__tiling radio__tiling_true"></label>
 													</div>
 													<div class="radio__item">
-														<input type="radio" id="false" value="false" name="tiling" checked="checked" class="radio__tiling_input radio__tiling_input_false" disabled="disabled">
+														<input type="radio" id="false" value="false" name="tiling" checked="checked" disabled="disabled" class="radio__tiling_input radio__tiling_input_false">
 														<label for="false" class="radio__tiling radio__tiling_false"></label>
 													</div>
 												</form>
@@ -94,12 +94,12 @@
 											<div class="choose-position__item"></div>
 										</div>
 										<div class="position-select__choose count-position">
-											<div class="input-group_count count-position__item_xxx">
+											<div class="input-group_count count-position__item_x">
 												<label for="moveX" class="input-group__label_count"></label>
 												<input id="moveX" name="value_x" value="0" aria-valuenow="0" autocomplete="off" role="spinbutton" class="count-position__item">
 												<div class="dif__btn-group"><a tabindex="-1" role="button" class="position__choose position__choose-increase"></a><a tabindex="-1" role="button" class="position__choose position__choose-reduce"></a></div>
 											</div>
-											<div class="input-group_count count-position__item_yyy">
+											<div class="input-group_count count-position__item_y">
 												<label for="moveY" class="input-group__label_count"> </label>
 												<input id="moveY" name="value_y" value="0" aria-valuenow="0" autocomplete="off" role="spinbutton" class="count-position__item">
 												<div class="dif__btn-group"><a tabindex="-1" role="button" class="position__choose position__choose-increase"></a><a tabindex="-1" role="button" class="position__choose position__choose-reduce"></a></div>
@@ -115,8 +115,8 @@
 								</div>
 							</div>
 							<div class="btn__box">
-								<button id="reset" type="reset" class="btn btn__clear" disabled="disabled">Сброс</button>
-								<button id="submit" type="submit" class="btn btn__save" disabled="disabled">Скачать</button>
+								<button id="reset" type="reset" disabled="disabled" class="btn btn__clear">Сброс</button>
+								<button id="submit" type="submit" disabled="disabled" class="btn btn__save">Скачать</button>
 							</div>
 						</form>
 					</div>
@@ -129,9 +129,8 @@
 			</div>
 		</footer>
 	</body><!-- bower:js -->
-<script src="./bower/jquery/jquery.js"></script>
-<script src="./bower/jquery-ui/jquery-ui.js"></script>
-<script src="./bower/jquery-file-download/src/Scripts/jquery.fileDownload.js"></script>
+<script src="../../bower/jquery/jquery.js"></script>
+<script src="../../bower/jquery-ui/jquery-ui.js"></script>
 <!-- endbower -->
 	<script src="js/vendor/jquery.ui.widget.js"></script>
 	<script src="js/jquery.iframe-transport.js"></script>
