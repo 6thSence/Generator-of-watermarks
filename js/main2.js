@@ -176,11 +176,10 @@ var FileUploadJQ = (function(){
             var height = $(this).height();
             $('.aim-img').append('<div class="mainIMGHolder"></div>').css('position', 'relative');
                     var zzz = width/parseInt($('.mainIMGHolder').css('width'));
-                    dataParams.addZZZ(zzz);
             if(width > 648 || height > 533){
+                    dataParams.addZZZ(zzz);
                 if(width > height){
                     var finalSize = (width/height);
-
                     _setUpListners2(zzz);
                     $('.mainIMGHolder').css({
                         'width': '648px',
@@ -198,7 +197,7 @@ var FileUploadJQ = (function(){
 
                 } else {
                    var finalSize = (height/width);
-                   _setUpListners2();
+                   _setUpListners2(zzz);
                    $('.mainIMGHolder').css({
                     'height': '533px',
                     'width': 533/finalSize+'px',
@@ -214,8 +213,8 @@ var FileUploadJQ = (function(){
                 });
                }
            } else {
-                   console.log('mbb')
-            _setUpListners2();
+            dataParams.addZZZ(1);
+            _setUpListners2(1);
             $('.mainIMGHolder').css({
                 'height': height,
                 'width': width,
