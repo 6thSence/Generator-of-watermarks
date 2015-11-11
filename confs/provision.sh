@@ -18,8 +18,7 @@ npm install -g bower
 
 # Install php requirements
 cd /var/www/WatermarkGen/
-curl -sS https://getcomposer.org/installer | php
-php composer.phar install
+apt-get install -y php5-imagick
 
 # Install frontend requirements
 npm install
