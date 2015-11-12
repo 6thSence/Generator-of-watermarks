@@ -40,8 +40,8 @@ if(isPost()) {
         $imageHeight = $original->getImageHeight();
 
         // Merge watermark in tiling mode
-        for($x = $initialX; ; $x += ($watermarkWidth + $originY)) {
-            for($y = $initialY; ; $y += ($watermarkHeight + $originX)) {
+        for($x = $initialX; ; $x += ($watermarkWidth + (int)$originY)) {
+            for($y = $initialY; ; $y += ($watermarkHeight + (int)$originX)) {
                 $original->compositeImage($watermark, Imagick::COMPOSITE_DEFAULT, $x, $y);
                 if ($y > $imageHeight) break;
             }
