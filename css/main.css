@@ -784,6 +784,7 @@ body {
 /* radio */
 .radio__tiling {
   cursor: pointer;
+  cursor: url("../img/images/cursor.cur"), auto;
   display: inline-block;
   width: 19px;
   height: 19px;
@@ -848,6 +849,7 @@ body {
   display: block;
   line-height: 12px;
   cursor: pointer;
+  cursor: url("../img/images/cursor.cur"), auto;
 }
 
 .file-holder__name {
@@ -880,6 +882,7 @@ body {
   width: 100%;
   height: 100%;
   cursor: pointer;
+  cursor: url("../img/images/cursor.cur"), auto;
   -ms-text-overflow: ellipsis;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -905,6 +908,7 @@ body {
 .radio__item_label {
   position: relative;
   cursor: pointer;
+  cursor: url("../img/images/cursor.cur"), auto;
 }
 
 /*************************/
@@ -935,6 +939,7 @@ body {
   padding: 0px;
   background-color: #dbe1e8;
   cursor: pointer;
+  cursor: url("../img/images/cursor.cur"), auto;
 }
 .choose-position__item:before, .choose-position__item:after {
   content: "";
@@ -1030,6 +1035,7 @@ body {
   background: transparent;
   color: #444a53;
   cursor: pointer;
+  cursor: url("../img/images/cursor.cur"), auto;
 }
 
 /*********/
@@ -1089,6 +1095,7 @@ body {
   width: 99px;
   font-family: 'robotomedium', sans-serif;
   cursor: pointer;
+  cursor: url("../img/images/cursor.cur"), auto;
 }
 .btn:focus {
   outline: none;
@@ -1130,6 +1137,7 @@ body {
   border: 0 none;
 }
 .lang .lang__btn {
+  cursor: url("../img/images/cursor.cur"), auto;
   font-family: "SegoeUILight", sans-serif;
   font-size: 20px;
   text-align: center;
@@ -1163,6 +1171,7 @@ body {
   float: right;
 }
 .share .share__btn {
+  cursor: url("../img/images/cursor.cur"), auto;
   display: block;
   background-color: #f1f1f5;
   opacity: 0.6;
@@ -1261,6 +1270,7 @@ html, body {
   border-radius: 0 !important;
   margin-left: -14px !important;
   cursor: pointer !important;
+  cursor: url("../img/images/cursor.cur"), auto !important;
   width: 8px !important;
   height: 8px !important;
   border: 7px solid #dbe1e8 !important;
@@ -1302,6 +1312,7 @@ html, body {
   background: transparent !important;
   color: #444a53 !important;
   cursor: pointer !important;
+  cursor: url("../img/images/cursor.cur"), auto !important;
   padding: 0 !important;
   margin-top: 0 !important;
 }
@@ -1319,6 +1330,7 @@ html, body {
   background: transparent !important;
   border: 0 none !important;
   cursor: pointer !important;
+  cursor: url("../img/images/cursor.cur"), auto !important;
 }
 
 .ui-spinner-button.ui-state-default:hover {

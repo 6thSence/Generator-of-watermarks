@@ -149,6 +149,7 @@ body{
 /* radio */
 .radio__tiling {
     cursor: pointer;
+    cursor: url("../img/images/cursor.cur"), auto;
     display: inline-block;
     width: 19px;
     height: 19px;

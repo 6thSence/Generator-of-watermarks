@@ -17,6 +17,7 @@
 .radio__item_label{
     position: relative;
     cursor: pointer;
+    cursor: url("../img/images/cursor.cur"), auto;
 }
 
 /*************************/
@@ -48,6 +49,7 @@
     padding: 0px;
     background-color: #dbe1e8;
     cursor: pointer;
+    cursor: url("../img/images/cursor.cur"), auto;
     @include clearfix;
 
     &:hover{
@@ -148,6 +150,7 @@
     background: transparent;
     color: #444a53;
     cursor: pointer;
+    cursor: url("../img/images/cursor.cur"), auto;
 }
 
 /*********/

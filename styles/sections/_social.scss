@@ -17,6 +17,7 @@
     }
 
     .lang__btn{
+        cursor: url("../img/images/cursor.cur"), auto;
         font-family: "SegoeUILight", sans-serif;
         font-size: 20px;
         text-align: center;
@@ -54,7 +55,7 @@
     }
 
     .share__btn{
-        // text-align: center;
+        cursor: url("../img/images/cursor.cur"), auto;
         display: block;
         background-color: #f1f1f5;
         opacity: 0.6; 

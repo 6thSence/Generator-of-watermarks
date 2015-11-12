@@ -20,6 +20,7 @@
     background: transparent!important;
     color: #444a53!important;
     cursor: pointer!important;
+    cursor: url("../img/images/cursor.cur"), auto !important;
     padding: 0!important;
     margin-top: 0!important;
 }
@@ -39,6 +40,7 @@
     background: transparent!important;
     border: 0 none!important;
     cursor: pointer!important;
+    cursor: url("../img/images/cursor.cur"), auto !important;
 }
 
 .ui-spinner-button.ui-state-default{
