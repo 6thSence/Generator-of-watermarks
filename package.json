@@ -1,5 +1,5 @@
 {
-  "name": "Watermark Generator",
+  "name": "Watermark-Generator",
   "version": "1.0.0",
   "description": "Watermark generator for dummies",
   "main": "gulpfile.js",
