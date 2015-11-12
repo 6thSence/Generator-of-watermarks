@@ -459,7 +459,7 @@ return {
 })();
 
 //_________________________________I_________________________//
-
+//Позиционирование марки
 var Coordin = (function () {
 
     var init = function(){
@@ -474,7 +474,7 @@ var Coordin = (function () {
         // $('.position__choose-reduce').on('click', _reduce);
         $('.choose-position__item').on('click', _positionRadio);
     };
-
+//Квадрат координат
     var _positionRadio = function(){
       var item = $(this).attr('data-item'),
           img = $('.mainMark'),//  РњРѕСЏ РїСЂР°РІРєР°
@@ -605,7 +605,7 @@ var Coordin = (function () {
             }
 
         };
-
+//Увеличение координаты
         var _increas = function(){
         //console.log('increas');
         var inp = $(this).closest('.input-group_count').find('input'),
@@ -645,6 +645,7 @@ var Coordin = (function () {
     }
 
 };
+//Уменьшении координты
 var _reduce = function(){
         //console.log('reduce');
         var inp = $(this).closest('.input-group_count').find('input');
@@ -676,7 +677,7 @@ var _reduce = function(){
         }
 
     };
-
+//Установка координаты при помощи input
     var _setCoordinY = function () {
 
         var $this = $(this);
@@ -705,6 +706,7 @@ var _reduce = function(){
             $this.val('0');
         }
     };
+//Установка координаты при помощи input
     var _setCoordinX = function () {
 
         var $this = $(this);
@@ -733,6 +735,7 @@ var _reduce = function(){
             $this.val('0');
         }
     };
+//Отслеживание позиции марки
     var drag = function($this){
         //$this.on('drag', _drag);
         $('.mainMark').on('drag', _drag);
@@ -752,6 +755,7 @@ var _reduce = function(){
             }
         });
     };
+//Разрушение модуля, отвязка обработчиков
     var destroy = function(){
         $('#moveY').off();
         $('#moveX').off();
@@ -759,6 +763,7 @@ var _reduce = function(){
         $('.position__choose-reduce').off();
         $('.choose-position__item').off();
     };
+//Неактивное расположение
     var positionOff = function(){
         console.log('pos off');
         $('.choose-position__item').unbind('mouseenter mouseleave');
@@ -767,6 +772,7 @@ var _reduce = function(){
             $(this).css({border: '1px solid #c1cfd9' , 'background-color' : '#dbe1e8'});
         });
     };
+//Активное расположение
     var positionOn = function(){
         // console.log('pos on');
         $('.choose-position__item').unbind('mouseenter mouseleave');
@@ -787,7 +793,7 @@ var _reduce = function(){
         positionOff : positionOff
     }
 })();
-
+//Добавление Дата атрибутов квадратам позиционирования
 if ($('.choose-position')) {
     $(function () {
         //console.log('create-radio');
@@ -798,8 +804,9 @@ if ($('.choose-position')) {
     });
 };
 //_________________________________I_________________________//
-
+//Позиционирование в режиме замощения
 var main2 = (function(){
+    //увеличенние координаты
     var _increas2 = function(){
 
         var inp = $(this).closest('.input-group_count').find('input');
@@ -832,7 +839,7 @@ var main2 = (function(){
         }
 
     };
-
+//уменьшение координаты
     var _reduce2 = function(){
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
@@ -873,7 +880,7 @@ var main2 = (function(){
         }
 
     };
-
+//Отрисовка креста
     var _redCross = function() {
             // console.log($(this).css('left'))
             // console.log($(this).css('top'))
@@ -926,6 +933,7 @@ var main2 = (function(){
 })();
 // if ($('.position__choose-increase') && $('.position__choose-reduce') && $('.flagHolder')) { main2.init(); };
 //_________________________________TOGLEMODUL____________________________________//
+//Модуль переключения между модулями
 var toggelModule = (function(){
 
     var init = function(){
@@ -933,7 +941,7 @@ var toggelModule = (function(){
         //_first();
         _setupListener();
     };
-
+//самый первый запуск сайта и инициализация обычного режима
     var first = function () {
         Coordin.destroy();
         main2.destroy;
@@ -945,6 +953,7 @@ var toggelModule = (function(){
     var _setupListener = function(){
         $('input[name=tiling]:radio').on('change', _initSomth);
     };
+//Переключатель режимов
     var _initSomth = function(){
         if ($('#true').prop('checked')){
             console.log('radio1');
@@ -956,7 +965,7 @@ var toggelModule = (function(){
         }
 
     };
-
+//Инициализация обычного режима
     var _initSingle = function(){
         main2.destroy();
         var urlFile =($('.flag').attr('src')),
@@ -975,6 +984,7 @@ var toggelModule = (function(){
         Coordin.positionOn();
         $( "#slider" ).slider({'value':100});/////////////////////
     };
+//Инициализация  режима замощения
     var _initZamos = function () {
         // var mainIMGHolderWidth = screen.width/1.2;
         // var mainIMGHolderHeight = screen.height/1.2;
@@ -1017,7 +1027,7 @@ $('body').fadeloader({
 });
 
 
-
+//Сброс
 var ReSeT = (function(){
     var _setUpListners = function() {
         $('.btn__clear').on('click', function(event) {
@@ -1072,7 +1082,7 @@ var ReSeT = (function(){
     };
 })();
 ReSeT.init();
-
+//Анимация социальных сетей
 var ShareShow = (function(){
 
     var init = function () {
@@ -1109,7 +1119,7 @@ var ShareShow = (function(){
 })();
 
 if($('#share')) { ShareShow.init();};
-
+//Спиннер для инпутов
 var Spiners = (function(){
     var _setUpListners = function() {
         $('#moveX,#moveY').attr('disabled', 'disabled').spinner({
@@ -1161,7 +1171,7 @@ var Spiners = (function(){
             }
 }       );
     };
-
+//Проверка инпутов на числа
     var _onlyNumber = function () {
         $('#moveX,#moveY').on('keyup', function() {
              var $this = $(this);
