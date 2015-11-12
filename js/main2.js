@@ -39,10 +39,10 @@
     };
 
     var _addX = function(x){
-        params.x= x;
+        params.x= x*params.zzz;
     };
     var _addY = function(x){
-        params.y= x;
+        params.y= x*params.zzz;
     };
 
     var _getData = function(){
@@ -77,6 +77,8 @@ var submitForm = (function(){
             e.preventDefault();
             dataParams.addX(parseInt($('.flagHolder').css('left')));
             dataParams.addY(parseInt($('.flagHolder').css('top')));
+            // dataParams.addTransparency($( ".ui-slider-handle" ).attr('style'));
+            dataParams.addTransparency($( ".mainMark,.flagHolder" ).css('opacity'));
             console.log (dataParams.getData());
              var url ='./php/download.php',
             defObj = _ajax(dataParams.getData(), url);
@@ -118,9 +120,9 @@ var OpacitySlider = (function(){
     var _setUpListners = function() {
         $( "#slider" ).slider({disabled: true,'value':100, 'range': 'min'}).on( "slide", function( event, ui ) {
             var opacity = ui.value/100;
-            dataParams.addTransparency(opacity);
+            // dataParams.addTransparency(opacity);
             $('.mainMark,.flagHolder').css('opacity', opacity);
-            $('input[name="opacity"]').val(opacity*100);
+            // $('input[name="opacity"]').val(opacity);
         });
     };
     var init = function () {
@@ -971,6 +973,7 @@ var toggelModule = (function(){
         Coordin.init();
         Coordin.drag();
         Coordin.positionOn();
+        $( "#slider" ).slider({'value':100});/////////////////////
     };
     var _initZamos = function () {
         // var mainIMGHolderWidth = screen.width/1.2;
@@ -1124,11 +1127,10 @@ var Spiners = (function(){
 
                     if($('.flag').length){
                         $('#moveX').spinner( "option", "max", 100);
-                        $('#moveX').removeAttr('aria-valuemax').attr('aria-valuemax', '100');
-                        $('.flag').css('border-bottom', ui.value+'px solid transparent');
-                        $('#vertical').css({
-                            'margin-top': (-1*ui.value)/2+'px',
-                            'height': ui.value+'px'
+                        $('.flag').css('border-right', ui.value+'px solid transparent');
+                        $('#horizontal').css({
+                            'margin-left': (-1*ui.value)/2+'px',
+                            'width': ui.value+'px'
                         });
                         if(ui.value === 0){
                             $('#vertical').css('height', '1px');
@@ -1144,10 +1146,10 @@ var Spiners = (function(){
 
                     if($('.flag').length){
                         $('#moveY').spinner( "option", "max", 100);
-                        $('.flag').css('border-right', ui.value+'px solid transparent');
-                        $('#horizontal').css({
-                            'margin-left': (-1*ui.value)/2+'px',
-                            'width': ui.value+'px'
+                        $('.flag').css('border-bottom', ui.value+'px solid transparent');
+                        $('#vertical').css({
+                            'margin-top': (-1*ui.value)/2+'px',
+                            'height': ui.value+'px'
                         });
                         if(ui.value === 0){
                             $('#horizontal').css('width', '0.5px');
@@ -1162,7 +1164,6 @@ var Spiners = (function(){
 
     var _onlyNumber = function () {
         $('#moveX,#moveY').on('keyup', function() {
-            console.log('!!!!!!!!!!!!!!!!!!!!!!!!')
              var $this = $(this);
              if(parseInt($this.val())){
                 var number = parseInt($this.val())
