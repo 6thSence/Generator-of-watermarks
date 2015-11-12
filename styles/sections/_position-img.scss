@@ -17,6 +17,7 @@
 .radio__item_label{
     position: relative;
     cursor: pointer;
+    cursor: url("../img/images/cursor.cur"), auto;
 }
 
 /*************************/
@@ -48,6 +49,7 @@
     padding: 0px;
     background-color: #dbe1e8;
     cursor: pointer;
+    cursor: url("../img/images/cursor.cur"), auto;
     @include clearfix;
 
     &:hover{
@@ -63,14 +65,15 @@
 
 /*count-position*/
 .count-position{
-    width: 100px;
+    width: 95px;
     float: right;
     color: #444a53;
 }
 
 
 .input-group_count{
-    float: right;
+    // float: right;
+    // margin-bottom: 10px;
 }
 
 
@@ -147,11 +150,11 @@
     background: transparent;
     color: #444a53;
     cursor: pointer;
+    cursor: url("../img/images/cursor.cur"), auto;
 }
 
-
 /*********/
-.dif__btn-group{
+/*.dif__btn-group{
     display: inline-block;
     vertical-align: top;
     margin-right: 13px;
@@ -181,4 +184,4 @@
     &:hover{
         background-image: url('../img/images/dec_hover.png');
     }
-}
+}*/

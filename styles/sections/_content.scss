@@ -104,7 +104,7 @@ body{
 
 .group-wrap__placement{
     margin-top: 14px;
-    margin-bottom: 23px;
+    margin-bottom: 27px;
 }
 
 .group-wrap__transparency{
@@ -149,6 +149,7 @@ body{
 /* radio */
 .radio__tiling {
     cursor: pointer;
+    cursor: url("../img/images/cursor.cur"), auto;
     display: inline-block;
     width: 19px;
     height: 19px;

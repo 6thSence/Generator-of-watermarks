@@ -20,6 +20,7 @@
     font-family: 'robotomedium', sans-serif;
     @include outline;
     cursor: pointer;
+    cursor: url("../img/images/cursor.cur"), auto;
 }
 
 .btn__clear{

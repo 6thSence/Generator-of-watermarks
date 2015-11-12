@@ -117,12 +117,10 @@
 									<div class="input-group_count count-position__item_x">
 										<label for="moveX" class="input-group__label_count"></label>
 										<input id="moveX" name="value_x" value="0" aria-valuenow="0" autocomplete="off" role="spinbutton" class="count-position__item">
-										<div class="dif__btn-group"><a tabindex="-1" role="button" class="position__choose position__choose-increase"></a><a tabindex="-1" role="button" class="position__choose position__choose-reduce"></a></div>
 									</div>
 									<div class="input-group_count count-position__item_y">
 										<label for="moveY" class="input-group__label_count"> </label>
 										<input id="moveY" name="value_y" value="0" aria-valuenow="0" autocomplete="off" role="spinbutton" class="count-position__item">
-										<div class="dif__btn-group"><a tabindex="-1" role="button" class="position__choose position__choose-increase"></a><a tabindex="-1" role="button" class="position__choose position__choose-reduce"></a></div>
 									</div>
 								</div>
 							</div>

@@ -7,6 +7,5 @@ $app_dir = '/var/www/WatermarkGen/';
 $default_language = 'ru';
 
 // Images
-$upload_dir = $app_dir.'uploads/';
-$images = 'uploads/';
-
+$download_dir = $app_dir.'uploads/';
+$upload_dir = $app_dir.'server/php/files/';
