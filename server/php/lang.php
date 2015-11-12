@@ -1,5 +1,6 @@
 <?php
 
+// Language array
 $lang = array(
     'ru' => array(
         'title' => 'Генератор водяных знаков',
