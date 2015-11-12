@@ -87,7 +87,7 @@ var submitForm = (function(){
                     if (ans.status === 'OK') {
                         console.log('ok');
                         // РќРµ РІР»РµР·Р°Р№, СѓР±СЊРµС‚!
-                        window.location= ("php/downloadImg.php?file=" + ans.link);
+                        window.location= ("server/php/downloadImg.php?file=" + ans.link);
                     } else{
                      console.log('РЅРµ ok');
                      console.log('Status: ' + ans.status + ' Message: ' + ans.text);
