@@ -1,13 +1,13 @@
 {
-  "name": "loft-template",
+  "name": "Watermark Generator",
   "version": "1.0.0",
-  "description": "template for good works",
+  "description": "Watermark generator for dummies",
   "main": "gulpfile.js",
-  "repository": "https://github.com/wowua/loftschool-template",
+  "repository": "https://github.com/6thSence/Watermark-Generator",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Vladimir Sabantsev",
+  "author": "Andrey Filimonov",
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.9.7",
