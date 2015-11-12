@@ -66,7 +66,7 @@
 				<form id="form" class="form">
 					<input type="hidden" name="aim-img">
 					<input type="hidden" name="watermark">
-					<input type="hidden" name="opacity" value="1">
+					<input type="hidden" name="opacity">
 					<input type="hidden" name="mode">
 					<div class="form__group">
 						<div class="form__group-wrap group-wrap__image">
