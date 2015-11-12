@@ -177,7 +177,6 @@ var FileUploadJQ = (function(){
             if(width > 648 || height > 533){
                 if(width > height){
                     var finalSize = (width/height);
-                    _setUpListners2(zzz);                                                                           // сжатие картинки 
                     $('.mainIMGHolder').css({
                         'width': '648px',
                         'height': 648/finalSize+'px',
@@ -192,6 +191,7 @@ var FileUploadJQ = (function(){
                         'margin':'auto'
                     });
                     var zzz = width/parseInt($('.mainIMGHolder').css('width'));
+                    _setUpListners2(zzz);                                                                           // сжатие картинки 
                     dataParams.addZZZ(zzz);
 
                 } else {
@@ -211,7 +211,7 @@ var FileUploadJQ = (function(){
                 });
                    var zzz = width/parseInt($('.mainIMGHolder').css('width'));
                     dataParams.addZZZ(zzz);
-                    console.log(zzz);
+                    // console.log(zzz);
                    _setUpListners2(zzz);
                }
            } else {
