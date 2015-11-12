@@ -79,7 +79,7 @@ var submitForm = (function(){
             dataParams.addY(parseInt($('.flagHolder').css('top')));
             dataParams.addTransparency($( ".mainMark,.flagHolder" ).css('opacity'));
             console.log (dataParams.getData());
-             var url ='./php/download.php',
+             var url ='server/php/download.php',
             defObj = _ajax(dataParams.getData(), url);
             if(defObj) {
                 defObj.done(function(ans){
@@ -87,7 +87,7 @@ var submitForm = (function(){
                     if (ans.status === 'OK') {
                         console.log('ok');
                         // РќРµ РІР»РµР·Р°Р№, СѓР±СЊРµС‚!
-                        window.location= ("php/downloadImg.php?file=" + ans.link);
+                        window.location= ("server/php/downloadImg.php?file=" + ans.link);
                     } else{
                      console.log('РЅРµ ok');
                      console.log('Status: ' + ans.status + ' Message: ' + ans.text);
