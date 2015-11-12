@@ -77,7 +77,6 @@ var submitForm = (function(){
             e.preventDefault();
             dataParams.addX(parseInt($('.flagHolder').css('left')));
             dataParams.addY(parseInt($('.flagHolder').css('top')));
-            // dataParams.addTransparency($( ".ui-slider-handle" ).attr('style'));
             dataParams.addTransparency($( ".mainMark,.flagHolder" ).css('opacity'));
             console.log (dataParams.getData());
              var url ='./php/download.php',
@@ -120,9 +119,7 @@ var OpacitySlider = (function(){
     var _setUpListners = function() {
         $( "#slider" ).slider({disabled: true,'value':100, 'range': 'min'}).on( "slide", function( event, ui ) {
             var opacity = ui.value/100;
-            // dataParams.addTransparency(opacity);
             $('.mainMark,.flagHolder').css('opacity', opacity);
-            // $('input[name="opacity"]').val(opacity);
         });
     };
     var init = function () {
@@ -312,7 +309,6 @@ var _setUpListners2 = function(zzz) {
                     var realWidth = width/zzz+'px';
                     var realHeight = height/zzz+'px';
                     if(width > 648 || height > 648){
-
 
                         if(width > height){
                             $(this).css('width', '100%').show('fast').draggable({containment:'parent'});
@@ -1127,10 +1123,10 @@ var Spiners = (function(){
 
                     if($('.flag').length){
                         $('#moveX').spinner( "option", "max", 100);
-                        $('.flag').css('border-right', ui.value+'px solid transparent');
-                        $('#horizontal').css({
-                            'margin-left': (-1*ui.value)/2+'px',
-                            'width': ui.value+'px'
+                        $('.flag').css('border-bottom', ui.value+'px solid transparent');
+                        $('#vertical').css({
+                            'margin-top': (-1*ui.value)/2+'px',
+                            'height': ui.value+'px'
                         });
                         if(ui.value === 0){
                             $('#vertical').css('height', '1px');
@@ -1146,10 +1142,10 @@ var Spiners = (function(){
 
                     if($('.flag').length){
                         $('#moveY').spinner( "option", "max", 100);
-                        $('.flag').css('border-bottom', ui.value+'px solid transparent');
-                        $('#vertical').css({
-                            'margin-top': (-1*ui.value)/2+'px',
-                            'height': ui.value+'px'
+                        $('.flag').css('border-right', ui.value+'px solid transparent');
+                        $('#horizontal').css({
+                            'margin-left': (-1*ui.value)/2+'px',
+                            'width': ui.value+'px'
                         });
                         if(ui.value === 0){
                             $('#horizontal').css('width', '0.5px');
