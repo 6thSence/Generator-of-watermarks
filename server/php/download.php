@@ -16,6 +16,11 @@ if(isPost()) {
     $original = new Imagick($originalImagePath);
     $watermark = new Imagick($watermarkImagePath);
 
+    // Set transparent background if original image has alpha channel
+    if($original->getImageAlphaChannel()) {
+        $original->setBackgroundColor(new ImagickPixel('transparent'));
+    }
+
     // Set opacity for images with alpha channel and without
     if($watermark->getImageAlphaChannel()) {
         $watermark->evaluateImage(Imagick::EVALUATE_DIVIDE, 1.0 / $transparency, Imagick::CHANNEL_ALPHA);
