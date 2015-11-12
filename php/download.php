@@ -33,8 +33,8 @@ if(isPost()) {
         $imageHeight = $original->getImageHeight();
 
 
-        for($x = $initialX; ; $x += ($watermarkWidth + $originX)) {
-            for($y = $initialY; ; $y += ($watermarkHeight + $originY)) {
+        for($x = $initialX; ; $x += ($watermarkWidth + $originY)) {
+            for($y = $initialY; ; $y += ($watermarkHeight + $originX)) {
                 $original->compositeImage($watermark, Imagick::COMPOSITE_DEFAULT, $x, $y);
                 if ($y > $imageHeight) break;
             }
