@@ -1,4 +1,4 @@
-;var dataParams = (function(){
+;var dataParams = (function(){ // это на сервер отправляется
 
     var params = {
         originX        : 0,
@@ -21,7 +21,7 @@
         params.originY =  parseInt($('#moveY').val())*params.zzz;
     };
     var _addTransparency = function(x){
-        params.transparency= x;
+        params.transparency= x;                                            // тут функции для заполнения объекта
     };
     var _addOriginalImage = function(x){
         params.originalImage= x;
@@ -82,7 +82,7 @@ var submitForm = (function(){
              var url ='server/php/download.php',
             defObj = _ajax(dataParams.getData(), url);
             if(defObj) {
-                defObj.done(function(ans){
+                defObj.done(function(ans){                                                          // модуль отправки данных на сервер на сервер
 
                     if (ans.status === 'OK') {
                         console.log('ok');
@@ -104,7 +104,7 @@ var submitForm = (function(){
             dataType: 'JSON',
             data: data
         }).fail(function(){
-            console.log('РќР° СЃРµСЂРІРµСЂРµ РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°.');
+            // console.log('РќР° СЃРµСЂРІРµСЂРµ РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°.');
         });
     };
     return {
@@ -114,7 +114,7 @@ var submitForm = (function(){
 if ($('#submit')) { submitForm.init(); };
 
 
-//РџСЂРѕР·СЂР°С‡РЅРѕСЃС‚СЊ РјР°СЂРєРё
+//слайдер прозрачности 
 var OpacitySlider = (function(){
     var _setUpListners = function() {
         $( "#slider" ).slider({disabled: true,'value':100, 'range': 'min'}).on( "slide", function( event, ui ) {
@@ -132,7 +132,7 @@ var OpacitySlider = (function(){
 })();
 if ($('#slider')) { OpacitySlider.init(); };
 
-//Р—Р°РіСЂСѓР·РєР° РѕСЃРЅРѕРІРЅРѕРіРѕ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
+//FileUpload 
 var FileUploadJQ = (function(){
     var _setUpListners = function() {
         $('#fileuploadImage').fileupload({
@@ -174,12 +174,9 @@ var FileUploadJQ = (function(){
             var width = $(this).width();
             var height = $(this).height();
             $('.aim-img').append('<div class="mainIMGHolder"></div>').css('position', 'relative');
-                    var zzz = width/parseInt($('.mainIMGHolder').css('width'));
             if(width > 648 || height > 533){
-                    dataParams.addZZZ(zzz);
                 if(width > height){
                     var finalSize = (width/height);
-                    _setUpListners2(zzz);
                     $('.mainIMGHolder').css({
                         'width': '648px',
                         'height': 648/finalSize+'px',
@@ -193,10 +190,12 @@ var FileUploadJQ = (function(){
                         'right':'0',
                         'margin':'auto'
                     });
+                    var zzz = width/parseInt($('.mainIMGHolder').css('width'));
+                    _setUpListners2(zzz);                                                                           // сжатие картинки 
+                    dataParams.addZZZ(zzz);
 
                 } else {
                    var finalSize = (height/width);
-                   _setUpListners2(zzz);
                    $('.mainIMGHolder').css({
                     'height': '533px',
                     'width': 533/finalSize+'px',
@@ -210,6 +209,10 @@ var FileUploadJQ = (function(){
                     'right':'0',
                     'margin':'auto'
                 });
+                   var zzz = width/parseInt($('.mainIMGHolder').css('width'));
+                    dataParams.addZZZ(zzz);
+                    // console.log(zzz);
+                   _setUpListners2(zzz);
                }
            } else {
             dataParams.addZZZ(1);
@@ -278,9 +281,9 @@ var _setUpListners2 = function(zzz) {
                 $('#moveX').val(0);
                 $('#moveY').val(0);
                 var buff = 0;
-            /////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////
                 var buffModul = 0;
-            console.log($('.flag').length);
+            // console.log($('.flag').length);
                 if( ($('.mainMark').length) || ($('.flag').length)){
                    buffModul = 1;
                     $('.flagHolder, #vertical, #horizontal').remove();
@@ -315,7 +318,7 @@ var _setUpListners2 = function(zzz) {
                             $(this).css('width', '100%').show('fast').draggable({containment:'parent'});
             
                     } //else {
-                    //    $(this).css('height', '100%').show('fast').draggable({containment:'parent'});
+                    //    $(this).css('height', '100%').show('fast').draggable({containment:'parent'}); // сжатие марки
                     //  }
                  } else {
                     $(this).show('fast').attr('width', realWidth).draggable({containment:'parent'});
@@ -354,7 +357,7 @@ return {
 })();
 if ($('#fileuploadImage')) { FileUploadJQ.init(); };
 
-//Р РµР¶РёРј Р·Р°РјРѕС‰РµРЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёР№
+//замощение
 var ZAMOS = (function(){
     var init = function (file, flagAreaOut) {
         var mainIMGHolderWidth = screen.width;
@@ -373,7 +376,7 @@ var ZAMOS = (function(){
         $('.flagHolder').css({
             'position': 'absolute',
             'width': mainIMGHolderWidth+'px',
-            'height': mainIMGHolderHeight+'px',
+            'height': mainIMGHolderHeight+'px',             // всякая математика для сжатия марки
             'top': -1*mainIMGHolderHeight/3+'px',
             'left':-1*mainIMGHolderWidth/3+'px',
             'cursor':'move',
@@ -765,7 +768,7 @@ var _reduce = function(){
         });
     };
     var positionOn = function(){
-        console.log('pos on');
+        // console.log('pos on');
         $('.choose-position__item').unbind('mouseenter mouseleave');
         $('.choose-position__item').css('cursor', 'pointer');
         $('.choose-position__item').on('mouseenter', function(){
@@ -926,7 +929,7 @@ var main2 = (function(){
 var toggelModule = (function(){
 
     var init = function(){
-        console.log('toggle_init');
+        // console.log('toggle_init');
         //_first();
         _setupListener();
     };
@@ -1032,7 +1035,7 @@ var ReSeT = (function(){
             $('.mainImg').text('Image.jpg');
             $('.mainWatermark').text('Image.jpg');
             $('.count-position__item_yyy').removeClass('count-position__item_yyy').addClass('count-position__item_y');
-            $('.count-position__item_xxx').removeClass('count-position__item_xxx').addClass('count-position__item_x');
+            $('.count-position__item_xxx').removeClass('count-position__item_xxx').addClass('count-position__item_x');  // сброс всех параметров
             $('#true').prop('checked', 'none');
             $('#false').prop('checked', 'checked');// =======
             $('.aim-img').append('<img src="" class="mainMark">');
@@ -1081,7 +1084,7 @@ var ShareShow = (function(){
        // $('#share').on('hover', _showLike);
         $('.share__btn_like').on('mouseenter', function(){
             $(this).stop(true,true);
-            $('.share').addClass('open').animate({left: '0px' });
+            $('.share').addClass('open').animate({left: '0px' });   // соц.иконки
         });
         $('.share').on('mouseleave', function(){
             $(this).stop(true,true);
@@ -1116,10 +1119,10 @@ var Spiners = (function(){
             spin: function( event, ui ) {
                 if(event.target.id === 'moveX'){
                     // ui.value = parseInt($('#moveX').val());
-                    console.log(ui.value)
+                    // console.log(ui.value)
                     if($('.mainMark')){
                          $('.mainMark').css('left',ui.value+'px');
-                         $('#moveX').val(ui.value).spinner( "option", "max", $('.mainIMGHolder').width()-$('.mainMark').width());
+                         $('#moveX').val(ui.value).spinner( "option", "max", $('.mainIMGHolder').width()-$('.mainMark').width());   // спинеры 
                      }//$('.mainMark')
 
                     if($('.flag').length){
