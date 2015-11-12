@@ -2,15 +2,17 @@
 
 include_once 'config.php';
 
-// Access functions
+// Get session variable
 function get_session($field_name) {
     return $_SESSION[$field_name];
 }
 
+// Set session variable
 function set_session($filed_name, $value) {
     $_SESSION[$filed_name] = $value;
 }
 
+// Get post parameter
 function post($field_name) {
     $data = $_POST[$field_name];
 
@@ -25,31 +27,35 @@ function post($field_name) {
     return $_POST[$field_name];
 }
 
+// Get get parameter
 function get($field_name) {
     return $_GET[$field_name];
 }
 
+// Check request method
 function isPost() {
     return $_SERVER['REQUEST_METHOD'] == 'POST';
 }
 
 
-// File functions
+// Make filename
 function make_filename($name, $ext) {
     return sha1($name).'.'.$ext;
 }
 
+// Get file path for download it
 function get_download_filedir($name) {
     global $download_dir;
     return ''.$download_dir.$name;
 }
 
+// Get file path for upload it
 function get_upload_filedir($name) {
     global $upload_dir;
     return ''.$upload_dir.$name;
 }
 
-// Send functions
+// Send file name
 function send_filename($file_name) {
     echo json_encode(array(
         'status' => 'OK',
@@ -58,6 +64,7 @@ function send_filename($file_name) {
     exit;
 }
 
+// Initiate file download
 function send_file($file_name) {
     $file_dir = get_download_filedir($file_name);
     header('Content-Description: File Transfer');
@@ -71,7 +78,7 @@ function send_file($file_name) {
     exit;
 }
 
-// Utils
+// Convert value to bool
 function bool($value) {
     return $value === "true";
 }

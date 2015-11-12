@@ -4,17 +4,22 @@
 	include_once 'server/php/functions.php';
 	include_once 'server/php/lang.php';
 
+	// Get language from GET
 	$lang_param = get('lang');
+	// Set language if it GET
 	if($lang_param) {
 		set_session('lang', $lang_param);
 	}
 
+	// Get session language
 	$current_language = get_session('lang');
+	// Set default language if session is empty
 	if(!$current_language || !$lang[$current_language]) {
 		set_session('lang', $default_language);
 		$current_language = $default_language;
 	}
 
+	// Get translated text
 	$text = $lang[$current_language];
 ?>
 
