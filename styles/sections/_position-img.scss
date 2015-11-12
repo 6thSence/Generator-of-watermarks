@@ -4,6 +4,11 @@
     display: block;
 }
 
+@import "images/tilling/*.png";
+$tilling-spacing: 20px;
+
+
+
 /*****radio******/
 .radio{
     text-align: right;
@@ -20,7 +25,49 @@
     cursor: url("../img/images/cursor.cur"), auto;
 }
 
+/* radio */
+.radio__tiling {
+    cursor: pointer;
+    cursor: url("../img/images/cursor.cur"), auto;
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    &_true {
+        @include tilling-sprite(tiling);
+        // background: url(../img/images/tiling.jpg) no-repeat center;
+        &:hover {
+            @include tilling-sprite(tiling_hover);
+            // background: url(../img/images/tiling_hover.jpg) no-repeat center;
+        }
+    }
+    &_false {
+        @include tilling-sprite(notiling);
+        // background: url(../img/images/notiling.jpg) no-repeat center;
+        &:hover{
+            @include tilling-sprite(notiling_hover);
+            // background: url(../img/images/notiling_hover.jpg) no-repeat center;
+        }
+    }
+    &_input {
+        display: none;
+        position: relative;
+        &_false:checked + label {
+            @include tilling-sprite(notiling_active);
+            // background: url(../img/images/notiling_active.jpg) no-repeat center;
+        }
+        &_true:checked + label {
+            @include tilling-sprite(tiling_active);
+            // background: url(../img/images/tiling_active.jpg) no-repeat center;
+        }
+
+    }
+}
+
 /*************************/
+
+@import "images/arrows/*.png";
+$arrows-spacing: 20px;
+
 .position-select__wrap{
     // @include clearfix;
     width: 230px;
@@ -63,6 +110,24 @@
     }
 }
 
+.choose-position__item-lock{
+    width: 32px;
+    height: 32px;
+    border: 1px solid #c1cfd9;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+    background-color: #dbe1e8;
+    cursor: pointer;
+    cursor: url("../img/images/cursor.cur"), auto;
+    @include clearfix;
+
+    .active{
+        background-color: #f97e76;
+        border-color: #f97e76;
+    }
+}
+
 /*count-position*/
 .count-position{
     width: 95px;
@@ -83,7 +148,7 @@
         content: '';
         display: block;
         position: absolute;
-        background-image: url('../img/images/vert.png');
+        @include arrows-sprite(vert);
         left: 3px;
         top: 10px;
         width: 10px;
@@ -111,10 +176,10 @@
     &:before{
         content: '';
         display: block;
-        background-image: url('../img/images/horiz.png');
+        @include arrows-sprite(horiz);
         position: absolute;
         left: -16px;
-        top: 21px;
+        top: 18px;
         width: 29px;
         height: 10px;
     }

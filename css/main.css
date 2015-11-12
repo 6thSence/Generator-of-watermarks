@@ -781,37 +781,6 @@ body {
   margin-bottom: 27px;
 }
 
-/* radio */
-.radio__tiling {
-  cursor: pointer;
-  cursor: url("../img/images/cursor.cur"), auto;
-  display: inline-block;
-  width: 19px;
-  height: 19px;
-}
-.radio__tiling_true {
-  background: url(../img/images/tiling.jpg) no-repeat center;
-}
-.radio__tiling_true:hover {
-  background: url(../img/images/tiling_hover.jpg) no-repeat center;
-}
-.radio__tiling_false {
-  background: url(../img/images/notiling.jpg) no-repeat center;
-}
-.radio__tiling_false:hover {
-  background: url(../img/images/notiling_hover.jpg) no-repeat center;
-}
-.radio__tiling_input {
-  display: none;
-  position: relative;
-}
-.radio__tiling_input_false:checked + label {
-  background: url(../img/images/notiling_active.jpg) no-repeat center;
-}
-.radio__tiling_input_true:checked + label {
-  background: url(../img/images/tiling_active.jpg) no-repeat center;
-}
-
 /****form__input*****/
 .input-group__input {
   background-color: #fff;
@@ -895,6 +864,11 @@ body {
   display: block;
 }
 
+.tilling-sprite, .radio__tiling_true, .radio__tiling_true:hover, .radio__tiling_false, .radio__tiling_false:hover, .radio__tiling_input_false:checked + label, .radio__tiling_input_true:checked + label {
+  background-image: url('../img/images/tilling-sbcdda6e404.png');
+  background-repeat: no-repeat;
+}
+
 /*****radio******/
 .radio {
   text-align: right;
@@ -911,7 +885,55 @@ body {
   cursor: url("../img/images/cursor.cur"), auto;
 }
 
+/* radio */
+.radio__tiling {
+  cursor: pointer;
+  cursor: url("../img/images/cursor.cur"), auto;
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+}
+.radio__tiling_true {
+  background-position: 0 -57px;
+}
+.radio__tiling_true:hover, .radio__tiling_true.tiling-hover {
+  background-position: 0 -95px;
+}
+.radio__tiling_true:active, .radio__tiling_true.tiling-active {
+  background-position: 0 -76px;
+}
+.radio__tiling_true:hover {
+  background-position: 0 -95px;
+}
+.radio__tiling_false {
+  background-position: 0 0;
+}
+.radio__tiling_false:hover, .radio__tiling_false.notiling-hover {
+  background-position: 0 -38px;
+}
+.radio__tiling_false:active, .radio__tiling_false.notiling-active {
+  background-position: 0 -19px;
+}
+.radio__tiling_false:hover {
+  background-position: 0 -38px;
+}
+.radio__tiling_input {
+  display: none;
+  position: relative;
+}
+.radio__tiling_input_false:checked + label {
+  background-position: 0 -19px;
+}
+.radio__tiling_input_true:checked + label {
+  background-position: 0 -76px;
+}
+
 /*************************/
+.arrows-sprite, .count-position__item_xxx:before, .count-position__item_yyy:before {
+  background-image: url('../img/images/arrows-sca8168e76c.png');
+  background-repeat: no-repeat;
+}
+
 .position-select__wrap {
   width: 230px;
   clear: both;
@@ -957,6 +979,29 @@ body {
   border-color: #f97e76;
 }
 
+.choose-position__item-lock {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #c1cfd9;
+  display: inline-block;
+  margin: 0px;
+  padding: 0px;
+  background-color: #dbe1e8;
+  cursor: pointer;
+  cursor: url("../img/images/cursor.cur"), auto;
+}
+.choose-position__item-lock:before, .choose-position__item-lock:after {
+  content: "";
+  display: table;
+}
+.choose-position__item-lock:after {
+  clear: both;
+}
+.choose-position__item-lock .active {
+  background-color: #f97e76;
+  border-color: #f97e76;
+}
+
 /*count-position*/
 .count-position {
   width: 95px;
@@ -971,7 +1016,7 @@ body {
   content: '';
   display: block;
   position: absolute;
-  background-image: url("../img/images/vert.png");
+  background-position: 0 -10px;
   left: 3px;
   top: 10px;
   width: 10px;
@@ -999,10 +1044,10 @@ body {
 .count-position__item_yyy:before {
   content: '';
   display: block;
-  background-image: url("../img/images/horiz.png");
+  background-position: 0 0;
   position: absolute;
   left: -16px;
-  top: 21px;
+  top: 18px;
   width: 29px;
   height: 10px;
 }
@@ -1154,6 +1199,12 @@ body {
   color: #444a53;
 }
 
+/*************************/
+.share-sprite, .share .share__btn_fb, .share .share__btn_fb:hover, .share .share__btn_like, .share .share__btn_like:hover, .share .share__btn_tw, .share .share__btn_tw:hover, .share .share__btn_vk, .share .share__btn_vk:hover {
+  background-image: url('../img/images/share-sb543052e4d.png');
+  background-repeat: no-repeat;
+}
+
 .share {
   position: relative;
   left: -43px;
@@ -1179,29 +1230,50 @@ body {
   height: 43px;
 }
 .share .share__btn_fb {
-  background-image: url("../img/images/share/fb.png");
+  background-position: 0 0;
+}
+.share .share__btn_fb:hover, .share .share__btn_fb.fb-hover {
+  background-position: 0 -41px;
 }
 .share .share__btn_fb:hover {
-  background-image: url("../img/images/share/fb_hover.png");
+  background-position: 0 -41px;
 }
 .share .share__btn_like {
   display: inline-block;
-  background-image: url("../img/images/share/like.png");
+  background-position: 0 -82px;
+}
+.share .share__btn_like:hover, .share .share__btn_like.like-hover {
+  background-position: 0 -123px;
 }
 .share .share__btn_like:hover {
-  background-image: url("../img/images/share/like_hover.png");
+  background-position: 0 -82px;
+}
+.share .share__btn_like:hover:hover, .share .share__btn_like:hover.like-hover {
+  background-position: 0 -123px;
 }
 .share .share__btn_tw {
-  background-image: url("../img/images/share/tw.png");
+  background-position: 0 -164px;
+}
+.share .share__btn_tw:hover, .share .share__btn_tw.tw-hover {
+  background-position: 0 -205px;
 }
 .share .share__btn_tw:hover {
-  background-image: url("../img/images/share/tw_hover.png");
+  background-position: 0 -164px;
+}
+.share .share__btn_tw:hover:hover, .share .share__btn_tw:hover.tw-hover {
+  background-position: 0 -205px;
 }
 .share .share__btn_vk {
-  background-image: url("../img/images/share/vk.png");
+  background-position: 0 -248px;
+}
+.share .share__btn_vk:hover, .share .share__btn_vk.vk-hover {
+  background-position: 0 -289px;
 }
 .share .share__btn_vk:hover {
-  background-image: url("../img/images/share/vk_hover.png");
+  background-position: 0 -248px;
+}
+.share .share__btn_vk:hover:hover, .share .share__btn_vk:hover.vk-hover {
+  background-position: 0 -289px;
 }
 
 /* --------- layout --------- */
@@ -1338,17 +1410,17 @@ html, body {
 }
 
 .custom-up-icon {
-  background-image: url("/img/images/inc.png") !important;
+  background-image: url("/img/images/math/inc.png") !important;
 }
 .custom-up-icon:hover {
-  background-image: url("../img/images/inc_hover.png") !important;
+  background-image: url("../img/images/math/inc_hover.png") !important;
 }
 
 .custom-down-icon {
-  background-image: url("/img/images/dec.png") !important;
+  background-image: url("/img/images/math/dec.png") !important;
 }
 .custom-down-icon:hover {
-  background-image: url("../img/images/dec_hover.png") !important;
+  background-image: url("../img/images/math/dec_hover.png") !important;
 }
 
 /* --------- vendors --------- */

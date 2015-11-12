@@ -35,6 +35,10 @@
         }
     }
 }
+
+/*************************/
+@import "images/share/*.png";
+$icons-spacing: 5px;
 .share{
     position: relative;
     left: -43px;
@@ -65,36 +69,33 @@
 
 
     .share__btn_fb{
-        // float: none;
-        // display: inline-block;
-        background-image: url('../img/images/share/fb.png');
+        @include share-sprite(fb);
         &:hover{
-            background-image: url('../img/images/share/fb_hover.png');
+            @include share-sprite(fb_hover);
         }
     }
 
     .share__btn_like{
-        // float: right;
         display: inline-block;
-        background-image: url('../img/images/share/like.png');
+        @include share-sprite(like);
         &:hover{
-            background-image: url('../img/images/share/like_hover.png');
+            @include share-sprite(like);
         }
     }
 
     .share__btn_tw{
-        // float: none;
-        background-image: url('../img/images/share/tw.png');
+        @include share-sprite(tw);
         &:hover{
-            background-image: url('../img/images/share/tw_hover.png');
+    
+            @include share-sprite(tw);
         }
     }
 
     .share__btn_vk{
-        // float: none;
-        background-image: url('../img/images/share/vk.png');
+        @include share-sprite(vk);
         &:hover{
-            background-image: url('../img/images/share/vk_hover.png');
+    
+            @include share-sprite(vk);
         }
     }
 }

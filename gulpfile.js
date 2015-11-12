@@ -41,6 +41,7 @@ var
 			imgFolder   : 'img'
 		},
 
+
 		browserSync : {
 			baseDirDist : './dist',
 			baseDir : './',
@@ -80,6 +81,7 @@ gulp.task('compass', function() {
 			image: paths.compass.imgFolder
 		}));
 });
+
 
 /* --------- browser sync --------- */
 

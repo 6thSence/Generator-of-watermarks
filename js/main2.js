@@ -1110,7 +1110,7 @@ if($('#share')) { ShareShow.init();};
 var Spiners = (function(){
     var _setUpListners = function() {
         $('#moveX,#moveY').attr('disabled', 'disabled').spinner({
-            disabled: true,
+            // disabled: true,
             icons: { down: "custom-down-icon", up: "custom-up-icon" },
             min:0,
             spin: function( event, ui ) {
