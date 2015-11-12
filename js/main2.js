@@ -270,6 +270,7 @@ var _setUpListners2 = function(zzz) {
                 $('#reset').removeAttr('disabled');
                 $('#false').removeAttr('disabled');
                 $('#true').removeAttr('disabled');
+                $('.choose-position__item-lock').removeClass('choose-position__item-lock').attr('class', 'choose-position__item');
 
                 $('#progress').remove(); 
                 $('.mainWatermark').text(nameFile);
@@ -1109,7 +1110,7 @@ if($('#share')) { ShareShow.init();};
 var Spiners = (function(){
     var _setUpListners = function() {
         $('#moveX,#moveY').attr('disabled', 'disabled').spinner({
-            // disabled: true,
+            disabled: true,
             icons: { down: "custom-down-icon", up: "custom-up-icon" },
             min:0,
             spin: function( event, ui ) {

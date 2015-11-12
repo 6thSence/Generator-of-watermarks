@@ -103,15 +103,15 @@
 							</header>
 							<div class="position-select__wrap">
 								<div class="position-select__choose choose-position">
-									<div class="choose-position__item"></div>
-									<div class="choose-position__item"></div>
-									<div class="choose-position__item"></div>
-									<div class="choose-position__item"></div>
-									<div class="choose-position__item"></div>
-									<div class="choose-position__item"></div>
-									<div class="choose-position__item"></div>
-									<div class="choose-position__item"></div>
-									<div class="choose-position__item"></div>
+									<div class="choose-position__item-lock"></div>
+									<div class="choose-position__item-lock"></div>
+									<div class="choose-position__item-lock"></div>
+									<div class="choose-position__item-lock"></div>
+									<div class="choose-position__item-lock"></div>
+									<div class="choose-position__item-lock"></div>
+									<div class="choose-position__item-lock"></div>
+									<div class="choose-position__item-lock"></div>
+									<div class="choose-position__item-lock"></div>
 								</div>
 								<div class="position-select__choose count-position">
 									<div class="input-group_count count-position__item_x">
