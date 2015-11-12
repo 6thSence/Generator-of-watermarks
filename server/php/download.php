@@ -28,8 +28,8 @@ if(isPost()) {
     $isPattern = post('isPattern');
     if(bool($isPattern)) {
         // Get watermark`s offset from original image
-        $initialX = str_replace('px', '', post('x'));
-        $initialY = str_replace('px', '', post('y'));
+        $initialX = (int)str_replace('px', '', post('x'));
+        $initialY = (int)str_replace('px', '', post('y'));
 
         // Get watermark sizes
         $watermarkWidth = $watermark->getImageWidth();
