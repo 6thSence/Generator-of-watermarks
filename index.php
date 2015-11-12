@@ -1,8 +1,8 @@
 <?php
 	session_start();
-	include_once 'php/config.php';
-	include_once 'php/functions.php';
-	include_once 'php/lang.php';
+	include_once 'server/php/config.php';
+	include_once 'server/php/functions.php';
+	include_once 'server/php/lang.php';
 
 	$lang_param = get('lang');
 	if($lang_param) {
