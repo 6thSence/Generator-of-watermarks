@@ -16,11 +16,6 @@ if(isPost()) {
     $original = new Imagick($originalImagePath);
     $watermark = new Imagick($watermarkImagePath);
 
-    // Set transparent background if original image has alpha channel
-    if($original->getImageAlphaChannel()) {
-        $original->setBackgroundColor(new ImagickPixel('transparent'));
-    }
-
     // Set opacity for images with alpha channel and without
     if($watermark->getImageAlphaChannel()) {
         $watermark->evaluateImage(Imagick::EVALUATE_DIVIDE, 1.0 / $transparency, Imagick::CHANNEL_ALPHA);
@@ -33,8 +28,8 @@ if(isPost()) {
     $isPattern = post('isPattern');
     if(bool($isPattern)) {
         // Get watermark`s offset from original image
-        $initialX = str_replace('px', '', post('x'));
-        $initialY = str_replace('px', '', post('y'));
+        $initialX = (int)str_replace('px', '', post('x'));
+        $initialY = (int)str_replace('px', '', post('y'));
 
         // Get watermark sizes
         $watermarkWidth = $watermark->getImageWidth();
@@ -45,8 +40,8 @@ if(isPost()) {
         $imageHeight = $original->getImageHeight();
 
         // Merge watermark in tiling mode
-        for($x = $initialX; ; $x += ($watermarkWidth + $originY)) {
-            for($y = $initialY; ; $y += ($watermarkHeight + $originX)) {
+        for($x = $initialX; ; $x += ($watermarkWidth + (int)$originY)) {
+            for($y = $initialY; ; $y += ($watermarkHeight + (int)$originX)) {
                 $original->compositeImage($watermark, Imagick::COMPOSITE_DEFAULT, $x, $y);
                 if ($y > $imageHeight) break;
             }
@@ -61,9 +56,10 @@ if(isPost()) {
     $original->flattenImages();
 
     // Make filename and filedir
-    $file_name = make_filename($originalImagePath, 'jpg');
+    $file_name = make_filename($originalImagePath, 'png');
     $file_dir = get_download_filedir($file_name);
     // Save image
+    $original->setImageFormat('png');
     $original->writeImage($file_dir);
     // Send image name to user
     send_filename($file_name);
