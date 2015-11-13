@@ -9,7 +9,11 @@
         y                 : 0,
         originalImage  : "",
         watermarkImage : "",
-        zzz            : 0
+        zzz            : 0,
+        markMin        : 1
+    };
+    var _addmarkMin = function(x){
+        params.markMin = x;
     };
     var _addZZZ = function(x){
         params.zzz = x;
@@ -62,7 +66,8 @@
         addIsPattern        : _addIsPattern,
         addX                : _addX,
         addY                : _addY,
-        addZZZ              : _addZZZ
+        addZZZ              : _addZZZ,
+        addmarkMin          :_addmarkMin
     }
 
 })();
@@ -191,7 +196,7 @@ var FileUploadJQ = (function(){
                         'margin':'auto'
                     });
                     var zzz = width/parseInt($('.mainIMGHolder').css('width'));
-                    _setUpListners2(zzz);                                                                           // сжатие картинки 
+                    _setUpListners2(zzz,width);                                                                           // сжатие картинки 
                     dataParams.addZZZ(zzz);
 
                 } else {
@@ -212,11 +217,11 @@ var FileUploadJQ = (function(){
                    var zzz = width/parseInt($('.mainIMGHolder').css('width'));
                     dataParams.addZZZ(zzz);
                     // console.log(zzz);
-                   _setUpListners2(zzz);
+                   _setUpListners2(zzz,width);
                }
            } else {
             dataParams.addZZZ(1);
-            _setUpListners2(1);
+            _setUpListners2(1,width);
             $('.mainIMGHolder').css({
                 'height': height,
                 'width': width,
@@ -238,7 +243,7 @@ var FileUploadJQ = (function(){
 });
 };
 
-var _setUpListners2 = function(zzz) {
+var _setUpListners2 = function(zzz, mainWidth) {
     $('#watermark').fileupload({
         dataType: 'json',
         progressall: function (e, data) {
@@ -312,6 +317,14 @@ var _setUpListners2 = function(zzz) {
                     var height = $(this).height();
                     var realWidth = width/zzz+'px';
                     var realHeight = height/zzz+'px';
+
+                    if(mainWidth < width){
+
+                     dataParams.addmarkMin(parseInt(width)/parseInt(mainWidth));
+                    } else {
+                     dataParams.addmarkMin(1);
+                    }
+
                     if(width > 648 || height > 648){
 
                         if(width > height){
