@@ -292,7 +292,11 @@ var FileUploadJQ = (function(){
                                 $(this).css('width', '100%').show('fast').draggable({containment:'parent'});
                             }
                         } else {
+                            if(parseInt(mainWidth) < width){
+                                $(this).show('fast').attr('width','100%').draggable({containment:false});
+                        } else {
                             $(this).show('fast').attr('width', realWidth).draggable({containment:'parent'});
+                        }
                         }
                         $('#false').prop('checked', 'checked');
                         toggelModule.first();
