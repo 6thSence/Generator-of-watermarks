@@ -1,4 +1,4 @@
-;var dataParams = (function(){
+;var dataParams = (function(){ // это на сервер отправляется
 
     var params = {
         originX        : 0,
@@ -21,7 +21,7 @@
         params.originY =  parseInt($('#moveY').val())*params.zzz;
     };
     var _addTransparency = function(x){
-        params.transparency= x;
+        params.transparency= x;                                            // тут функции для заполнения объекта
     };
     var _addOriginalImage = function(x){
         params.originalImage= x;
@@ -79,15 +79,15 @@ var submitForm = (function(){
             dataParams.addY(parseInt($('.flagHolder').css('top')));
             dataParams.addTransparency($( ".mainMark,.flagHolder" ).css('opacity'));
             console.log (dataParams.getData());
-             var url ='./php/download.php',
+             var url ='server/php/download.php',
             defObj = _ajax(dataParams.getData(), url);
             if(defObj) {
-                defObj.done(function(ans){
+                defObj.done(function(ans){                                                          // модуль отправки данных на сервер на сервер
 
                     if (ans.status === 'OK') {
                         console.log('ok');
                         // РќРµ РІР»РµР·Р°Р№, СѓР±СЊРµС‚!
-                        window.location= ("php/downloadImg.php?file=" + ans.link);
+                        window.location= ("server/php/downloadImg.php?file=" + ans.link);
                     } else{
                      console.log('РЅРµ ok');
                      console.log('Status: ' + ans.status + ' Message: ' + ans.text);
@@ -104,7 +104,7 @@ var submitForm = (function(){
             dataType: 'JSON',
             data: data
         }).fail(function(){
-            console.log('РќР° СЃРµСЂРІРµСЂРµ РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°.');
+            // console.log('РќР° СЃРµСЂРІРµСЂРµ РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°.');
         });
     };
     return {
@@ -114,7 +114,7 @@ var submitForm = (function(){
 if ($('#submit')) { submitForm.init(); };
 
 
-//РџСЂРѕР·СЂР°С‡РЅРѕСЃС‚СЊ РјР°СЂРєРё
+//слайдер прозрачности 
 var OpacitySlider = (function(){
     var _setUpListners = function() {
         $( "#slider" ).slider({disabled: true,'value':100, 'range': 'min'}).on( "slide", function( event, ui ) {
@@ -132,7 +132,7 @@ var OpacitySlider = (function(){
 })();
 if ($('#slider')) { OpacitySlider.init(); };
 
-//Р—Р°РіСЂСѓР·РєР° РѕСЃРЅРѕРІРЅРѕРіРѕ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
+//FileUpload 
 var FileUploadJQ = (function(){
     var _setUpListners = function() {
         $('#fileuploadImage').fileupload({
@@ -174,12 +174,9 @@ var FileUploadJQ = (function(){
             var width = $(this).width();
             var height = $(this).height();
             $('.aim-img').append('<div class="mainIMGHolder"></div>').css('position', 'relative');
-                    var zzz = width/parseInt($('.mainIMGHolder').css('width'));
             if(width > 648 || height > 533){
-                    dataParams.addZZZ(zzz);
                 if(width > height){
                     var finalSize = (width/height);
-                    _setUpListners2(zzz);
                     $('.mainIMGHolder').css({
                         'width': '648px',
                         'height': 648/finalSize+'px',
@@ -193,10 +190,12 @@ var FileUploadJQ = (function(){
                         'right':'0',
                         'margin':'auto'
                     });
+                    var zzz = width/parseInt($('.mainIMGHolder').css('width'));
+                    _setUpListners2(zzz);                                                                           // сжатие картинки 
+                    dataParams.addZZZ(zzz);
 
                 } else {
                    var finalSize = (height/width);
-                   _setUpListners2(zzz);
                    $('.mainIMGHolder').css({
                     'height': '533px',
                     'width': 533/finalSize+'px',
@@ -210,6 +209,10 @@ var FileUploadJQ = (function(){
                     'right':'0',
                     'margin':'auto'
                 });
+                   var zzz = width/parseInt($('.mainIMGHolder').css('width'));
+                    dataParams.addZZZ(zzz);
+                    // console.log(zzz);
+                   _setUpListners2(zzz);
                }
            } else {
             dataParams.addZZZ(1);
@@ -270,6 +273,7 @@ var _setUpListners2 = function(zzz) {
                 $('#reset').removeAttr('disabled');
                 $('#false').removeAttr('disabled');
                 $('#true').removeAttr('disabled');
+                $('.choose-position__item-lock').removeClass('choose-position__item-lock').attr('class', 'choose-position__item');
 
                 $('#progress').remove(); 
                 $('.mainWatermark').text(nameFile);
@@ -277,9 +281,9 @@ var _setUpListners2 = function(zzz) {
                 $('#moveX').val(0);
                 $('#moveY').val(0);
                 var buff = 0;
-            /////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////
                 var buffModul = 0;
-            console.log($('.flag').length);
+            // console.log($('.flag').length);
                 if( ($('.mainMark').length) || ($('.flag').length)){
                    buffModul = 1;
                     $('.flagHolder, #vertical, #horizontal').remove();
@@ -314,7 +318,7 @@ var _setUpListners2 = function(zzz) {
                             $(this).css('width', '100%').show('fast').draggable({containment:'parent'});
             
                     } //else {
-                    //    $(this).css('height', '100%').show('fast').draggable({containment:'parent'});
+                    //    $(this).css('height', '100%').show('fast').draggable({containment:'parent'}); // сжатие марки
                     //  }
                  } else {
                     $(this).show('fast').attr('width', realWidth).draggable({containment:'parent'});
@@ -353,7 +357,7 @@ return {
 })();
 if ($('#fileuploadImage')) { FileUploadJQ.init(); };
 
-//Р РµР¶РёРј Р·Р°РјРѕС‰РµРЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёР№
+//замощение
 var ZAMOS = (function(){
     var init = function (file, flagAreaOut) {
         var mainIMGHolderWidth = screen.width;
@@ -372,7 +376,7 @@ var ZAMOS = (function(){
         $('.flagHolder').css({
             'position': 'absolute',
             'width': mainIMGHolderWidth+'px',
-            'height': mainIMGHolderHeight+'px',
+            'height': mainIMGHolderHeight+'px',             // всякая математика для сжатия марки
             'top': -1*mainIMGHolderHeight/3+'px',
             'left':-1*mainIMGHolderWidth/3+'px',
             'cursor':'move',
@@ -455,7 +459,7 @@ return {
 })();
 
 //_________________________________I_________________________//
-
+//Позиционирование марки
 var Coordin = (function () {
 
     var init = function(){
@@ -470,7 +474,7 @@ var Coordin = (function () {
         // $('.position__choose-reduce').on('click', _reduce);
         $('.choose-position__item').on('click', _positionRadio);
     };
-
+//Квадрат координат
     var _positionRadio = function(){
       var item = $(this).attr('data-item'),
           img = $('.mainMark'),//  РњРѕСЏ РїСЂР°РІРєР°
@@ -601,7 +605,7 @@ var Coordin = (function () {
             }
 
         };
-
+//Увеличение координаты
         var _increas = function(){
         //console.log('increas');
         var inp = $(this).closest('.input-group_count').find('input'),
@@ -641,6 +645,7 @@ var Coordin = (function () {
     }
 
 };
+//Уменьшении координты
 var _reduce = function(){
         //console.log('reduce');
         var inp = $(this).closest('.input-group_count').find('input');
@@ -672,7 +677,7 @@ var _reduce = function(){
         }
 
     };
-
+//Установка координаты при помощи input
     var _setCoordinY = function () {
 
         var $this = $(this);
@@ -701,6 +706,7 @@ var _reduce = function(){
             $this.val('0');
         }
     };
+//Установка координаты при помощи input
     var _setCoordinX = function () {
 
         var $this = $(this);
@@ -729,6 +735,7 @@ var _reduce = function(){
             $this.val('0');
         }
     };
+//Отслеживание позиции марки
     var drag = function($this){
         //$this.on('drag', _drag);
         $('.mainMark').on('drag', _drag);
@@ -748,6 +755,7 @@ var _reduce = function(){
             }
         });
     };
+//Разрушение модуля, отвязка обработчиков
     var destroy = function(){
         $('#moveY').off();
         $('#moveX').off();
@@ -755,6 +763,7 @@ var _reduce = function(){
         $('.position__choose-reduce').off();
         $('.choose-position__item').off();
     };
+//Неактивное расположение
     var positionOff = function(){
         console.log('pos off');
         $('.choose-position__item').unbind('mouseenter mouseleave');
@@ -763,8 +772,9 @@ var _reduce = function(){
             $(this).css({border: '1px solid #c1cfd9' , 'background-color' : '#dbe1e8'});
         });
     };
+//Активное расположение
     var positionOn = function(){
-        console.log('pos on');
+        // console.log('pos on');
         $('.choose-position__item').unbind('mouseenter mouseleave');
         $('.choose-position__item').css('cursor', 'pointer');
         $('.choose-position__item').on('mouseenter', function(){
@@ -783,7 +793,7 @@ var _reduce = function(){
         positionOff : positionOff
     }
 })();
-
+//Добавление Дата атрибутов квадратам позиционирования
 if ($('.choose-position')) {
     $(function () {
         //console.log('create-radio');
@@ -794,8 +804,9 @@ if ($('.choose-position')) {
     });
 };
 //_________________________________I_________________________//
-
+//Позиционирование в режиме замощения
 var main2 = (function(){
+    //увеличенние координаты
     var _increas2 = function(){
 
         var inp = $(this).closest('.input-group_count').find('input');
@@ -828,7 +839,7 @@ var main2 = (function(){
         }
 
     };
-
+//уменьшение координаты
     var _reduce2 = function(){
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
@@ -869,7 +880,7 @@ var main2 = (function(){
         }
 
     };
-
+//Отрисовка креста
     var _redCross = function() {
             // console.log($(this).css('left'))
             // console.log($(this).css('top'))
@@ -922,14 +933,15 @@ var main2 = (function(){
 })();
 // if ($('.position__choose-increase') && $('.position__choose-reduce') && $('.flagHolder')) { main2.init(); };
 //_________________________________TOGLEMODUL____________________________________//
+//Модуль переключения между модулями
 var toggelModule = (function(){
 
     var init = function(){
-        console.log('toggle_init');
+        // console.log('toggle_init');
         //_first();
         _setupListener();
     };
-
+//самый первый запуск сайта и инициализация обычного режима
     var first = function () {
         Coordin.destroy();
         main2.destroy;
@@ -941,6 +953,7 @@ var toggelModule = (function(){
     var _setupListener = function(){
         $('input[name=tiling]:radio').on('change', _initSomth);
     };
+//Переключатель режимов
     var _initSomth = function(){
         if ($('#true').prop('checked')){
             console.log('radio1');
@@ -952,7 +965,7 @@ var toggelModule = (function(){
         }
 
     };
-
+//Инициализация обычного режима
     var _initSingle = function(){
         main2.destroy();
         var urlFile =($('.flag').attr('src')),
@@ -971,6 +984,7 @@ var toggelModule = (function(){
         Coordin.positionOn();
         $( "#slider" ).slider({'value':100});/////////////////////
     };
+//Инициализация  режима замощения
     var _initZamos = function () {
         // var mainIMGHolderWidth = screen.width/1.2;
         // var mainIMGHolderHeight = screen.height/1.2;
@@ -1013,7 +1027,7 @@ $('body').fadeloader({
 });
 
 
-
+//Сброс
 var ReSeT = (function(){
     var _setUpListners = function() {
         $('.btn__clear').on('click', function(event) {
@@ -1031,7 +1045,7 @@ var ReSeT = (function(){
             $('.mainImg').text('Image.jpg');
             $('.mainWatermark').text('Image.jpg');
             $('.count-position__item_yyy').removeClass('count-position__item_yyy').addClass('count-position__item_y');
-            $('.count-position__item_xxx').removeClass('count-position__item_xxx').addClass('count-position__item_x');
+            $('.count-position__item_xxx').removeClass('count-position__item_xxx').addClass('count-position__item_x');  // сброс всех параметров
             $('#true').prop('checked', 'none');
             $('#false').prop('checked', 'checked');// =======
             $('.aim-img').append('<img src="" class="mainMark">');
@@ -1068,7 +1082,7 @@ var ReSeT = (function(){
     };
 })();
 ReSeT.init();
-
+//Анимация социальных сетей
 var ShareShow = (function(){
 
     var init = function () {
@@ -1080,7 +1094,7 @@ var ShareShow = (function(){
        // $('#share').on('hover', _showLike);
         $('.share__btn_like').on('mouseenter', function(){
             $(this).stop(true,true);
-            $('.share').addClass('open').animate({left: '0px' });
+            $('.share').addClass('open').animate({left: '0px' });   // соц.иконки
         });
         $('.share').on('mouseleave', function(){
             $(this).stop(true,true);
@@ -1105,20 +1119,20 @@ var ShareShow = (function(){
 })();
 
 if($('#share')) { ShareShow.init();};
-
+//Спиннер для инпутов
 var Spiners = (function(){
     var _setUpListners = function() {
         $('#moveX,#moveY').attr('disabled', 'disabled').spinner({
-            // disabled: true,
+            disabled: true,
             icons: { down: "custom-down-icon", up: "custom-up-icon" },
             min:0,
             spin: function( event, ui ) {
                 if(event.target.id === 'moveX'){
                     // ui.value = parseInt($('#moveX').val());
-                    console.log(ui.value)
+                    // console.log(ui.value)
                     if($('.mainMark')){
                          $('.mainMark').css('left',ui.value+'px');
-                         $('#moveX').val(ui.value).spinner( "option", "max", $('.mainIMGHolder').width()-$('.mainMark').width());
+                         $('#moveX').val(ui.value).spinner( "option", "max", $('.mainIMGHolder').width()-$('.mainMark').width());   // спинеры 
                      }//$('.mainMark')
 
                     if($('.flag').length){
@@ -1157,7 +1171,7 @@ var Spiners = (function(){
             }
 }       );
     };
-
+//Проверка инпутов на числа
     var _onlyNumber = function () {
         $('#moveX,#moveY').on('keyup', function() {
              var $this = $(this);
