@@ -9,6 +9,7 @@ if(isPost()) {
     $originX = post('originX');
     $originY = post('originY');
     $transparency = post('transparency');
+    $watermarkResize = post('markMin');
     $originalImagePath = post('originalImage');
     $watermarkImagePath = post('watermarkImage');
 
@@ -22,6 +23,13 @@ if(isPost()) {
     }
     else {
         $watermark->setImageOpacity($transparency);
+    }
+
+    // Resize image
+    if($watermarkResize > 1) {
+        $watermark->resizeImage($watermark->getImageWidth() / $watermarkResize,
+                                $watermark->getImageHeight() / $watermarkResize,
+                                Imagick::FILTER_LANCZOS, 1);
     }
 
     // Watermark block

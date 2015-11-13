@@ -43,7 +43,6 @@
 
 		<!-- ***** css ******-->
 		<link rel="stylesheet" href="css/main.css">
-		<link rel="stylesheet" href="bower/jquery-ui/themеs/flick/jquery-ui.css">
 	</head>
 	<body>
 		<div class="wrapper-all">
