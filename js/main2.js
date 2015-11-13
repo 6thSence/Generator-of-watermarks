@@ -1,4 +1,5 @@
-;var dataParams = (function(){ // это на сервер отправляется
+// Модуль сбора данных для передачи на сервер
+;var dataParams = (function(){
 
     var params = {
         originX        : 0,
@@ -9,7 +10,11 @@
         y                 : 0,
         originalImage  : "",
         watermarkImage : "",
-        zzz            : 0
+        zzz            : 0,
+        markMin        : 1
+    };
+    var _addmarkMin = function(x){
+        params.markMin = x;
     };
     var _addZZZ = function(x){
         params.zzz = x;
@@ -62,12 +67,13 @@
         addIsPattern        : _addIsPattern,
         addX                : _addX,
         addY                : _addY,
-        addZZZ              : _addZZZ
+        addZZZ              : _addZZZ,
+        addmarkMin          :_addmarkMin
     }
 
 })();
 
-//РЎРєР°С‡Р°С‚СЊ РёР·РѕР±СЂР°Р¶РµРЅРёРµ, РїРµСЂРµРґР°С‡Р° РёРЅС„РѕСЂРјР°С†РёРё РЅР° backend
+//Модуль передачи данных на сервер для скачивания готового изображения
 var submitForm = (function(){
     var init = function () {
         _setUpListners();
@@ -78,23 +84,15 @@ var submitForm = (function(){
             dataParams.addX(parseInt($('.flagHolder').css('left')));
             dataParams.addY(parseInt($('.flagHolder').css('top')));
             dataParams.addTransparency($( ".mainMark,.flagHolder" ).css('opacity'));
-            console.log (dataParams.getData());
              var url ='server/php/download.php',
             defObj = _ajax(dataParams.getData(), url);
             if(defObj) {
-                defObj.done(function(ans){                                                          // модуль отправки данных на сервер на сервер
-
+                defObj.done(function(ans){
                     if (ans.status === 'OK') {
-                        console.log('ok');
-                        // РќРµ РІР»РµР·Р°Р№, СѓР±СЊРµС‚!
                         window.location= ("server/php/downloadImg.php?file=" + ans.link);
-                    } else{
-                     console.log('РЅРµ ok');
-                     console.log('Status: ' + ans.status + ' Message: ' + ans.text);
-                 }
+                    };
              })
             }
-
         });
     };
     var _ajax = function (data, url) {
@@ -103,8 +101,6 @@ var submitForm = (function(){
             type: 'POST',
             dataType: 'JSON',
             data: data
-        }).fail(function(){
-            // console.log('РќР° СЃРµСЂРІРµСЂРµ РїСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°.');
         });
     };
     return {
@@ -114,7 +110,7 @@ var submitForm = (function(){
 if ($('#submit')) { submitForm.init(); };
 
 
-//слайдер прозрачности 
+//Модуль работы слайдера, отвечающего за прозрачность водяного знака
 var OpacitySlider = (function(){
     var _setUpListners = function() {
         $( "#slider" ).slider({disabled: true,'value':100, 'range': 'min'}).on( "slide", function( event, ui ) {
@@ -124,7 +120,6 @@ var OpacitySlider = (function(){
     };
     var init = function () {
         _setUpListners();
-
     };
     return {
         init: init
@@ -132,12 +127,105 @@ var OpacitySlider = (function(){
 })();
 if ($('#slider')) { OpacitySlider.init(); };
 
-//FileUpload 
+//Загрузка изображений и сжатие
 var FileUploadJQ = (function(){
+    // Загрузка и обработка основного изображения
     var _setUpListners = function() {
         $('#fileuploadImage').fileupload({
-            dataType: 'json',
-            progressall: function (e, data) {
+            dataType    : 'json',
+            progressall : function (e, data) {
+                            var progress = '<div id="progress"></div>';
+                            $('.main-bl').css('position', 'relative').prepend(progress)
+                            var progress = parseInt(data.loaded / data.total * 100, 10);
+                            $('#progress').css({
+                                'height': '17px',
+                                'background-image':'url(img/progressbar.gif)',
+                                'position':'absolute',
+                                'top':'75px',
+                                'left':'26px',
+                                'max-width':'648px',
+                                'border-radius': '7px'
+                            }).css('width', progress + '%');
+                        },
+            add         :   function (e,data) {
+                                data.submit();
+                            },
+            done        : function (e, data) {
+                var nameFile = data.result.files[0].name,
+                urlFile = data.result.files[0].url;
+                dataParams.addOriginalImage(urlFile);
+                $('#fileuploadImage').attr('disabled', 'disabled');
+                $('input[name="aim-img"]').val(nameFile)
+                $('.mainImg').text(nameFile);
+                $('#watermark').removeAttr('disabled');
+                $('body').append('<img src="'+ urlFile +'" class="mainIMG">');
+                $(".mainIMG").hide().on('load', function(event) {
+                    var width = $(this).width();
+                    var height = $(this).height();
+                    $('.aim-img').append('<div class="mainIMGHolder"></div>').css('position', 'relative');
+                    if(width > 648 || height > 533){
+                        if(width > height){
+                            var finalSize = (width/height);
+                            $('.mainIMGHolder').css({
+                                'width': '648px',
+                                'height': 648/finalSize+'px',
+                                'background': 'url('+ urlFile +')',
+                                'background-size':'contain',
+                                'overflow':'hidden',
+                                'position':'absolute',
+                                'top':'0',
+                                'bottom':'0',
+                                'left':'0',
+                                'right':'0',
+                                'margin':'auto'
+                            });
+                            var zzz = width/parseInt($('.mainIMGHolder').css('width'));
+                            dataParams.addZZZ(zzz);
+                            } else {
+                                var finalSize = (height/width);
+                                $('.mainIMGHolder').css({
+                                    'height': '533px',
+                                    'width': 533/finalSize+'px',
+                                    'background': 'url('+ urlFile +')',
+                                    'background-size':'contain',
+                                    'overflow':'hidden',
+                                    'position':'absolute',
+                                    'top':'0',
+                                    'bottom':'0',
+                                    'left':'0',
+                                    'right':'0',
+                                    'margin':'auto'
+                                    });
+                                    var zzz = width/parseInt($('.mainIMGHolder').css('width'));
+                                    dataParams.addZZZ(zzz);
+                                    _setUpListners2(zzz,width);
+                                };
+                    } else {
+                        dataParams.addZZZ(1);
+                        _setUpListners2(1,width);
+                        $('.mainIMGHolder').css({
+                            'height': height,
+                            'width': width,
+                            'background': 'url('+ urlFile +')',
+                            'background-size':'contain',
+                            'overflow':'hidden',
+                            'position':'absolute',
+                            'top':'0',
+                            'bottom':'0',
+                            'left':'0',
+                            'right':'0',
+                            'margin':'auto'
+                        });
+                    };
+                });
+            }
+        });
+    };
+    // Загрузка и обработка водяного знака
+    var _setUpListners2 = function(zzz, mainWidth) {
+        $('#watermark').fileupload({
+            dataType    :   'json',
+            progressall :   function (e, data) {
                 var progress = '<div id="progress"></div>';
                 $('.main-bl').css('position', 'relative').prepend(progress)
                 var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -151,213 +239,84 @@ var FileUploadJQ = (function(){
                     'border-radius': '7px'
                 }).css('width', progress + '%');
             },
-            add:function (e,data) {
-        //console.log('add ready')
-        data.submit();
-    },
-    // fail:function () {
-
-    // },
-    done: function (e, data) {
-        var nameFile = data.result.files[0].name,
-        urlFile = data.result.files[0].url;
-        dataParams.addOriginalImage(urlFile);
-        
-
-
-        $('#fileuploadImage').attr('disabled', 'disabled');
-        $('input[name="aim-img"]').val(nameFile)
-        $('.mainImg').text(nameFile);
-        $('#watermark').removeAttr('disabled');
-        $('body').append('<img src="'+ urlFile +'" class="mainIMG">');
-        $(".mainIMG").hide().on('load', function(event) {
-            var width = $(this).width();
-            var height = $(this).height();
-            $('.aim-img').append('<div class="mainIMGHolder"></div>').css('position', 'relative');
-            if(width > 648 || height > 533){
-                if(width > height){
-                    var finalSize = (width/height);
-                    $('.mainIMGHolder').css({
-                        'width': '648px',
-                        'height': 648/finalSize+'px',
-                        'background': 'url('+ urlFile +')',
-                        'background-size':'contain',
-                        'overflow':'hidden',
-                        'position':'absolute',
-                        'top':'0',
-                        'bottom':'0',
-                        'left':'0',
-                        'right':'0',
-                        'margin':'auto'
+            add     :   function (e,data) {
+            data.submit();
+             },
+            done    : function (e, data) {
+                    $('#progress').remove();
+                    var nameFile = data.result.files[0].name,
+                    urlFile = data.result.files[0].url;
+                    dataParams.addWatermarkImage(urlFile);
+                    $('#submit').removeAttr('disabled');
+                    $('#reset').removeAttr('disabled');
+                    $('#false').removeAttr('disabled');
+                    $('#true').removeAttr('disabled');
+                    $('.choose-position__item-lock').removeClass('choose-position__item-lock').attr('class', 'choose-position__item');
+                    $('#progress').remove();
+                    $('.mainWatermark').text(nameFile);
+                    $('input[name="watermark"]').val(nameFile);
+                    $('#moveX').val(0);
+                    $('#moveY').val(0);
+                    var buff = 0;
+                    var buffModul = 0;
+                    if( ($('.mainMark').length) || ($('.flag').length)){
+                       buffModul = 1;
+                        $('.flagHolder, #vertical, #horizontal').remove();
+                        $('.mainMark').remove();
+                        $('.flag').remove();
+                    };
+                    if(!($('.mainMark').length)){
+                        buff = 1;
+                    };
+                    $('.mainIMGHolder').append('<img src="'+ urlFile +'" class="mainMark">');
+                    $('.mainMark').css({left : '0', top : '0'});
+                    Coordin.drag($('.mainMark'));
+                    $('#moveX').val('0');
+                    $('#moveY').val('0');
+                    $( "#slider" ).slider({'value':100})
+                    $(".mainMark").hide().css({
+                        'position': 'absolute',
+                        'cursor':'move'
+                    }).on('load', function(event) {
+                        var width = $(this).width();
+                        var height = $(this).height();
+                        var realWidth = width/zzz+'px';
+                        var realHeight = height/zzz+'px';
+                        if(mainWidth < width){
+                         dataParams.addmarkMin(parseInt(width)/parseInt(mainWidth));
+                        } else {
+                         dataParams.addmarkMin(1);
+                        }
+                        if(width > 648 || height > 648){
+                            if(width > height){
+                                $(this).css('width', '100%').show('fast').draggable({containment:'parent'});
+                            }
+                        } else {
+                            $(this).show('fast').attr('width', realWidth).draggable({containment:'parent'});
+                        }
+                        $('#false').prop('checked', 'checked');
+                        toggelModule.first();
+                        if (buffModul === 0){
+                             toggelModule.init();
+                        }
+                        $('#moveX').removeAttr('disabled');
+                        $('#moveY').removeAttr('disabled');
+                        $( "#slider" ).slider({disabled:false});
+                        $('#moveX,#moveY').removeAttr('disabled').spinner({disabled: false});
                     });
-                    var zzz = width/parseInt($('.mainIMGHolder').css('width'));
-                    _setUpListners2(zzz);                                                                           // сжатие картинки 
-                    dataParams.addZZZ(zzz);
-
-                } else {
-                   var finalSize = (height/width);
-                   $('.mainIMGHolder').css({
-                    'height': '533px',
-                    'width': 533/finalSize+'px',
-                    'background': 'url('+ urlFile +')',
-                    'background-size':'contain',
-                    'overflow':'hidden',
-                    'position':'absolute',
-                    'top':'0',
-                    'bottom':'0',
-                    'left':'0',
-                    'right':'0',
-                    'margin':'auto'
-                });
-                   var zzz = width/parseInt($('.mainIMGHolder').css('width'));
-                    dataParams.addZZZ(zzz);
-                    // console.log(zzz);
-                   _setUpListners2(zzz);
-               }
-           } else {
-            dataParams.addZZZ(1);
-            _setUpListners2(1);
-            $('.mainIMGHolder').css({
-                'height': height,
-                'width': width,
-                'background': 'url('+ urlFile +')',
-                'background-size':'contain',
-                'overflow':'hidden',
-                'position':'absolute',
-                'top':'0',
-                'bottom':'0',
-                'left':'0',
-                'right':'0',
-                'margin':'auto'
-            });
-        }
-        $('#progress').remove();
-
-    });
-}
-});
-};
-
-var _setUpListners2 = function(zzz) {
-    $('#watermark').fileupload({
-        dataType: 'json',
-        progressall: function (e, data) {
-            var progress = '<div id="progress"></div>';
-            $('.main-bl').css('position', 'relative').prepend(progress)
-            var progress = parseInt(data.loaded / data.total * 100, 10);
-            $('#progress').css({
-                'height': '17px',
-                'background-image':'url(img/progressbar.gif)',
-                'position':'absolute',
-                'top':'75px',
-                'left':'26px',
-                'max-width':'648px',
-                'border-radius': '7px'
-            }).css('width', progress + '%');
-        },
-        add:function (e,data) {
-        //console.log('add ready')
-        if($('.flagHolder').length){
-            //$('.flagHolder, #vertical, #horizontal').remove();
-        }
-
-        data.submit();
-    },
-        done: function (e, data) {
-                $('#progress').remove();
-                var nameFile = data.result.files[0].name,
-                urlFile = data.result.files[0].url;
-                dataParams.addWatermarkImage(urlFile);
-
-                $('#submit').removeAttr('disabled');
-                $('#reset').removeAttr('disabled');
-                $('#false').removeAttr('disabled');
-                $('#true').removeAttr('disabled');
-                $('.choose-position__item-lock').removeClass('choose-position__item-lock').attr('class', 'choose-position__item');
-
-                $('#progress').remove(); 
-                $('.mainWatermark').text(nameFile);
-                $('input[name="watermark"]').val(nameFile);
-                $('#moveX').val(0);
-                $('#moveY').val(0);
-                var buff = 0;
-            ///////////////////////////////////////////////////////////////
-                var buffModul = 0;
-            // console.log($('.flag').length);
-                if( ($('.mainMark').length) || ($('.flag').length)){
-                   buffModul = 1;
-                    $('.flagHolder, #vertical, #horizontal').remove();
-                    $('.mainMark').remove();
-                    $('.flag').remove();
-                }
-                if(!($('.mainMark').length)){
-                    buff = 1;
-                }
-                if($('.mainMark').length || $('.flag').length){
-                    //$('.mainMark').remove();
-                    // $('.flagHolder').remove();
-                     //$('.flag').remove();
-                }
-                $('.mainIMGHolder').append('<img src="'+ urlFile +'" class="mainMark">');
-                $('.mainMark').css({left : '0', top : '0'});
-                Coordin.drag($('.mainMark'));
-                $('#moveX').val('0');
-                $('#moveY').val('0');
-                $( "#slider" ).slider({'value':100})
-                $(".mainMark").hide().css({
-                    'position': 'absolute',
-                    'cursor':'move'
-                }).on('load', function(event) {
-                    var width = $(this).width();
-                    var height = $(this).height();
-                    var realWidth = width/zzz+'px';
-                    var realHeight = height/zzz+'px';
-                    if(width > 648 || height > 648){
-
-                        if(width > height){
-                            $(this).css('width', '100%').show('fast').draggable({containment:'parent'});
-            
-                    } //else {
-                    //    $(this).css('height', '100%').show('fast').draggable({containment:'parent'}); // сжатие марки
-                    //  }
-                 } else {
-                    $(this).show('fast').attr('width', realWidth).draggable({containment:'parent'});
-                                         
-                }
-                    $('#false').prop('checked', 'checked');
-                    toggelModule.first();
-                    if (buffModul === 0){
-                         toggelModule.init();
-                    }
-                    if (buff === 1){
-        
-                    }
-                    $('#moveX').removeAttr('disabled');
-                    $('#moveY').removeAttr('disabled');
-
-                     $( "#slider" ).slider({disabled:false});
-                    $('#moveX,#moveY').removeAttr('disabled').spinner({disabled: false});
-                });
-
-}
-});
-};
-
-
-var init = function () {
-    _setUpListners();
-
-};
-
-
-return {
-    init: init
-};
-
+            }
+        });
+    };
+    var init = function () {
+        _setUpListners();
+    };
+    return {
+        init: init
+    };
 })();
 if ($('#fileuploadImage')) { FileUploadJQ.init(); };
 
-//замощение
+//Модуль замощения водяного знака
 var ZAMOS = (function(){
     var init = function (file, flagAreaOut) {
         var mainIMGHolderWidth = screen.width;
@@ -366,12 +325,10 @@ var ZAMOS = (function(){
         var flagArea = flagAreaOut;
         var integer = (mainIMGHolderArea/flagArea);
         var kooficientSjatia = $('.mainMark').width();
-            $('#moveX').val(0);
-            $('#moveY').val(0);
-            $( "#slider" ).slider({'value':100});
-         
-            $('.mainMark').remove();
-    
+        $('#moveX').val(0);
+        $('#moveY').val(0);
+        $( "#slider" ).slider({'value':100});
+        $('.mainMark').remove();
         $('.mainIMGHolder').append('<div class="flagHolder"></div>');
         $('.flagHolder').css({
             'position': 'absolute',
@@ -381,103 +338,83 @@ var ZAMOS = (function(){
             'left':-1*mainIMGHolderWidth/3+'px',
             'cursor':'move',
             'font-size':'0'
-        }).draggable({containment: [0,0,$('.mainIMGHolder').offset().left,$('.mainIMGHolder').offset().top]});
-        console.log($('.aim-img').offset().top)
-
-
-            for(var i = 0;i<=integer;i++){
-                $('.flagHolder').append('<img  class="flag">');       
+         }).draggable({containment: [0,0,$('.mainIMGHolder').offset().left,$('.mainIMGHolder').offset().top]});
+        for(var i = 0;i<=integer;i++){
+            $('.flagHolder').append('<img  class="flag">');
+        }
+        $('.flag').attr({
+            'src': file,
+            'width': kooficientSjatia
+        });
+        $('#moveX').on('keyup', function(event) {
+            if (parseInt($(this).val()) > 100){
+                var coordin = 100;
+            }else if(parseInt($(this).val())){
+                var coordin = parseInt($(this).val())
+            } else {
+                coordin = 0;
             }
-            $('.flag').attr({
-                'src': file,
-                'width': kooficientSjatia
-            });
-
-            $('#moveX').on('keyup', function(event) {
-                // var $this = $(this);
-                if (parseInt($(this).val()) > 100){
-                    var coordin = 100;
-                }else if(parseInt($(this).val())){
-                    var coordin = parseInt($(this).val())
-                } else {
-                    coordin = 0;
-                }
-                 $('.flag').css('border-bottom', coordin+'px solid transparent');
-                 $(this).val(coordin);
-                 if(coordin===0){
-                    $('#vertical').css({
-                            'margin-top': (-1*coordin)/2+'px',
-                            'height':'1px'
-                        });
-                 } else if(coordin>100){
-                    $('#vertical').css({
-                            'margin-top': (-1*100)/2+'px',
-                            'height':'100px'
-                        });
-                   $('#moveX').val(100)
-                 } else {
-
-                  $('#vertical').css({
-                            'margin-top': (-1*coordin)/2+'px',
-                            'height': coordin+'px'
-                        });
-                 }
-            });
-
-            $('#moveY').on('keyup', function(event) {
-                // var $this = $(this);
-                if (parseInt($(this).val()) > 100){
-                    var coordin = 100;
-                }else if(parseInt($(this).val())){
-                    var coordin = parseInt($(this).val())
-                } else {
-                    coordin = 0;
-                }
-                 $('.flag').css('border-right', coordin+'px solid transparent');
-                 $(this).val(coordin);
-                 if(coordin===0){
-                     $('#horizontal').css({
-                            'margin-left': (-1*coordin)/2+'px',
-                            'width': '1px'
-                        });
-                 } else {
-
-                  $('#horizontal').css({
-                            'margin-left': (-1*coordin)/2+'px',
-                            'width': coordin+'px'
-                        });
-                 }
-            });
-
-
-
-};
-return {
-    init: init
-};
-
+             $('.flag').css('border-bottom', coordin+'px solid transparent');
+             $(this).val(coordin);
+             if (coordin===0){
+                $('#vertical').css({
+                        'margin-top': (-1*coordin)/2+'px',
+                        'height':'1px'
+                    });
+             } else if (coordin>100) {
+                $('#vertical').css({
+                        'margin-top': (-1*100)/2+'px',
+                        'height':'100px'
+                    });
+               $('#moveX').val(100)
+             } else {
+              $('#vertical').css({
+                        'margin-top': (-1*coordin)/2+'px',
+                        'height': coordin+'px'
+                    });
+             }
+        });
+        $('#moveY').on('keyup', function(event) {
+            if (parseInt($(this).val()) > 100){
+                var coordin = 100;
+            }else if(parseInt($(this).val())){
+                var coordin = parseInt($(this).val())
+            } else {
+                coordin = 0;
+            }
+             $('.flag').css('border-right', coordin+'px solid transparent');
+             $(this).val(coordin);
+             if(coordin===0){
+                 $('#horizontal').css({
+                        'margin-left': (-1*coordin)/2+'px',
+                        'width': '1px'
+                    });
+             } else {
+              $('#horizontal').css({
+                        'margin-left': (-1*coordin)/2+'px',
+                        'width': coordin+'px'
+                    });
+             }
+        });
+    };
+    return {
+        init: init
+    };
 })();
 
-//_________________________________I_________________________//
 //Позиционирование марки
 var Coordin = (function () {
-
     var init = function(){
         _setupListener();
     };
     var _setupListener = function(){
-        //console.log('ilia');
-        //$(".mainMark").on('drag', _drag);
         $('#moveY').on('keyup', _setCoordinY);
         $('#moveX').on('keyup', _setCoordinX);
-        // $('.position__choose-increase').on('click', _increas);
-        // $('.position__choose-reduce').on('click', _reduce);
         $('.choose-position__item').on('click', _positionRadio);
     };
-//Квадрат координат
     var _positionRadio = function(){
       var item = $(this).attr('data-item'),
-          img = $('.mainMark'),//  РњРѕСЏ РїСЂР°РІРєР°
+          img = $('.mainMark'),
           layer=$('.mainIMGHolder'),
           img_width= parseInt(img.css('width')),
           layer_width=parseInt(layer.css('width')),
@@ -487,127 +424,110 @@ var Coordin = (function () {
           center_hight =(layer_height - img_height)/2,
           inp_x = $('#moveX'),
           inp_y = $('#moveY');
-
-
-        //console.log('click');
-        //console.log(item);
-        switch (parseInt(item)){
-            case 0:
-                //img.css({'left': '0' , 'top': '0'});
-                img.stop(true,true).animate(
-                {
-                    'left': '0',
-                    'top': '0'
-                },
-                1000
-                );
-                inp_x.val(0);
-                inp_y.val(0);
-                break;
-                case 1:
-                //img.css({'left': center_width, 'top': '0'});
-                img.stop(true,true).animate(
-                {
-                    'left': center_width,
-                    'top': '0'
-                },
-                1000
-                );
-                inp_x.val(center_width);
-                inp_y.val(0);
-                break;
-                case 2:
-                //img.css({'left': layer_width-img_width , 'top': '0'});
-                img.stop(true,true).animate(
-                {
-                    'left': layer_width-img_width,
-                    'top': '0'
-                },
-                1000
-                );
-                inp_x.val(layer_width-img_width);
-                inp_y.val(0);
-                break;
-                case 3:
-                //img.css({'left': '0' , 'top': center_hight});
-                img.stop(true,true).animate(
-                {
-                    'left': '0',
-                    'top': center_hight
-                },
-                1000
-                );
-                inp_x.val(0);
-                inp_y.val(center_hight);
-                break;
-                case 4:
-                //img.css({'left': center_width , 'top': center_hight});
-                img.stop(true,true).animate(
-                {
-                    'left': center_width,
-                    'top': center_hight
-                },
-                1000
-                );
-                inp_x.val(center_width);
-                inp_y.val(center_hight);
-                break;
-                case 5:
-                //img.css({'left': layer_width-img_width , 'top': center_hight});
-                img.stop(true,true).animate(
-                {
-                    'left': layer_width-img_width,
-                    'top': center_hight
-                },
-                1000
-                );
-                inp_x.val(layer_width-img_width);
-                inp_y.val(center_hight);
-                break;
-                case 6:
-                //img.css({'left': '0' , 'top': layer_height-img_height});
-                img.stop(true,true).animate(
-                {
-                    'left': '0',
-                    'top': layer_height-img_height
-                },
-                1000
-                );
-                inp_x.val(0);
-                inp_y.val(layer_height-img_height);
-                break;
-                case 7:
-                //img.css({'left': center_width , 'top': layer_height-img_height});
-                img.stop(true,true).animate(
-                {
-                    'left': center_width,
-                    'top': layer_height-img_height
-                },
-                1000
-                );
-                inp_x.val(center_width);
-                inp_y.val(layer_height-img_height);
-                break;
-                case 8:
-                //img.css({'left': layer_width-img_width , 'top': layer_height-img_height});
-                img.stop(true,true).animate(
-                {
-                    'left': layer_width-img_width,
-                    'top': layer_height-img_height
-                },
-                1000
-                );
-                inp_x.val(layer_width-img_width);
-                inp_y.val(layer_height-img_height);
-                break;
-                default :
-                //console.log('hz')
-            }
+      switch (parseInt(item)){
+        case 0:
+            img.stop(true,true).animate(
+            {
+                'left': '0',
+                'top': '0'
+            },
+            1000
+            );
+            inp_x.val(0);
+            inp_y.val(0);
+            break;
+            case 1:
+            img.stop(true,true).animate(
+            {
+                'left': center_width,
+                'top': '0'
+            },
+            1000
+            );
+            inp_x.val(center_width);
+            inp_y.val(0);
+            break;
+        case 2:
+            img.stop(true,true).animate(
+            {
+                'left': layer_width-img_width,
+                'top': '0'
+            },
+            1000
+            );
+            inp_x.val(layer_width-img_width);
+            inp_y.val(0);
+            break;
+        case 3:
+            img.stop(true,true).animate(
+            {
+                'left': '0',
+                'top': center_hight
+            },
+            1000
+            );
+            inp_x.val(0);
+            inp_y.val(center_hight);
+            break;
+        case 4:
+            img.stop(true,true).animate(
+            {
+                'left': center_width,
+                'top': center_hight
+            },
+            1000
+            );
+            inp_x.val(center_width);
+            inp_y.val(center_hight);
+            break;
+        case 5:
+            img.stop(true,true).animate(
+            {
+                'left': layer_width-img_width,
+                'top': center_hight
+            },
+            1000
+            );
+            inp_x.val(layer_width-img_width);
+            inp_y.val(center_hight);
+            break;
+        case 6:
+            img.stop(true,true).animate(
+            {
+                'left': '0',
+                'top': layer_height-img_height
+            },
+            1000
+            );
+            inp_x.val(0);
+            inp_y.val(layer_height-img_height);
+            break;
+        case 7:
+            img.stop(true,true).animate(
+            {
+                'left': center_width,
+                'top': layer_height-img_height
+            },
+            1000
+            );
+            inp_x.val(center_width);
+            inp_y.val(layer_height-img_height);
+            break;
+        case 8:
+            img.stop(true,true).animate(
+            {
+                'left': layer_width-img_width,
+                'top': layer_height-img_height
+            },
+            1000
+            );
+            inp_x.val(layer_width-img_width);
+            inp_y.val(layer_height-img_height);
+            break;
+        }
 
         };
-//Увеличение координаты
-        var _increas = function(){
-        //console.log('increas');
+    var _increas = function(){
         var inp = $(this).closest('.input-group_count').find('input'),
         img=$('.mainMark'),
         layer=$('.mainIMGHolder'),
@@ -615,12 +535,10 @@ var Coordin = (function () {
         layer_width=parseInt(layer.css('width')),
         img_height= parseInt(img.css('height')),
         layer_height=parseInt(layer.css('height'));
-
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.mainMark').css('left'),
-            coordin_inc = parseInt(coordin) + 10,///////////
-            pos = coordin_inc +'px';
-
+                coordin_inc = parseInt(coordin) + 10,
+                pos = coordin_inc +'px';
             if ((coordin_inc)<= (layer_width - img_width)) {
                 $('.mainMark').css('left', pos);
                 inp.val(coordin_inc);
@@ -637,17 +555,14 @@ var Coordin = (function () {
             if ((coordin_inc)<= (layer_height - img_height)) {
                $('.mainMark').css('top' , pos);
                inp.val(coordin_inc);
-           }
-           if ((coordin_inc)>= (layer_height - img_height)) {
-            $('.mainMark').css('top' , layer_height - img_height);
-            inp.val(layer_height - img_height);
+            }
+            if ((coordin_inc)>= (layer_height - img_height)) {
+                $('.mainMark').css('top' , layer_height - img_height);
+                inp.val(layer_height - img_height);
+            }
         }
-    }
-
-};
-//Уменьшении координты
-var _reduce = function(){
-        //console.log('reduce');
+    };
+    var _reduce = function(){
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
             var coordin = $('.mainMark').css('left'),
@@ -677,9 +592,7 @@ var _reduce = function(){
         }
 
     };
-//Установка координаты при помощи input
     var _setCoordinY = function () {
-
         var $this = $(this);
         if (parseInt($(this).val())){
             var coordin = parseInt($(this).val());
@@ -693,7 +606,6 @@ var _reduce = function(){
             img_height= parseInt(img.css('height')),
             layer_height=parseInt(layer.css('height'));
         $this.val(coordin);
-
         if(coordin <= (layer_height - img_height) || coordin >= 0){
             $('.mainMark').css('top' , position);
         }
@@ -706,9 +618,7 @@ var _reduce = function(){
             $this.val('0');
         }
     };
-//Установка координаты при помощи input
     var _setCoordinX = function () {
-
         var $this = $(this);
         if (parseInt($(this).val())){
             var coordin = parseInt($(this).val());
@@ -721,12 +631,10 @@ var _reduce = function(){
             img_width= parseInt(img.css('width')),
             layer_width=parseInt(layer.css('width'));
         $this.val(coordin);
-
         if(coordin <= (layer_width - img_width) || coordin >= 0){
             $('.mainMark').css('left' , position);
         }
         if(coordin >= (layer_width - img_width)){
-            
             $('.mainMark').css('left' , layer_width - img_width);
             $this.val(layer_width - img_width);
         }
@@ -735,27 +643,21 @@ var _reduce = function(){
             $this.val('0');
         }
     };
-//Отслеживание позиции марки
+    //Отслеживание позиции марки
     var drag = function($this){
-        //$this.on('drag', _drag);
         $('.mainMark').on('drag', _drag);
     };
     var _drag = function() {
-        //console.log('drag');
         var moveX = $('#moveX'),
         moveY = $('#moveY');
-
         $(this).draggable({
             drag: function (event, ui) {
                 moveX.val(ui.position.left);
                 moveY.val(ui.position.top);        
-                //console.log(ui.position.left);
-                //console.log(ui.position.top);
-                //ui.position.top = y;
             }
         });
     };
-//Разрушение модуля, отвязка обработчиков
+    //Разрушение модуля, отвязка обработчиков
     var destroy = function(){
         $('#moveY').off();
         $('#moveX').off();
@@ -763,18 +665,16 @@ var _reduce = function(){
         $('.position__choose-reduce').off();
         $('.choose-position__item').off();
     };
-//Неактивное расположение
+    //Неактивное расположение
     var positionOff = function(){
-        console.log('pos off');
         $('.choose-position__item').unbind('mouseenter mouseleave');
         $('.choose-position__item').css('cursor', 'default');
         $('.choose-position__item').on('mouseenter mouseleave', function(){
             $(this).css({border: '1px solid #c1cfd9' , 'background-color' : '#dbe1e8'});
         });
     };
-//Активное расположение
+    //Активное расположение
     var positionOn = function(){
-        // console.log('pos on');
         $('.choose-position__item').unbind('mouseenter mouseleave');
         $('.choose-position__item').css('cursor', 'pointer');
         $('.choose-position__item').on('mouseenter', function(){
@@ -784,7 +684,6 @@ var _reduce = function(){
             $(this).css({border: '1px solid #c1cfd9' , 'background-color' : '#dbe1e8'});
         });
     };
-
     return{
         init : init,
         drag: drag,
@@ -793,37 +692,31 @@ var _reduce = function(){
         positionOff : positionOff
     }
 })();
+
 //Добавление Дата атрибутов квадратам позиционирования
 if ($('.choose-position')) {
     $(function () {
-        //console.log('create-radio');
         var child = $('.choose-position').children().each(function (key, val) {
             $(this).attr('data-item', key);
         });
-        //console.log(child);
     });
 };
-//_________________________________I_________________________//
-//Позиционирование в режиме замощения
-var main2 = (function(){
-    //увеличенние координаты
-    var _increas2 = function(){
 
+// Модуль работы с координатами
+var main2 = (function(){
+    //Увеличени координат
+    var _increas2 = function(){
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
-            //console.log(1)
             var coordin = $('.flag').css('border-bottom-width');
-
             var coordin_inc = parseInt(coordin) + 1,
             pos = coordin_inc;
             $('.flag').css('border-bottom' , pos+'px solid transparent');
             inp.val(pos);
-
             $('#vertical').css({
                 'margin-top': (-1*pos)/2+'px',
                 'height': pos+'px'
             });
-
         }
         if (inp.attr('id') === 'moveY'){
             var coordin = $('.flag').css('border-right-width'),
@@ -831,7 +724,6 @@ var main2 = (function(){
             pos = coordin_inc;
             $('.flag').css('border-right' , pos+'px solid transparent');
             inp.val(pos);
-
             $('#horizontal').css({
                 'margin-left': (-1*pos)/2+'px',
                 'width': pos+'px'
@@ -839,7 +731,7 @@ var main2 = (function(){
         }
 
     };
-//уменьшение координаты
+    //уменьшение координаты
     var _reduce2 = function(){
         var inp = $(this).closest('.input-group_count').find('input');
         if (inp.attr('id') === 'moveX'){
@@ -852,14 +744,10 @@ var main2 = (function(){
             } else {
                 inp.val(pos);
             }
-
             $('#vertical').css({
                 'margin-top': (-1*pos)/2+'px',
                 'height': pos+'px'
             });
-
-
-
         }
         if (inp.attr('id') === 'moveY'){
             var coordin = $('.flag').css('border-right-width'),
@@ -875,16 +763,10 @@ var main2 = (function(){
                 'margin-left': (-1*pos)/2+'px',
                 'width': pos+'px'
             });
-
-
         }
-
     };
-//Отрисовка креста
+    //Отрисовка креста
     var _redCross = function() {
-            // console.log($(this).css('left'))
-            // console.log($(this).css('top'))
-
             $('.choose-position').css('position', 'relative').css('overflow', 'hidden').append('<div id="vertical"></div> <div id="horizontal"></div>');
             $('#vertical').css({
                 'position': 'absolute',
@@ -902,50 +784,38 @@ var main2 = (function(){
                 'width':'1px',
                 'background-color':'#e3736c'
             });
-            //main2.init()
-
         };
     var redCrossDestroy =function(){
       $('#vartical').remove();
       $('#horizontal').remove();
     };
-
-        var init = function () {
-         _redCross();
-        //$('.radio__tiling_true').on('click',_redCross);
-        $('.position__choose-increase').on('click', _increas2);
-        $('.position__choose-reduce').on('click', _reduce2);
+    var init = function () {
+     _redCross();
+    $('.position__choose-increase').on('click', _increas2);
+    $('.position__choose-reduce').on('click', _reduce2);
     };
-
     var destroy = function(){
         $('.radio__tiling_true').off();
         $('.position__choose-increase').off();
         $('.position__choose-reduce').off();
     };
-
-
     return {
         init: init,
         destroy: destroy,
         redCrossDestroy : redCrossDestroy
     };
-
 })();
-// if ($('.position__choose-increase') && $('.position__choose-reduce') && $('.flagHolder')) { main2.init(); };
-//_________________________________TOGLEMODUL____________________________________//
+
 //Модуль переключения между модулями
 var toggelModule = (function(){
-
     var init = function(){
-        // console.log('toggle_init');
-        //_first();
         _setupListener();
     };
-//самый первый запуск сайта и инициализация обычного режима
+    //Инициализация режима по дефолту
     var first = function () {
         Coordin.destroy();
         main2.destroy;
-      Coordin.init();
+        Coordin.init();
         Coordin.positionOn();
         $('.count-position__item_yyy').removeClass('count-position__item_yyy').addClass('count-position__item_y');
         $('.count-position__item_xxx').removeClass('count-position__item_xxx').addClass('count-position__item_x');
@@ -953,25 +823,22 @@ var toggelModule = (function(){
     var _setupListener = function(){
         $('input[name=tiling]:radio').on('change', _initSomth);
     };
-//Переключатель режимов
+    //Переключатель режимов (замощения/одинарный водяной знак)
     var _initSomth = function(){
         if ($('#true').prop('checked')){
-            console.log('radio1');
             _initZamos();
         }
         if ($('#false').prop('checked')){
-            console.log('radio2');
             _initSingle();
         }
 
     };
-//Инициализация обычного режима
+    //Инициализация обычного режима
     var _initSingle = function(){
         main2.destroy();
         var urlFile =($('.flag').attr('src')),
             width = $('.flag').width(),
             height = $('.flag').height();
-
         $('.flagHolder, #vertical, #horizontal, .flag').remove();
         $('.mainIMGHolder').append('<img src="'+ urlFile +'" class="mainMark">');
         $('.mainMark').css({left : '0', top : '0', cursor :'move','width':width,'height':height}).draggable({containment:'parent'});
@@ -984,15 +851,8 @@ var toggelModule = (function(){
         Coordin.positionOn();
         $( "#slider" ).slider({'value':100});/////////////////////
     };
-//Инициализация  режима замощения
+    //Инициализация  режима замощения
     var _initZamos = function () {
-        // var mainIMGHolderWidth = screen.width/1.2;
-        // var mainIMGHolderHeight = screen.height/1.2;
-        // var mainIMGHolderArea = mainIMGHolderWidth * mainIMGHolderHeight;
-        // var flagWidth = $('.mainMark:last').width();
-        // var flagHeight = $('.mainMark:last').height();
-        // var flagArea = flagWidth * flagHeight;
-        // var integer = (mainIMGHolderArea/flagArea);
         Coordin.destroy();
         Coordin.positionOff();
         $('.count-position__item_y').removeClass('count-position__item_y').addClass('count-position__item_yyy');
@@ -1000,24 +860,16 @@ var toggelModule = (function(){
         var width = $('.mainMark').width();
         var height = $('.mainMark').height();
         var area = width*height;
-        console.log('OUT AREA:'+ area);
         var urlFile = $('.mainMark').attr('src');
-        // var indexPath = urlFile.lastIndexOf('/'),
-        //     file =  urlFile.slice(indexPath+1);
-
         ZAMOS.init(urlFile, area);
         main2.init();
     };
-
     return{
         init : init,
         first : first
     };
-
 })();
-//_________________________________TOGLEMODUL____________________________________//
-
-//Fadeloader (РєСЂР°СЃРёРІРёС€РЅР°СЏ Р·Р°РіСЂСѓР·РєР° СЃС‚СЂР°РЅРёС†С‹)
+//Fadeloader
 $('body').fadeloader({
     mode: 'children',
     fadeSpeed : 1500,
@@ -1026,8 +878,7 @@ $('body').fadeloader({
     onComplete : ''
 });
 
-
-//Сброс
+//Сброс формы
 var ReSeT = (function(){
     var _setUpListners = function() {
         $('.btn__clear').on('click', function(event) {
@@ -1049,7 +900,6 @@ var ReSeT = (function(){
             $('#true').prop('checked', 'none');
             $('#false').prop('checked', 'checked');// =======
             $('.aim-img').append('<img src="" class="mainMark">');
-
             $('#submit').attr('disabled', 'disabled');
             $('#reset').attr('disabled', 'disabled');
             $('#false').attr('disabled', 'disabled');
@@ -1058,8 +908,6 @@ var ReSeT = (function(){
             $('#moveY').attr('disabled', 'disabled');
             $( "#slider" ).slider({disabled:true});
             $('#moveX,#moveY').spinner({disabled: true});
-
-            //$('#true').off();
             main2.redCrossDestroy();
             Coordin.positionOff();
             $('.position__choose').off();
@@ -1069,29 +917,23 @@ var ReSeT = (function(){
             dataParams.addTransparency(1);
             dataParams.addX('');
             dataParams.addY('');
-
         });
     };
     var init = function () {
         _setUpListners();
-
-
     };
     return {
         init: init
     };
 })();
-ReSeT.init();
+if($('#reset')) { ReSeT.init(); };
+
 //Анимация социальных сетей
 var ShareShow = (function(){
-
     var init = function () {
         _setUpListners();
     };
-
     var _setUpListners = function() {
-        //$('#like').on('click', _showLike);
-       // $('#share').on('hover', _showLike);
         $('.share__btn_like').on('mouseenter', function(){
             $(this).stop(true,true);
             $('.share').addClass('open').animate({left: '0px' });   // соц.иконки
@@ -1100,25 +942,13 @@ var ShareShow = (function(){
             $(this).stop(true,true);
             $(this).removeClass('open').animate({left: '-43px' });
         });
-
     };
-
-    //var  _showLike = function (e) {
-    //    e.preventDefault();
-    //    if ($('#share').hasClass('open')) {
-    //        $('#share').removeClass('open').animate({left: '-43px' });;
-    //    } else {
-    //        $('#share').addClass('open').animate({left: '0px' });
-    //    }
-    //}
-
     return {
         init: init
     };
-
 })();
-
 if($('#share')) { ShareShow.init();};
+
 //Спиннер для инпутов
 var Spiners = (function(){
     var _setUpListners = function() {
@@ -1128,13 +958,10 @@ var Spiners = (function(){
             min:0,
             spin: function( event, ui ) {
                 if(event.target.id === 'moveX'){
-                    // ui.value = parseInt($('#moveX').val());
-                    // console.log(ui.value)
                     if($('.mainMark')){
                          $('.mainMark').css('left',ui.value+'px');
-                         $('#moveX').val(ui.value).spinner( "option", "max", $('.mainIMGHolder').width()-$('.mainMark').width());   // спинеры 
-                     }//$('.mainMark')
-
+                         $('#moveX').val(ui.value).spinner( "option", "max", $('.mainIMGHolder').width()-$('.mainMark').width());
+                     }
                     if($('.flag').length){
                         $('#moveX').spinner( "option", "max", 100);
                         $('.flag').css('border-bottom', ui.value+'px solid transparent');
@@ -1144,16 +971,14 @@ var Spiners = (function(){
                         });
                         if(ui.value === 0){
                             $('#vertical').css('height', '1px');
-                        }//ui.value === 0
-                    }//$('.flag')
-                }//event.target.id === 'moveX'
-
+                        }
+                    }
+                }
                 if(event.target.id === 'moveY'){
                     if($('.mainMark')){
                          $('.mainMark').css('top', ui.value);
                          $('#moveY').val(ui.value).spinner( "option", "max", $('.mainIMGHolder').height()-$('.mainMark').height());
-                     }//$('.mainMark')
-
+                     }
                     if($('.flag').length){
                         $('#moveY').spinner( "option", "max", 100);
                         $('.flag').css('border-right', ui.value+'px solid transparent');
@@ -1163,15 +988,13 @@ var Spiners = (function(){
                         });
                         if(ui.value === 0){
                             $('#horizontal').css('width', '0.5px');
-                        }//z === 0
-                    }//$('.flag')
-                }//event.target.id === 'moveY'
-
-                 
-            }
-}       );
+                        }
+                    }
+                }
+            },
+        });
     };
-//Проверка инпутов на числа
+    //Проверка инпутов на числа
     var _onlyNumber = function () {
         $('#moveX,#moveY').on('keyup', function() {
              var $this = $(this);
@@ -1180,8 +1003,7 @@ var Spiners = (function(){
              } else {
                 var number = 0;
              }
-                
-        $this.val(number)            
+        $this.val(number)
         });
     }
     var init = function () {
