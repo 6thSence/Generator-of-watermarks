@@ -13,34 +13,6 @@ body{
     @include clearfix;
 }
 
-
-/****main-bl*****/
-.main-bl{
-    float: left;
-    width: 700px;
-    height: auto;
-    background: #61585b;
-
-    .main-title{
-        font-family: "SegoeUILight", sans-serif;
-        font-weight: 300;
-        padding-top: 9px;
-        padding-left: 21px;
-        font-size: 36px;
-        color: #fff;
-        margin: 0;
-    }
-
-    .mainIMG{
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        margin: auto;
-        z-index: 10;
-    }
-}
-
 /****controls-bl*****/
 .controls-bl{
     display: block;
@@ -50,6 +22,8 @@ body{
     background: #f1f1f5;
     @include clearfix;
 }
+
+
 
 /****controls-title****/
 .controls-title{
@@ -61,17 +35,9 @@ body{
     padding-right: 6px;
 }
 
-.aim-img{
-    width: 648px;
-    height: 533px;
-    margin: 54px auto 25px;
-    background-color: #fff;
-}
-
 
 
 /****form__group*****/
-
 .form__group{
     border-bottom: 1px solid #f97e76;
     position: relative;
@@ -114,7 +80,6 @@ body{
 
 
 /****form__group Name*****/
-
 .form__label{
     font-size: 14px;
     color: #2e3641;
