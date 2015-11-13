@@ -627,28 +627,6 @@ table {
 }
 /* --------- variables --------- */
 /* --------- sections --------- */
-body {
-  background: url("../img/bg.jpg") no-repeat;
-  -webkit-background-size: cover;
-  background-size: cover;
-  font-family: 'robotolight', sans-serif;
-  line-height: 1.4;
-  padding-bottom: 50px;
-  margin: 0;
-}
-
-.container {
-  width: 960px;
-  margin: 60px auto;
-}
-.container:before, .container:after {
-  content: "";
-  display: table;
-}
-.container:after {
-  clear: both;
-}
-
 /****main-bl*****/
 .main-bl {
   float: left;
@@ -672,6 +650,36 @@ body {
   left: 0;
   margin: auto;
   z-index: 10;
+}
+
+.aim-img {
+  width: 648px;
+  height: 533px;
+  margin: 54px auto 25px;
+  background-color: #fff;
+  background: url("../img/images/wback.png") no-repeat;
+}
+
+body {
+  background: url("../img/bg.jpg") no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+  font-family: 'robotolight', sans-serif;
+  line-height: 1.4;
+  padding-bottom: 50px;
+  margin: 0;
+}
+
+.container {
+  width: 960px;
+  margin: 60px auto;
+}
+.container:before, .container:after {
+  content: "";
+  display: table;
+}
+.container:after {
+  clear: both;
 }
 
 /****controls-bl*****/
@@ -698,13 +706,6 @@ body {
   margin-top: 26px;
   line-height: 1;
   padding-right: 6px;
-}
-
-.aim-img {
-  width: 648px;
-  height: 533px;
-  margin: 54px auto 25px;
-  background-color: #fff;
 }
 
 /****form__group*****/
