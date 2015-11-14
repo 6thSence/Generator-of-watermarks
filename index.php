@@ -179,7 +179,7 @@
 		<script src="js/jquery.iframe-transport.js"></script>
 		<script src="js/jquery.fileupload.js"></script>
 		<script src="js/jquery.fadeloader.js"></script>
-		<script src="js/main2.js"></script>
+		<script src="js/main.js"></script>
 		<script src="js/share.js"></script>
 	</body>
 </html>
