@@ -95,7 +95,7 @@
 										<div class="file-holder__btn">
 											<img src="../img/images/cloud.png" alt="" class="file__up-img">
 										</div>
-										<input id="fileuploadImage" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input="#image" class="file__up">
+										<input id="fileuploadImage" accept="image/*" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input="#image" class="file__up">
 									</div>
 									<label class="form__label watermark-image"><?php echo $text['watermark'] ?></label>
 									<div class="file-holder">
@@ -103,7 +103,7 @@
 										<div class="file-holder__btn">
 											<img src="../img/images/cloud.png" alt="" class="file__up-img">
 										</div>
-										<input id="watermark" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input="#watermark" disabled class="file__up">
+										<input id="watermark" accept="image/*" type="file" name="files[]" data-url="server/php/" data-position="left" title="изображение" data-file-name-input="#watermark" disabled class="file__up">
 									</div>
 								</div>
 							</div>
