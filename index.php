@@ -40,7 +40,7 @@
 		<meta name="keywords" content="">
 		<meta name="author" content="">
 		<!-- ***** favicon ******-->
-
+		<link rel="SHORTCUT ICON" type="image/x-icon" href="img/favicon.ico">
 		<!-- ***** css ******-->
 		<link rel="stylesheet" href="css/main.css">
 	</head>
