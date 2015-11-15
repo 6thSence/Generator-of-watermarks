@@ -338,8 +338,8 @@ var ZAMOS = (function(){
             'position': 'absolute',
             'width': mainIMGHolderWidth+'px',
             'height': mainIMGHolderHeight+'px',             // всякая математика для сжатия марки
-            'top': -1*mainIMGHolderHeight/3+'px',
-            'left':-1*mainIMGHolderWidth/3+'px',
+            'top': '-50px',
+            'left':'-50px',
             'cursor':'move',
             'font-size':'0'
          }).draggable({containment: [0,0,$('.mainIMGHolder').offset().left,$('.mainIMGHolder').offset().top]});
