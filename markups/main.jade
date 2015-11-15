@@ -17,21 +17,31 @@ html(lang='ru-RU')
         meta(name='author', content='')
         // ***** favicon ******
         // ***** css ******
-        link(rel='stylesheet', href='./main.css')
+        link(rel='stylesheet', href='css/main.css')
+        link(rel='stylesheet', href='bower/jquery-ui/themеs/flick/jquery-ui.css')
         // ***** js ******
     body
         .wrapper-all
             .wrapper
+                include _common/_left__btn-group
+
                 .container.cl
                     block block
 
         include _common/footer
 
 
-
+    <!-- build:js js/vendor.min.js -->
     <!-- bower:js -->
     <!-- endbower -->
+    script(src='js/vendor/jquery.ui.widget.js')
+    script(src='js/jquery.iframe-transport.js')
+    <!-- endbuild -->
+    script(src='js/jquery.fileupload.js')
+    script(src='js/jquery.fadeloader.js')
     script(src='js/main.js')
+    script(src='js/share.js')
+
 
 
 

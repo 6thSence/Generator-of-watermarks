@@ -1,0 +1,68 @@
+.ui-spinner.ui-widget-content{
+    background: transparent!important;
+    border: 0 none!important;
+}
+
+.ui-widget input{
+    font-size: 24px!important;
+    font-family: 'robotolight', sans-serif!important;
+}
+
+.ui-spinner-input{
+    width: 44px!important;
+    height: 43px!important;
+    text-align: center!important;
+    border-radius: 5px!important;
+    border-style: solid!important;
+    border-width: 1px!important;
+    border-color: #c1cfd9!important;
+    margin-left: 17px!important;
+    background: transparent!important;
+    color: #444a53!important;
+    cursor: pointer!important;
+    cursor: url("../img/images/cursor.cur"), auto !important;
+    padding: 0!important;
+    margin-top: 0!important;
+}
+
+.count-position__item_x{
+    .ui-spinner{
+        margin-bottom: 9px!important;
+    }
+}
+
+.ui-spinner-down {
+    bottom: -4px !important;
+}
+/**********************/
+
+.ui-spinner-button{
+    background: transparent!important;
+    border: 0 none!important;
+    cursor: pointer!important;
+    cursor: url("../img/images/cursor.cur"), auto !important;
+}
+
+.ui-spinner-button.ui-state-default{
+    &:hover{
+        background: #f1f1f5!important;
+    }
+}
+
+.custom-up-icon{
+    background-image: url('/img/images/math/inc.png')!important;
+    &:hover{
+        background-image: url('../img/images/math/inc_hover.png')!important;
+    }
+}
+
+.custom-down-icon{
+    background-image: url('/img/images/math/dec.png')!important;
+    &:hover{
+        background-image: url('../img/images/math/dec_hover.png')!important;
+    }
+}
+
+
+
+

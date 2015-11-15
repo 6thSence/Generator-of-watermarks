@@ -1,0 +1,110 @@
+body{
+    background: url('../img/bg.jpg') no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    font-family: 'robotolight', sans-serif;
+    line-height: 1.4;
+    padding-bottom: 50px;
+    margin: 0;
+}
+.container{
+    width: 960px;
+    margin: 60px auto;
+    @include clearfix;
+}
+
+/****controls-bl*****/
+.controls-bl{
+    display: block;
+    float: right;
+    width: 260px;
+    height: auto;
+    background: #f1f1f5;
+    @include clearfix;
+}
+
+
+
+/****controls-title****/
+.controls-title{
+    font-size: 26px;
+    text-align: center;
+    margin: 0;
+    margin-top: 26px;
+    line-height: 1;
+    padding-right: 6px;
+}
+
+
+
+/****form__group*****/
+.form__group{
+    border-bottom: 1px solid #f97e76;
+    position: relative;
+    padding: 0px 20px;
+    &:after{
+        content: "";
+        position: absolute;
+        bottom: -13px;
+        right: 50%;
+        width: 10px;
+        height: 10px;
+        border: 1px solid white;
+        border-top-color: transparent;
+        border-right-color: transparent; 
+        border-bottom-color: #f97e76;
+        border-left-color: #f97e76;
+        background: #f1f1f5;
+        transform: translateY(-50%) translateX(50%) rotate(-45deg);
+    }
+}
+
+.form__group-wrap {
+    @include clearfix;
+}
+
+.group-wrap__image{
+    margin-top: 34px;
+    margin-bottom: 29px;
+}
+
+.group-wrap__placement{
+    margin-top: 14px;
+    margin-bottom: 27px;
+}
+
+.group-wrap__transparency{
+    margin: 15px 0;
+    margin-bottom: 20px;
+}
+
+
+/****form__group Name*****/
+.form__label{
+    font-size: 14px;
+    color: #2e3641;
+    display: block;
+}
+
+.form__label.original-image {
+    margin-bottom: 6px;  
+    }
+
+
+.form__label.watermark-image{
+    margin-top: 20px;
+    margin-bottom: 6px;
+}
+
+.header__placement{
+    margin-bottom: 57px;
+}
+
+.form__label.place-title{
+    width: 100px;
+    float: left;
+}
+
+.form__label.transparency-title {
+    margin-bottom: 27px;
+}
