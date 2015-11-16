@@ -738,7 +738,7 @@ body {
 }
 
 .group-wrap__image {
-  margin-top: 34px;
+  margin-top: 33px;
   margin-bottom: 29px;
 }
 
@@ -761,12 +761,12 @@ body {
 }
 
 .form__label.original-image {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .form__label.watermark-image {
   margin-top: 20px;
-  margin-bottom: 6px;
+  margin-bottom: 9px;
 }
 
 .header__placement {
@@ -779,7 +779,7 @@ body {
 }
 
 .form__label.transparency-title {
-  margin-bottom: 27px;
+  margin-bottom: 29px;
 }
 
 /****form__input*****/
