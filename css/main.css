@@ -943,14 +943,12 @@ body {
 
 /* choose-position */
 .choose-position {
-  width: 102px;
+  width: 103px;
   height: 102px;
   float: left;
   font-size: 0;
   letter-spacing: 0px;
   word-spacing: 0px;
-  border: 1px solid #c1cfd9;
-  border-radius: 7px;
   overflow: hidden;
 }
 .choose-position:before, .choose-position:after {
@@ -1009,6 +1007,22 @@ body {
 .choose-position__item-lock .active {
   background-color: #f97e76;
   border-color: #f97e76;
+}
+
+.top-left {
+  border-top-left-radius: 7px;
+}
+
+.top-right {
+  border-top-right-radius: 7px;
+}
+
+.down-left {
+  border-bottom-left-radius: 7px;
+}
+
+.down-right {
+  border-bottom-right-radius: 7px;
 }
 
 /*count-position*/
