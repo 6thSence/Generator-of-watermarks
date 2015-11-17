@@ -7,9 +7,7 @@
         'description': $('meta[name="description"]').attr('content'),
         'image': 'http://www.filimonow.ru/img/site.jpg',
         'noparse': true,
-        'display': 'page',
-        'fb_id': '964296000282885'
-
+        'display': 'page'
     };
 
     var _encode = function () {
@@ -39,14 +37,11 @@
     var _fbShare = function (event) {
         event.preventDefault();
 
-        var url = 'https://www.facebook.com/dialog/feed?';
-        url += ('app_id=' + _options['fb_id']);
-        url += ('&display=' + _options['display']);
-        url += ('&link=' + _options['url']);
-        url += ('&name=' + _options['title']);
-        url += ('&description=' + _options['description']);
-        url += ('&picture=' + _options['image']);
-        url += ('&redirect_uri=' + _options['url']);
+        var url = 'http://www.facebook.com/sharer/sharer.php?s=100';
+        url += ('&p[title]=' + _options['title']);
+        url += ('&p[summary]=' + _options['description']);
+        url += ('&p[url]=' + _options['url']);
+        url += ('&p[images][0]=' + _options['image']);
         _openWindow(url);
     };
 
