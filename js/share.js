@@ -1,6 +1,10 @@
+// Share module
+// It Supports vk.com, facebook.com, twitter.com
+// User can set custom properties through "options" parameter
 ;var share = (function(){
     'use strict';
 
+    // Mutual parameters for share services
     var _options = {
         'url': 'http://www.filimonow.ru',
         'title': document.title,
@@ -10,18 +14,21 @@
         'display': 'page'
     };
 
+    // URI encode
     var _encode = function () {
         for(var key in _options) {
             _options[key] = encodeURIComponent(_options[key]);
         }
     };
 
+    // Share handlers
     var _setUpListeners = function () {
         $('#vk-share').on('click', _vkShare);
         $('#fb-share').on('click', _fbShare);
         $('#tw-share').on('click', _twShare);
     };
 
+    // vk.com share handler
     var _vkShare = function (event) {
         event.preventDefault();
 
@@ -34,6 +41,7 @@
         _openWindow(url);
     };
 
+    // facebook.com share handler
     var _fbShare = function (event) {
         event.preventDefault();
 
@@ -45,6 +53,7 @@
         _openWindow(url);
     };
 
+    // twitter.com share handler
     var _twShare = function (event) {
         event.preventDefault();
 
@@ -54,10 +63,13 @@
         _openWindow(url);
     };
 
+    // Share process in a new window
     var _openWindow = function (url) {
         window.open(url, '_blank');
     };
 
+    // Public API
+    // Get "options" object with user properties
     return {
         init: function(options) {
             _options = options || _options;
@@ -67,6 +79,7 @@
     }
 })();
 
+// Initialize module if any share link on page
 if ($('a[id^="share"]')) {
     share.init();
 }
