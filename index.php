@@ -128,15 +128,15 @@
 									</header>
 									<div class="position-select__wrap">
 										<div class="position-select__choose choose-position">
-											<div class="choose-position__item-lock"></div>
-											<div class="choose-position__item-lock"></div>
-											<div class="choose-position__item-lock"></div>
-											<div class="choose-position__item-lock"></div>
-											<div class="choose-position__item-lock"></div>
-											<div class="choose-position__item-lock"></div>
-											<div class="choose-position__item-lock"></div>
-											<div class="choose-position__item-lock"></div>
-											<div class="choose-position__item-lock"></div>
+											<div class="choose-position__item-lock top-left" data-item="0"></div>
+											<div class="choose-position__item-lock" data-item="1"></div>
+											<div class="choose-position__item-lock top-right" data-item="2"></div>
+											<div class="choose-position__item-lock" data-item="3"></div>
+											<div class="choose-position__item-lock" data-item="4"></div>
+											<div class="choose-position__item-lock" data-item="5"></div>
+											<div class="choose-position__item-lock down-left" data-item="6"></div>
+											<div class="choose-position__item-lock" data-item="7"></div>
+											<div class="choose-position__item-lock down-right" data-item="8"></div>
 										</div>
 										<div class="position-select__choose count-position">
 											<div class="input-group_count count-position__item_x">
