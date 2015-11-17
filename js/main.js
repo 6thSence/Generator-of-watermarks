@@ -181,6 +181,7 @@ var FileUploadJQ = (function(){
                             });
                             var zzz = width/parseInt($('.mainIMGHolder').css('width'));
                             dataParams.addZZZ(zzz);
+                            _setUpListners2(zzz,width);
                             } else {
                                 var finalSize = (height/width);
                                 $('.mainIMGHolder').css({
