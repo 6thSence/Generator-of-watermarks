@@ -171,15 +171,10 @@
 				<div class="footer-copi">© 2015. <?php echo $text["copyright"] ?></div>
 			</div>
 		</footer>
-		<!-- bower:js -->
-		<script src="../../bower/jquery/jquery.js"></script>
-		<script src="../../bower/jquery-ui/jquery-ui.js"></script>
-		<!-- endbower -->
-		<script src="js/vendor/jquery.ui.widget.js"></script>
-		<script src="js/jquery.iframe-transport.js"></script>
+		<script src="js/vendor.min.js"></script>
 		<script src="js/jquery.fileupload.js"></script>
 		<script src="js/jquery.fadeloader.js"></script>
-		<script src="js/main2.js"></script>
+		<script src="js/main.js"></script>
 		<script src="js/share.js"></script>
 	</body>
 </html>
