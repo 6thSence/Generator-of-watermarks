@@ -167,6 +167,7 @@ var FileUploadJQ = (function(){
                             });
                             var zzz = width/parseInt($('.mainIMGHolder').css('width'));
                             dataParams.addZZZ(zzz);
+                            _setUpListners2(zzz,width);
                             } else {
                                 var finalSize = (height/width);
                                 $('.mainIMGHolder').css({
@@ -215,6 +216,7 @@ var FileUploadJQ = (function(){
             data.submit();
              },
             done    : function (e, data) {
+                    $('#progress').remove();
                     var nameFile = data.result.files[0].name,
                     urlFile = data.result.files[0].url;
                     dataParams.addWatermarkImage(urlFile);
@@ -223,6 +225,7 @@ var FileUploadJQ = (function(){
                     $('#false').removeAttr('disabled');
                     $('#true').removeAttr('disabled');
                     $('.choose-position__item-lock').removeClass('choose-position__item-lock').attr('class', 'choose-position__item');
+                    $('#progress').remove();
                     $('.mainWatermark').text(nameFile);
                     $('input[name="watermark"]').val(nameFile);
                     $('#moveX').val(0);
@@ -307,9 +310,9 @@ var ZAMOS = (function(){
         $('.flagHolder').css({
             'position': 'absolute',
             'width': mainIMGHolderWidth+'px',
-            'height': mainIMGHolderHeight+'px',             // всякая математика для сжатия марки
-            'top': '-50px',
-            'left':'-50px',
+            'height': mainIMGHolderHeight+'px',
+            'top': '-40px',
+            'left':'-40px',
             'cursor':'move',
             'font-size':'0'
          }).draggable({containment: [0,0,$('.mainIMGHolder').offset().left,$('.mainIMGHolder').offset().top]});
@@ -792,35 +795,20 @@ var ReSeT = (function(){
     var _setUpListners = function() {
         $('.btn__clear').on('click', function(event) {
             event.preventDefault();
-            if($('.mainIMGHolder').length){$('.mainIMGHolder').remove();}
-            if($('.flagHolder').length){$('.flagHolder').remove();}
-            if($('#horizontal').length){$('#horizontal').remove();}
-            if($('#vertical').length){$('#vertical').remove();}
-            $('#fileuploadImage').removeAttr('disabled');
-            $('#watermark').attr('disabled', 'disabled');
             $('#moveX').val(0);
             $('#moveY').val(0);
-            $('input[name="opacity"]').val(0);
             $( "#slider" ).slider({'value':100});
-            $('.mainImg').text('Image.jpg');
-            $('.mainWatermark').text('Image.jpg');
-            $('.count-position__item_yyy').removeClass('count-position__item_yyy').addClass('count-position__item_y');
-            $('.count-position__item_xxx').removeClass('count-position__item_xxx').addClass('count-position__item_x');  // сброс всех параметров
-            $('#true').prop('checked', 'none');
-            $('#false').prop('checked', 'checked');// =======
-            $('.aim-img').append('<img src="" class="mainMark">');
-            $('#submit').attr('disabled', 'disabled');
-            $('#reset').attr('disabled', 'disabled');
-            $('#false').attr('disabled', 'disabled');
-            $('#true').attr('disabled', 'disabled');
-            $('#moveX').attr('disabled', 'disabled');
-            $('#moveY').attr('disabled', 'disabled');
-            $( "#slider" ).slider({disabled:true});
-            $('#moveX,#moveY').spinner({disabled: true});
-            main2.redCrossDestroy();
-            Coordin.positionOff();
-            $('.position__choose').off();
-            $('.choose-position__item').off();
+            $('input[name="opacity"]').val(0);
+
+            if($('.flagHolder').length){
+                $('.flagHolder').css({'opacity':'1'})
+                $('.flag').css({'border-right':'0px solid transparent', 'border-bottom':'0px solid transparent'});
+                $('#horizontal').css({'width':'1px','margin-left':'0px'});
+                $('#vertical').css({'height':'1px','margin-top':'0px'});
+            }
+            if($('.mainMark').length){
+                $('.mainMark').css({'top':'0','left':'0','opacity':'1'});
+            }
             dataParams.addWatermarkImage('');
             dataParams.addOriginalImage('');
             dataParams.addTransparency(1);
