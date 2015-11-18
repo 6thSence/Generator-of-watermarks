@@ -133,6 +133,20 @@ var FileUploadJQ = (function(){
     var _setUpListners = function() {
         $('#fileuploadImage').fileupload({
             dataType    : 'json',
+            progressall : function (e, data) {
+                            var progress = '<div id="progress"></div>';
+                            $('.main-bl').css('position', 'relative').prepend(progress)
+                            var progress = parseInt(data.loaded / data.total * 100, 10);
+                            $('#progress').css({
+                                'height': '17px',
+                                'background-image':'url(img/progressbar.gif)',
+                                'position':'absolute',
+                                'top':'75px',
+                                'left':'26px',
+                                'max-width':'648px',
+                                'border-radius': '7px'
+                            }).css('width', progress + '%');
+                        },
             add         :   function (e,data) {
                                 data.submit();
                             },
@@ -167,7 +181,6 @@ var FileUploadJQ = (function(){
                             });
                             var zzz = width/parseInt($('.mainIMGHolder').css('width'));
                             dataParams.addZZZ(zzz);
-                            _setUpListners2(zzz,width);
                             } else {
                                 var finalSize = (height/width);
                                 $('.mainIMGHolder').css({
@@ -212,6 +225,20 @@ var FileUploadJQ = (function(){
     var _setUpListners2 = function(zzz, mainWidth) {
         $('#watermark').fileupload({
             dataType    :   'json',
+            progressall :   function (e, data) {
+                var progress = '<div id="progress"></div>';
+                $('.main-bl').css('position', 'relative').prepend(progress)
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress').css({
+                    'height': '17px',
+                    'background-image':'url(img/progressbar.gif)',
+                    'position':'absolute',
+                    'top':'75px',
+                    'left':'26px',
+                    'max-width':'648px',
+                    'border-radius': '7px'
+                }).css('width', progress + '%');
+            },
             add     :   function (e,data) {
             data.submit();
              },
@@ -311,8 +338,8 @@ var ZAMOS = (function(){
             'position': 'absolute',
             'width': mainIMGHolderWidth+'px',
             'height': mainIMGHolderHeight+'px',
-            'top': '-40px',
-            'left':'-40px',
+            'top': -1*mainIMGHolderHeight/3+'px',
+            'left':-1*mainIMGHolderWidth/3+'px',
             'cursor':'move',
             'font-size':'0'
          }).draggable({containment: [0,0,$('.mainIMGHolder').offset().left,$('.mainIMGHolder').offset().top]});
@@ -504,72 +531,6 @@ var Coordin = (function () {
         }
 
         };
-
-    var _increas = function(){
-        var inp = $(this).closest('.input-group_count').find('input'),
-        img=$('.mainMark'),
-        layer=$('.mainIMGHolder'),
-        img_width= parseInt(img.css('width')),
-        layer_width=parseInt(layer.css('width')),
-        img_height= parseInt(img.css('height')),
-        layer_height=parseInt(layer.css('height'));
-        if (inp.attr('id') === 'moveX'){
-            var coordin = $('.mainMark').css('left'),
-                coordin_inc = parseInt(coordin) + 10,
-                pos = coordin_inc +'px';
-            if ((coordin_inc)<= (layer_width - img_width)) {
-                $('.mainMark').css('left', pos);
-                inp.val(coordin_inc);
-            }
-            if ((coordin_inc)>= (layer_width - img_width)) {
-                $('.mainMark').css('left', layer_width - img_width);
-                inp.val(layer_width - img_width);
-            }
-        }
-        if (inp.attr('id') === 'moveY'){
-            var coordin = $('.mainMark').css('top'),
-            coordin_inc = parseInt(coordin) + 10,///////////
-            pos = coordin_inc +'px';
-            if ((coordin_inc)<= (layer_height - img_height)) {
-               $('.mainMark').css('top' , pos);
-               inp.val(coordin_inc);
-            }
-            if ((coordin_inc)>= (layer_height - img_height)) {
-                $('.mainMark').css('top' , layer_height - img_height);
-                inp.val(layer_height - img_height);
-            }
-        }
-    };
-    var _reduce = function(){
-        var inp = $(this).closest('.input-group_count').find('input');
-        if (inp.attr('id') === 'moveX'){
-            var coordin = $('.mainMark').css('left'),
-            coordin_red = parseInt(coordin) - 10,
-            pos = coordin_red +'px';
-            if(coordin_red >= 0) {
-                $('.mainMark').css('left', pos);
-                inp.val(coordin_red);
-            }
-            if(coordin_red <=0){
-                $('.mainMark').css('left', '0');
-                inp.val('0');
-            }
-        }
-        if (inp.attr('id') === 'moveY'){
-            var coordin = $('.mainMark').css('top'),
-            coordin_red = parseInt(coordin) - 10,
-            pos = coordin_red +'px';
-            if(coordin_red >= 0) {
-                $('.mainMark').css('top', pos);
-                inp.val(coordin_red);
-            }
-            if(coordin_red <=0){
-                $('.mainMark').css('top', '0');
-                inp.val('0');
-            }
-        }
-
-    };
     var _setCoordinY = function () {
         var $this = $(this);
         if (parseInt($(this).val())){
@@ -621,7 +582,8 @@ var Coordin = (function () {
             $this.val('0');
         }
     };
-    var drag = function($this){
+    //Отслеживание позиции марки
+    var drag = function(){
         $('.mainMark').on('drag', _drag);
     };
     var _drag = function() {
@@ -670,11 +632,7 @@ var Coordin = (function () {
     }
 })();
 
-// <<<<<<< HEAD:js/main.js
-// //Добавление data атрибутов квадратам позиционирования
-// =======
-// //Добавление Дата атрибутов квадратам позиционирования
-// >>>>>>> 279723626dcaaeb3a395b08e6e7801b98d356d43:js/main2.js
+//Добавление data атрибутов квадратам позиционирования
 if ($('.choose-position')) {
     $(function () {
         var child = $('.choose-position').children().each(function (key, val) {
@@ -864,20 +822,35 @@ var ReSeT = (function(){
     var _setUpListners = function() {
         $('.btn__clear').on('click', function(event) {
             event.preventDefault();
+            if($('.mainIMGHolder').length){$('.mainIMGHolder').remove();}
+            if($('.flagHolder').length){$('.flagHolder').remove();}
+            if($('#horizontal').length){$('#horizontal').remove();}
+            if($('#vertical').length){$('#vertical').remove();}
+            $('#fileuploadImage').removeAttr('disabled');
+            $('#watermark').attr('disabled', 'disabled');
             $('#moveX').val(0);
             $('#moveY').val(0);
-            $( "#slider" ).slider({'value':100});
             $('input[name="opacity"]').val(0);
-
-            if($('.flagHolder').length){
-                $('.flagHolder').css({'opacity':'1'})
-                $('.flag').css({'border-right':'0px solid transparent', 'border-bottom':'0px solid transparent'});
-                $('#horizontal').css({'width':'1px','margin-left':'0px'});
-                $('#vertical').css({'height':'1px','margin-top':'0px'});
-            }
-            if($('.mainMark').length){
-                $('.mainMark').css({'top':'0','left':'0','opacity':'1'});
-            }
+            $( "#slider" ).slider({'value':100});
+            $('.mainImg').text('Image.jpg');
+            $('.mainWatermark').text('Image.jpg');
+            $('.count-position__item_yyy').removeClass('count-position__item_yyy').addClass('count-position__item_y');
+            $('.count-position__item_xxx').removeClass('count-position__item_xxx').addClass('count-position__item_x');  // сброс всех параметров
+            $('#true').prop('checked', 'none');
+            $('#false').prop('checked', 'checked');// =======
+            $('.aim-img').append('<img src="" class="mainMark">');
+            $('#submit').attr('disabled', 'disabled');
+            $('#reset').attr('disabled', 'disabled');
+            $('#false').attr('disabled', 'disabled');
+            $('#true').attr('disabled', 'disabled');
+            $('#moveX').attr('disabled', 'disabled');
+            $('#moveY').attr('disabled', 'disabled');
+            $( "#slider" ).slider({disabled:true});
+            $('#moveX,#moveY').spinner({disabled: true});
+            main2.redCrossDestroy();
+            Coordin.positionOff();
+            $('.position__choose').off();
+            $('.choose-position__item').off();
             dataParams.addWatermarkImage('');
             dataParams.addOriginalImage('');
             dataParams.addTransparency(1);

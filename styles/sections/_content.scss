@@ -7,10 +7,21 @@ body{
     padding-bottom: 50px;
     margin: 0;
 }
-.container{
+.wrapper .container{
     width: 960px;
+    height: 670px;
     margin: 60px auto;
-    @include clearfix;
+    // @include clearfix;
+    // position: absolute;
+    // left: 0;
+    // right: 0;
+    // top: 0;
+    // bottom: 0;
+    // margin: auto;
+}
+
+.wrapper-all {
+    min-width: 970px;
 }
 
 /****controls-bl*****/
@@ -18,7 +29,8 @@ body{
     display: block;
     float: right;
     width: 260px;
-    height: auto;
+    height: 670px;
+    min-height: 670px;
     background: #f1f1f5;
     @include clearfix;
 }
@@ -64,7 +76,7 @@ body{
 }
 
 .group-wrap__image{
-    margin-top: 34px;
+    margin-top: 33px;
     margin-bottom: 29px;
 }
 
@@ -82,18 +94,19 @@ body{
 /****form__group Name*****/
 .form__label{
     font-size: 14px;
+    max-height: 16px;
     color: #2e3641;
     display: block;
 }
 
 .form__label.original-image {
-    margin-bottom: 6px;  
+    margin-bottom: 8px;  
     }
 
 
 .form__label.watermark-image{
     margin-top: 20px;
-    margin-bottom: 6px;
+    margin-bottom: 9px;
 }
 
 .header__placement{
@@ -106,5 +119,5 @@ body{
 }
 
 .form__label.transparency-title {
-    margin-bottom: 27px;
+    margin-bottom: 29px;
 }

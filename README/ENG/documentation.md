@@ -1,3 +1,4 @@
+
 # JS
 
 ## Main.js
@@ -1174,4 +1175,3 @@ function bool($value) {
 }
  
 ```
-

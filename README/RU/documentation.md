@@ -1172,4 +1172,3 @@ function bool($value) {
   return $value === "true";
 }
  
-```
