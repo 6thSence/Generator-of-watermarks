@@ -133,20 +133,6 @@ var FileUploadJQ = (function(){
     var _setUpListners = function() {
         $('#fileuploadImage').fileupload({
             dataType    : 'json',
-            progressall : function (e, data) {
-                            var progress = '<div id="progress"></div>';
-                            $('.main-bl').css('position', 'relative').prepend(progress)
-                            var progress = parseInt(data.loaded / data.total * 100, 10);
-                            $('#progress').css({
-                                'height': '17px',
-                                'background-image':'url(img/progressbar.gif)',
-                                'position':'absolute',
-                                'top':'75px',
-                                'left':'26px',
-                                'max-width':'648px',
-                                'border-radius': '7px'
-                            }).css('width', progress + '%');
-                        },
             add         :   function (e,data) {
                                 data.submit();
                             },
@@ -809,54 +795,28 @@ var toggelModule = (function(){
         first : first
     };
 })();
-//Fadeloader
-$('body').fadeloader({
-    mode: 'children',
-    fadeSpeed : 1500,
-    displayType : 'block',
-    easeLoad : 'easeInOutBack',
-    onComplete : ''
-});
 
 //Сброс формы
 var ReSeT = (function(){
     var _setUpListners = function() {
         $('.btn__clear').on('click', function(event) {
             event.preventDefault();
-            if($('.mainIMGHolder').length){$('.mainIMGHolder').remove();}
-            if($('.flagHolder').length){$('.flagHolder').remove();}
-            if($('#horizontal').length){$('#horizontal').remove();}
-            if($('#vertical').length){$('#vertical').remove();}
-            $('#fileuploadImage').removeAttr('disabled');
-            $('#watermark').attr('disabled', 'disabled');
+            $('.mainMark,.flagHolder').css('opacity', '1');
+            $('.mainMark').css('top' , '0');
+            $('.mainMark').css('left' , '0');
+            $('#vertical').css({
+                'margin-top':'0px',
+                'height':'1px'
+            });
+            $('#horizontal').css({
+                'margin-left':'0px',
+                'width':'1px'
+            });
             $('#moveX').val(0);
             $('#moveY').val(0);
             $('input[name="opacity"]').val(0);
             $( "#slider" ).slider({'value':100});
-            $('.mainImg').text('Image.jpg');
-            $('.mainWatermark').text('Image.jpg');
-            $('.count-position__item_yyy').removeClass('count-position__item_yyy').addClass('count-position__item_y');
-            $('.count-position__item_xxx').removeClass('count-position__item_xxx').addClass('count-position__item_x');  // сброс всех параметров
-            $('#true').prop('checked', 'none');
-            $('#false').prop('checked', 'checked');// =======
-            $('.aim-img').append('<img src="" class="mainMark">');
-            $('#submit').attr('disabled', 'disabled');
-            $('#reset').attr('disabled', 'disabled');
-            $('#false').attr('disabled', 'disabled');
-            $('#true').attr('disabled', 'disabled');
-            $('#moveX').attr('disabled', 'disabled');
-            $('#moveY').attr('disabled', 'disabled');
-            $( "#slider" ).slider({disabled:true});
-            $('#moveX,#moveY').spinner({disabled: true});
-            main2.redCrossDestroy();
-            Coordin.positionOff();
-            $('.position__choose').off();
-            $('.choose-position__item').off();
-            dataParams.addWatermarkImage('');
-            dataParams.addOriginalImage('');
-            dataParams.addTransparency(1);
-            dataParams.addX('');
-            dataParams.addY('');
+            $('#false').trigger('click');
         });
     };
     var init = function () {
