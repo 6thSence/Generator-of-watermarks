@@ -212,20 +212,6 @@ var FileUploadJQ = (function(){
     var _setUpListners2 = function(zzz, mainWidth) {
         $('#watermark').fileupload({
             dataType    :   'json',
-            progressall :   function (e, data) {
-                var progress = '<div id="progress"></div>';
-                $('.main-bl').css('position', 'relative').prepend(progress)
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('#progress').css({
-                    'height': '17px',
-                    'background-image':'url(img/progressbar.gif)',
-                    'position':'absolute',
-                    'top':'75px',
-                    'left':'26px',
-                    'max-width':'648px',
-                    'border-radius': '7px'
-                }).css('width', progress + '%');
-            },
             add     :   function (e,data) {
             data.submit();
              },
